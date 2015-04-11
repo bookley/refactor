@@ -20,7 +20,7 @@ define(["shaders", "mesh"], function(Shader, Mesh){
         var fShader = this.assets.Asset(fShader);
         var mainShader = new Shader(this.ctx, vShader, fShader);
         mainShader.LoadAttributes(["aVertexPosition"]);
-        mainShader.LoadUniforms(["uMVMatrix", "uPMatrix"]);
+        mainShader.LoadUniforms(["uMVMatrix", "uPMatrix", "uCMatrix"]);
         this._shaders[shaderName] = mainShader;
     }
 
@@ -33,26 +33,32 @@ define(["shaders", "mesh"], function(Shader, Mesh){
         return this._shaders[shaderName];
     }
 
+    /* Helper for creating a cube */
     Graphics.prototype.CreateCube = function(){
         var mesh = new Mesh(this.ctx);
         mesh.MakeCube();
-
         this._meshes.push(mesh);
+        return mesh;
     }
 
+    /* Perspective matrix */
     var pMatrix = mat4.create();
+
+    /* Move Matrix */
     var mvMatrix = mat4.create();
 
-    Graphics.prototype.Draw = function(){
+    Graphics.prototype.Draw = function(camera){
         this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
         this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
 
         mat4.perspective(pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
-        mat4.identity(mvMatrix);
-        mat4.translate(mvMatrix, mvMatrix, [0.0, 0.0, -5.0]);
 
-        this.currentShader.PassMatrix("uMVMatrix", mvMatrix);
         this.currentShader.PassMatrix("uPMatrix", pMatrix);
+
+        if(!camera) throw new Error("Can't draw if a camera isn't set");
+       // console.log(camera.GetMatrix());
+        var x = camera.GetMatrix();
+        this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
 
         for(var i = 0; i < this._meshes.length; i++){
             this._meshes[i].Draw(this.currentShader);
