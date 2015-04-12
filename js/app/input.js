@@ -57,10 +57,12 @@ define([], function(){
         vec[1] *=-1;
 
         var OP_squared = vec[0] * vec[0] + vec[1] * vec[1];
-        if (OP_squared <= 1*1)
-            vec[2] = Math.sqrt(1*1 - OP_squared);  // Pythagore
-        else
-            vec3.normalize(vec, vec);  // nearest point
+        if (OP_squared <= 1*1) {
+            vec[2] = Math.sqrt(1 * 1 - OP_squared);  // Pythagore
+        }
+        else {
+           // vec3.normalize(vec, vec);  // nearest point
+        }
 
         return vec;
     }
@@ -74,17 +76,38 @@ define([], function(){
         var a = this.GetArcballVector(pointA.x, pointA.y);
         var b = this.GetArcballVector(pointB.x, pointB.y);
 
-        var angle = Math.acos(Math.min(1.0, vec3.dot(a, b)));
-        var axis = vec3.create();
-        vec3.cross(axis, a, b);
+        /* Y Axis Rotation (Movement on x axis) */
+        var aY = vec3.fromValues(a[0], 0, a[2]);
+        var bY = vec3.fromValues(b[0], 0, b[2]);
+        vec3.normalize(aY, aY); vec3.normalize(bY, bY);
 
+        /* X Axis Rotation (Movement on y axis) */
+        var aX = vec3.fromValues(0, a[1], a[2]);
+        var bX = vec3.fromValues(0, b[1], b[2]);
+        vec3.normalize(aX, aX); vec3.normalize(bX, bX);
+
+        /* Y Angle and Axis */
+        var yAngle = Math.acos(Math.min(1.0, vec3.dot(aY, bY)));
+        var yAxis = vec3.create();
+        vec3.cross(yAxis, aY, bY);
+
+        /* X Angle and Axis */
+        var angle = Math.acos(Math.min(1.0, vec3.dot(aX, bX)));
+        var axis = vec3.create();
+        vec3.cross(axis, aX, bX);
+
+        /* Invert the current camera matrix */
         var inv = mat4.create();
         mat4.invert(inv, this.camera.matrix);
-        mat4.multiply(result, result, inv);
 
+        /* Rotate around x axis (transformed by inverse camera matrix */
+        vec3.transformMat4(axis, axis, inv);
         mat4.rotate(result, result, angle, axis);
 
-        mat4.multiply(result, result, this.camera.matrix);
+        /* transform y axis in x-axis rotated space*/
+        vec3.transformMat4(yAxis, yAxis, result);
+        /* Rotate around y axis */
+        mat4.rotate(result, result, yAngle, yAxis);
 
         return result;
     }
