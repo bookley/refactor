@@ -4,9 +4,22 @@ define([], function(){
         this.element = element;
         this.pM = null;
         this.cM = null;
+        this.isMouseDown = false;
 
         element.onmousemove =  function(evt){
             self.OnMouseMove(evt);
+        }
+
+        element.onmousedown = function(evt){
+            if(evt.which == 1){
+                self.isMouseDown = true;
+            }
+        }
+
+        document.onmouseup = function(evt){
+            if(evt.which == 1){
+                self.isMouseDown = false;
+            }
         }
     }
 
@@ -28,8 +41,10 @@ define([], function(){
             return;
         }
 
-        var transf = this.CalculateMoveMatrix(this.pM, this.cM);
-        mat4.multiply(this.camera.matrix, this.camera.matrix, transf);
+        if(this.isMouseDown) {
+            var transf = this.CalculateMoveMatrix(this.pM, this.cM);
+            mat4.multiply(this.camera.matrix, this.camera.matrix, transf);
+        }
         this.pM = this.cM;
     }
 
@@ -64,10 +79,12 @@ define([], function(){
         vec3.cross(axis, a, b);
 
         var inv = mat4.create();
-        //mat4.invert(inv, this.camera.position);
-        vec3.transformMat4(axis, axis, inv);
+        mat4.invert(inv, this.camera.matrix);
+        mat4.multiply(result, result, inv);
 
         mat4.rotate(result, result, angle, axis);
+
+        mat4.multiply(result, result, this.camera.matrix);
 
         return result;
     }
