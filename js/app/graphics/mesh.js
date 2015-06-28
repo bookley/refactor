@@ -1,19 +1,31 @@
-define([], function(){
+define(['graphics/filetypes/objloader'], function(ObjLoader){
     function Mesh(ctx){
         this.ctx = ctx;
         this.vertexBuffer = ctx.createBuffer();
+        this.colorBuffer = ctx.createBuffer();
         this.indexBuffer = ctx.createBuffer();
+        this.normalBuffer = ctx.createBuffer();
         this.position = mat4.create();
     }
 
-    Mesh.prototype.LoadVertices = function(vertices, indices){
+    Mesh.prototype.LoadVerticesFromFile = function(file){
+        var modelData = new ObjLoader().readFile(file);
+        this.LoadVertices(modelData.vertices, modelData.indices, modelData.colors, modelData.normals);
+    }
+
+    Mesh.prototype.LoadVertices = function(vertices, indices, colors, normals){
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
         this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(vertices), this.ctx.STATIC_DRAW);
 
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
         this.ctx.bufferData(this.ctx.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this.ctx.STATIC_DRAW);
 
-        this.numVertices = vertices.length / 3;
+        this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.colorBuffer);
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(colors), this.ctx.STATIC_DRAW);
+
+        this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(normals), this.ctx.STATIC_DRAW);
+
         this.numIndices = indices.length;
     }
 
@@ -62,6 +74,25 @@ define([], function(){
             -1.0,  1.0, -1.0
         ];
 
+        var colors4 = [
+            1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0,
+            0.0, 1.0, 0.0,
+            1.0, 0.0, 1.0,
+            1.0, 1.0, 0.0,
+            0.5, 0.5,0.5,
+        ];
+
+        var colors = [];
+        for(var i = 0; i < 6; i++){
+            for(var c = 0; c < 4; c++){
+                var x = colors4.slice(i*3, i*3+3);
+                colors = colors.concat(x);
+            }
+        }
+
+
+
         var indices = [
             0,  1,  2,      0,  2,  3,    // front
             4,  5,  6,      4,  6,  7,    // back
@@ -71,22 +102,29 @@ define([], function(){
             20, 21, 22,     20, 22, 23    // left
         ]
 
-       // var indices = [0,1,2, 2,3,0];
 
 
-
-        this.LoadVertices(vertices, indices);
+        this.LoadVertices(vertices, indices, colors);
     }
 
     Mesh.prototype.Draw = function(shader){
+        //Need to have texture//colours bound at this point
+        //if this.material -> this.material.bind
+        //add something to notify if shader.attributes["name"] doesn't exist
+        //console.log("drawing");
         shader.PassMatrix("uMVMatrix", this.position);
+
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
         this.ctx.vertexAttribPointer(shader.attributes["aVertexPosition"], 3, this.ctx.FLOAT, false, 0, 0);
 
+        this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.colorBuffer);
+        this.ctx.vertexAttribPointer(shader.attributes["aVertexColour"], 3, this.ctx.FLOAT, false, 0, 0);
+
+        this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
+        this.ctx.vertexAttribPointer(shader.attributes["aVertexNormal"], 3, this.ctx.FLOAT, false, 0, 0);
+
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
         this.ctx.drawElements(this.ctx.TRIANGLES, this.numIndices, this.ctx.UNSIGNED_SHORT, 0);
-
-        //this.ctx.drawArrays(this.ctx.TRIANGLES, 0, this.numVertices);
     }
 
     return Mesh;

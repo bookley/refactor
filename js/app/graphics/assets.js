@@ -3,6 +3,12 @@ define([], function(){
         this.urls = urls;
         this.assets = [];
 
+        /**
+         *
+         * @param url The url to fire the ajax request to
+         * @returns {Promise} Called when the asset file has been downloaded
+         * @constructor
+         */
         this.GetFile = function(url){
             var promise = new Promise(function(resolve, reject){
                 var request = new XMLHttpRequest();
@@ -21,11 +27,15 @@ define([], function(){
             return promise;
         }
 
-        this.GetAsset = function(url, name){
+        this.GetAsset = function(url, name, type){
             var self = this;
             var promise = new Promise(function(resolve, reject){
                 self.GetFile(url).then(function(data){
-                    self.assets[name] = data;
+                    self.assets[name] = {
+                        data: data,
+                        name: name,
+                        type: type
+                    };
                     resolve();
                 });
             })
@@ -36,7 +46,7 @@ define([], function(){
     Assets.prototype.Load = function(){
         var promises = [];
         for(var i = 0; i < this.urls.length; i++){
-            promises.push(this.GetAsset(this.urls[i].url, this.urls[i].name));
+            promises.push(this.GetAsset(this.urls[i].url, this.urls[i].name, this.urls[i].type));
         }
 
         var loadingPromise = Promise.all(promises).then(function(){
@@ -49,6 +59,17 @@ define([], function(){
 
     Assets.prototype.Asset = function(assetName){
         return this.assets[assetName];
+    }
+
+    Assets.prototype.GetByType = function(type){
+        var results = [];
+        var keys = Object.keys(this.assets);
+        for(var i = 0; i < keys.length; i++){
+            console.log(this.assets[keys[i]]);
+            if(this.assets[keys[i]].type == type) results.push(this.assets[keys[i]]);
+        }
+
+        return results;
     }
 
     return Assets;

@@ -63,5 +63,9 @@ define([], function(){
         this.ctx.uniformMatrix4fv(this.uniforms[uniformName], false, matrix);
     }
 
+    Shader.prototype.PassVec3 = function(uniformName, vector){
+        this.ctx.uniform3f(this.uniforms[uniformName], vector[0], vector[1], vector[2]);
+    }
+
     return Shader;
 });

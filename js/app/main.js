@@ -3,14 +3,14 @@
  */
 
 var assetUrls = [
-    {url: "assets/shaders/frag.frag", name: "defaultFrag"},
-    {url: "assets/shaders/vert.vert", name: "defaultVert"}
+    {url: "assets/shaders/frag.frag", name: "defaultFrag", type: "shader"},
+    {url: "assets/shaders/vert.vert", name: "defaultVert", type: "shader" },
+    {url: "assets/models/monkey.obj", name: "monkey", type: "mesh" }
 ]
 
-define(["graphics", "assets", "camera", "input"], function(Graphics, Assets, Camera, Input){
-    function App(canvas) {
+define(["graphics/graphics", "graphics/assets", "camera/camera", "input", "game/scene", "game/scenegraph"], function(Graphics, Assets, Camera, Input, Scene, Scenegraph){
+    function Engine(canvas) {
         var self = this;
-
         this.canvas = document.getElementById(canvas);
 
         this.camera = new Camera();
@@ -23,20 +23,23 @@ define(["graphics", "assets", "camera", "input"], function(Graphics, Assets, Cam
             self.graphics.SetAssets(self.assets);
             self.graphics.LoadShader("defaultVert", "defaultFrag", "MainShader");
             self.graphics.UseShader("MainShader");
-            var cube = self.graphics.CreateCube();
-
-            cube.SetPosition(0, 0, 0);
+            self.graphics.SetLightDir([0, -1, 1]);
+            scene.onStart();
             Draw();
         }).catch(function(err){
             console.error(err.stack);
         });
     }
 
-    var app = new App("mycanvas");
+    var engine = new Engine("mycanvas");
+    var sceneGraph = new Scenegraph();
+    var scene = new Scene(engine, sceneGraph);
 
     function Draw() {
-        app.input.Update();
-        app.graphics.Draw(app.camera);
+        engine.input.Update();
+        scene.onUpdate(0);
+
+        engine.graphics.Draw(engine.camera, sceneGraph);
         window.requestAnimationFrame(Draw);
     }
 });
