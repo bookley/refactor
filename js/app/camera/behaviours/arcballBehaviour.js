@@ -1,3 +1,4 @@
+///<reference path="../../../lib/gl-matrix.d.ts" />
 define(["require", "exports"], function (require, exports) {
     var Arcball = (function () {
         function Arcball() {

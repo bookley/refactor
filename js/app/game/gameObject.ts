@@ -3,9 +3,10 @@
  */
 
 ///<reference path="../../lib/gl-matrix.d.ts" />
+import Mesh = require("graphics/mesh");
 
 export class GameObject {
-    mesh: any;
+    mesh: Mesh.Mesh;
     texture: any;
     orientation: Float32Array;
 
@@ -19,9 +20,12 @@ export class GameObject {
 
     constructor(){
         this.orientation = mat4.create();
+        this.scaleX = 1;
+        this.scaleY = 1;
+        this.scaleZ = 1;
     }
 
-    setMesh(mesh:any){
+    setMesh(mesh:Mesh.Mesh){
         this.mesh = mesh;
     }
 
@@ -29,8 +33,10 @@ export class GameObject {
         this.texture = texture;
     }
 
-    getBoundingCube(){
-
+    getBoundingCube() : Mesh.BoundingCube{
+        var boundingCube = this.mesh.getBoundingCube();
+        boundingCube.transform(this.getMatrix());
+        return boundingCube;
     }
 
     setPosition(x: number, y:number, z:number){

@@ -148,4 +148,15 @@ export class Graphics {
             entity.mesh.Draw(this.currentShader, modelMatrix);
         }
     }
+
+    DebugDraw(camera, scenegraph){
+        this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
+        if (!camera) throw new Error("Can't draw if a camera isn't set");
+        // console.log(camera.GetMatrix());
+        this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
+        for(var i = 0; i < scenegraph.debugGraph.length; i++){
+            var line = scenegraph.debugGraph[i];
+            line.Draw(this.currentShader, mat4.create());
+        }
+    }
 }

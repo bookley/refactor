@@ -1,4 +1,9 @@
+///<reference path="../../../lib/gl-matrix.d.ts" />
+
 export class Arcball {
+
+    xRot:number;
+    yRot:number;
 
     constructor(){
         this.xRot = 0;
@@ -56,7 +61,6 @@ export class Arcball {
 
         mat4.rotate(result, result, this.xRot, vec3.fromValues(1, 0, 0));
 
-
         var prevCameraVectorY = vec3.fromValues(prevCameraVector[0], 0, prevCameraVector[2]);
         vec3.normalize(prevCameraVectorY, prevCameraVectorY);
 
@@ -79,8 +83,6 @@ export class Arcball {
         }
 
         mat4.rotate(result, result, this.yRot, vec3.fromValues(0, 1, 0));
-
-
         return result;
     }
 }

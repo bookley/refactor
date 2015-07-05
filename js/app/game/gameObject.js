@@ -2,10 +2,12 @@
  * Created by Jamie on 02-Jul-15.
  */
 define(["require", "exports"], function (require, exports) {
-    ///<reference path="../../lib/gl-matrix.d.ts" />
     var GameObject = (function () {
         function GameObject() {
             this.orientation = mat4.create();
+            this.scaleX = 1;
+            this.scaleY = 1;
+            this.scaleZ = 1;
         }
         GameObject.prototype.setMesh = function (mesh) {
             this.mesh = mesh;
@@ -14,6 +16,9 @@ define(["require", "exports"], function (require, exports) {
             this.texture = texture;
         };
         GameObject.prototype.getBoundingCube = function () {
+            var boundingCube = this.mesh.getBoundingCube();
+            boundingCube.transform(this.getMatrix());
+            return boundingCube;
         };
         GameObject.prototype.setPosition = function (x, y, z) {
             this.x = x;

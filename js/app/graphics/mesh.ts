@@ -15,6 +15,7 @@ export class Mesh {
     normalBuffer:WebGLBuffer;
     texturePositionBuffer:WebGLBuffer;
     numIndices:number;
+    vertices:number[];
 
 
     constructor(ctx:WebGLRenderingContext){
@@ -54,6 +55,7 @@ export class Mesh {
         }
 
         this.numIndices = indices.length;
+        this.vertices = vertices;
     }
 
     MakeSquare():void{
@@ -64,8 +66,7 @@ export class Mesh {
             1.0,  1.0,  1.0, //top right
             -1.0,  1.0,  1.0]; //top left
 
-        var indices = [
-            0, 1, 2, 0, 2, 3];
+        var indices = [0, 1, 2, 0, 2, 3];
 
         var colors = [
             1.0, 0.0, 0.0,
@@ -179,24 +180,24 @@ export class Mesh {
         this.ctx.drawElements(this.ctx.TRIANGLES, this.numIndices, this.ctx.UNSIGNED_SHORT, 0);
     }
 
-    getBoundingCube(vertices:number[]): BoundingCube{
+    getBoundingCube(): BoundingCube{
         var boundingCube = new BoundingCube();
 
-        for(var i = 0; i < vertices.length; i+=3) {
+        for(var i = 0; i < this.vertices.length; i+=3) {
             var currentVertex = {
-                x: vertices[i * 3],
-                y: vertices[i * 3 + 1],
-                z: vertices[i * 3 + 2]
+                x: this.vertices[i * 3],
+                y: this.vertices[i * 3 + 1],
+                z: this.vertices[i * 3 + 2]
             };
 
-            if(currentVertex.x < boundingCube.lowestX) boundingCube.lowestX = currentVertex.x;
-            if(currentVertex.x > boundingCube.highestX) boundingCube.highestX = currentVertex.x;
+            if(currentVertex.x < boundingCube.lowest[0]) boundingCube.lowest[0] = currentVertex.x;
+            if(currentVertex.x > boundingCube.highest[0]) boundingCube.highest[0] = currentVertex.x;
 
-            if(currentVertex.y < boundingCube.lowestY) boundingCube.lowestY = currentVertex.y;
-            if(currentVertex.y > boundingCube.highestY) boundingCube.highestY = currentVertex.y;
+            if(currentVertex.y < boundingCube.lowest[1]) boundingCube.lowest[1] = currentVertex.y;
+            if(currentVertex.y > boundingCube.highest[1]) boundingCube.highest[1] = currentVertex.y;
 
-            if(currentVertex.z < boundingCube.lowestZ) boundingCube.lowestZ = currentVertex.z;
-            if(currentVertex.z > boundingCube.highestZ) boundingCube.highestZ = currentVertex.z;
+            if(currentVertex.z < boundingCube.lowest[2]) boundingCube.lowest[2] = currentVertex.z;
+            if(currentVertex.z > boundingCube.highest[2]) boundingCube.highest[2] = currentVertex.z;
         };
 
         return boundingCube;
@@ -204,12 +205,16 @@ export class Mesh {
 }
 
 export class BoundingCube {
-    lowestX:number = 0;
-    highestX:number = 0;
+    lowest:Float32Array;
+    highest:Float32Array;
 
-    lowestY:number = 0;
-    highestY:number = 0;
+    constructor(){
+        this.lowest = vec3.create();
+        this.highest = vec3.create();
+    }
 
-    lowestZ:number = 0;
-    highestZ:number = 0;
+    transform(matrix:Float32Array): void {
+        vec3.transformMat4(this.lowest, this.lowest, matrix);
+        vec3.transformMat4(this.highest, this.highest, matrix);
+    }
 }
