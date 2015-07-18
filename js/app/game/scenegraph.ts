@@ -23,4 +23,10 @@ export class Scenegraph {
     setScene(scene:Scene.Scene){
         this.currentScene = scene;
     }
+
+    update(delta){
+        for(var i = 0; i < this.graph.length; i++){
+            this.graph[i].update(0);
+        }
+    }
 };

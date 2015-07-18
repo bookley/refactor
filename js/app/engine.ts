@@ -39,7 +39,7 @@ var assetUrls = [
         type:"texture"
     },
     {
-        url: "assets/textures/exclamation.png",
+        url: "assets/textures/wood.png",
         name:"exclamation",
         type:"texture"
     }
@@ -55,7 +55,7 @@ import Scenegraph = require("game/scenegraph");
 import CameraClickBehaviour = require("camera/behaviours/cameraClickPickerBehaviour");
 
 
-class Engine {
+export class Engine {
     canvas:HTMLCanvasElement;
     camera:Camera.Camera;
     input:Input.Input;
@@ -111,7 +111,7 @@ var scene = new Scene.Scene(engine, sceneGraph);
 function loop(){
     if(engine.ready) {
         engine.input.Update();
-        scene.onUpdate(0);
+        sceneGraph.update(0);
         engine.graphics.UseShader("TexturedShader");
         engine.graphics.Draw(engine.camera, sceneGraph);
         engine.graphics.UseShader("DebugShader");

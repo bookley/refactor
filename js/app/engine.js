@@ -39,7 +39,7 @@ define(["require", "exports", "graphics/graphics", "graphics/assets", "camera/ca
             type: "texture"
         },
         {
-            url: "assets/textures/exclamation.png",
+            url: "assets/textures/wood.png",
             name: "exclamation",
             type: "texture"
         }
@@ -75,13 +75,14 @@ define(["require", "exports", "graphics/graphics", "graphics/assets", "camera/ca
         };
         return Engine;
     })();
+    exports.Engine = Engine;
     var sceneGraph = new Scenegraph.Scenegraph();
     var engine = new Engine("mycanvas");
     var scene = new Scene.Scene(engine, sceneGraph);
     function loop() {
         if (engine.ready) {
             engine.input.Update();
-            scene.onUpdate(0);
+            sceneGraph.update(0);
             engine.graphics.UseShader("TexturedShader");
             engine.graphics.Draw(engine.camera, sceneGraph);
             engine.graphics.UseShader("DebugShader");

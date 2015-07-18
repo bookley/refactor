@@ -125,7 +125,7 @@ export class Graphics {
     Draw(camera, scenegraph) {
         this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
         this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
-        mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
+        mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 1000);
 
         /* Mesh position */
         this.currentShader.PassMatrix("uPMatrix", this.pMatrix);

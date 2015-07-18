@@ -8,6 +8,7 @@ define(["require", "exports"], function (require, exports) {
             this.scaleX = 1;
             this.scaleY = 1;
             this.scaleZ = 1;
+            this.setPosition(0, 0, 0);
         }
         GameObject.prototype.setMesh = function (mesh) {
             this.mesh = mesh;
@@ -41,6 +42,8 @@ define(["require", "exports"], function (require, exports) {
             mat4.scale(scale, scale, vec3.fromValues(this.scaleX, this.scaleY, this.scaleZ));
             mat4.mul(matrix, matrix, scale);
             return matrix;
+        };
+        GameObject.prototype.update = function (delta) {
         };
         return GameObject;
     })();

@@ -1,4 +1,4 @@
-define(["require", "exports", "game/gameObject", "game/billboard", "graphics/debugLine"], function (require, exports, GameObjects, Billboard, DebugLine) {
+define(["require", "exports", "graphics/debugLine", "game/entities/peon", "game/entities/tile"], function (require, exports, DebugLine, Peon, Tile) {
     var Scene = (function () {
         function Scene(engine, scenegraph) {
             this.engine = engine;
@@ -10,23 +10,21 @@ define(["require", "exports", "game/gameObject", "game/billboard", "graphics/deb
         };
         Scene.prototype.onStart = function () {
             var num = 50;
-            this.engine.graphics.setBackground(0, 0.2, 0.1);
-            this.engine.graphics.SetLightDir(vec3.fromValues(0, 1, 0));
-            var monkey = new GameObjects.GameObject();
-            monkey.setMesh(this.engine.graphics.GetMesh("man"));
-            monkey.setTexture(this.engine.graphics.GetTexture("mantexture"));
-            monkey.setPosition(0, 0, 0);
-            monkey.setScaleSingle(0.5);
-            var orientation = mat4.create();
-            monkey.setOrientation(orientation);
-            this.scenegraph.addEntity(monkey);
-            var billboard = new Billboard.Billboard();
-            billboard.setMesh(this.engine.graphics.GetMesh("square"));
-            billboard.setTexture(this.engine.graphics.GetTexture("exclamation"));
-            billboard.setPosition(2, 0, 0);
-            this.scenegraph.addEntity(billboard);
-        };
-        Scene.prototype.onUpdate = function (delta) {
+            this.engine.graphics.setBackground(216 / 255, 227 / 255, 230 / 255);
+            this.engine.graphics.SetLightDir(vec3.fromValues(-1, 0, 0));
+            for (var i = 0; i < 100; i++) {
+                var monkey = new Peon.Peon(this.engine);
+                this.scenegraph.addEntity(monkey);
+            }
+            for (var x = -10; x < 10; x++) {
+                for (var z = -10; z < 10; z++) {
+                    var tile = new Tile.Tile(this.engine);
+                    this.scenegraph.addEntity(tile);
+                    tile.setScaleSingle(10);
+                    tile.x = x * 20;
+                    tile.z = z * 20;
+                }
+            }
         };
         return Scene;
     })();

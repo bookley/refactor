@@ -23,6 +23,7 @@ export class GameObject {
         this.scaleX = 1;
         this.scaleY = 1;
         this.scaleZ = 1;
+        this.setPosition(0, 0, 0);
     }
 
     setMesh(mesh:Mesh.Mesh){
@@ -67,5 +68,9 @@ export class GameObject {
         mat4.mul(matrix, matrix, scale);
 
         return matrix;
+    }
+
+    update(delta){
+
     }
 }
