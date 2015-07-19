@@ -13,42 +13,62 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
             this.camera = camera;
         };
         CameraClickPickerBehaviour.prototype.getClipCameraPosition = function (position) {
-            var x = (position.x * 2.0) / this.viewportWidth - 1;
-            var y = 1.0 - (position.y * 2) / this.viewportHeight;
+            var x = ((position.x * 2) / this.viewportWidth) - 1;
+            var y = 1.0 - ((position.y * 2) / this.viewportHeight);
             return new MousePosition.MousePosition(x, y);
         };
         CameraClickPickerBehaviour.prototype.onClick = function (position) {
-            var clipPosition = this.getClipCameraPosition(position);
+            console.log("Mouse position");
+            console.log(position);
             for (var i = 0; i < this.sceneGraph.graph.length; i++) {
                 var entity = this.sceneGraph.graph[i];
-                if (this.isClickOnEntity(clipPosition, entity, this.camera.GetMatrix())) {
+                if (this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.GetMatrix())) {
                     alert("clicked!");
-                }
-                else {
                 }
             }
         };
         CameraClickPickerBehaviour.prototype.isClickOnEntity = function (click, entity, cameraMatrix) {
             var boundingCube = entity.getBoundingCube();
-            var mouseClip = vec4.fromValues(click.x, click.y * 0.55, -1, 0);
+            console.log("Clip3");
+            console.log(click);
+            var mouseClipNear = vec4.fromValues(click.x, click.y, -100, 1);
+            var transform = mat4.create();
+            var perspective = mat4.create();
+            mat4.perspective(perspective, 45, 600 / 600, 0.01, 100);
+            mat4.mul(transform, cameraMatrix, perspective);
+            mat4.invert(transform, transform);
             var inverseCamera = mat4.create();
             mat4.invert(inverseCamera, cameraMatrix);
             var cameraPosition = vec3.fromValues(inverseCamera[12], inverseCamera[13], inverseCamera[14]);
-            var mouseVector = vec4.create();
-            vec4.transformMat4(mouseVector, mouseClip, inverseCamera);
-            vec4.normalize(mouseVector, mouseVector);
-            var result = this.testRayOBBIntersection(cameraPosition, mouseVector, boundingCube);
-            if (result) {
-                console.log("hit");
-                this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result);
-            }
-            else {
+            vec4.transformMat4(mouseClipNear, mouseClipNear, transform);
+            console.log("After");
+            var result = vec3.fromValues(mouseClipNear[0], mouseClipNear[1], mouseClipNear[2]);
+            vec3.normalize(result, result);
+            console.log(result);
+            console.log("Camera");
+            console.log(cameraPosition);
+            var toTopLeft = vec3.fromValues(-1, 1, 0);
+            vec3.subtract(toTopLeft, toTopLeft, cameraPosition);
+            vec3.normalize(toTopLeft, toTopLeft);
+            console.log("To Top Left");
+            console.log(toTopLeft);
+            vec3.scale(result, result, 10);
+            vec3.add(result, cameraPosition, result);
+            this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result);
+            /*
+    
+            var result = this.testRayOBBIntersection(mouseClipNear, n, boundingCube);
+            //if(result) {
+              //  console.log("hit");
+                //this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result);
+            //} else {
                 var endPos = vec3.create();
                 var endPosDir = vec3.create();
-                vec3.scale(endPosDir, mouseVector, 100);
-                vec3.add(endPos, cameraPosition, endPosDir);
-                this.sceneGraph.currentScene.drawDebugLine(cameraPosition, endPos);
-            }
+                vec3.scale(endPosDir, n, 100);
+                vec3.add(endPos, mouseClipNear, mouseClipFar);
+                this.sceneGraph.currentScene.drawDebugLine(cameraPosition, mouseClipFar);
+            //}
+            */
         };
         CameraClickPickerBehaviour.prototype.testRayOBBIntersection = function (point, vector, box) {
             var values = ["x", "y", "z"];
@@ -58,7 +78,7 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
                 if (Math.abs(vector[i]) < 0.0001) {
                     //parallel
                     if (point[i] < box.lowest[i] || point[i] > box.highest[i]) {
-                        console.log("Failed on containment check for " + values[i]);
+                        //console.log("Failed on containment check for " + values[i]);
                         return null;
                     }
                 }
@@ -77,8 +97,8 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
                     if (t2 < tmax)
                         tmax = t2;
                     if (tmin > tmax) {
-                        console.log("Failed on min check for " + values[i]);
-                        console.log("With tmin: " + tmin + " tmax: " + tmax);
+                        //console.log("Failed on min check for " + values[i]);
+                        //console.log("With tmin: " + tmin + " tmax: " + tmax);
                         return null;
                     }
                 }

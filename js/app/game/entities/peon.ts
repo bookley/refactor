@@ -21,9 +21,11 @@ export class Peon extends GameObject.GameObject{
         this.engine = engine;
         this.setMesh(engine.graphics.GetMesh("man"));
         this.setTexture(engine.graphics.GetTexture("mantexture"));
-        this.setScaleSingle(0.5);
-        this.pickRandomPosition();
+        this.setScaleSingle(1);
+        //this.pickRandomPosition();
         this.randomOrientation();
+
+        this.y = -5;
     }
 
     pickRandomPosition(){
@@ -39,6 +41,7 @@ export class Peon extends GameObject.GameObject{
     }
 
     update(){
+        return;
         this.timer++;
         if(this.timer > this.nextChange){
             this.randomOrientation();

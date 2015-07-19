@@ -1,4 +1,4 @@
-define(["require", "exports", "graphics/debugLine", "game/entities/peon", "game/entities/tile"], function (require, exports, DebugLine, Peon, Tile) {
+define(["require", "exports", "graphics/debugLine", "game/entities/tile"], function (require, exports, DebugLine, Tile) {
     var Scene = (function () {
         function Scene(engine, scenegraph) {
             this.engine = engine;
@@ -11,20 +11,13 @@ define(["require", "exports", "graphics/debugLine", "game/entities/peon", "game/
         Scene.prototype.onStart = function () {
             var num = 50;
             this.engine.graphics.setBackground(216 / 255, 227 / 255, 230 / 255);
-            this.engine.graphics.SetLightDir(vec3.fromValues(-1, 0, 0));
-            for (var i = 0; i < 100; i++) {
-                var monkey = new Peon.Peon(this.engine);
-                this.scenegraph.addEntity(monkey);
-            }
-            for (var x = -10; x < 10; x++) {
-                for (var z = -10; z < 10; z++) {
-                    var tile = new Tile.Tile(this.engine);
-                    this.scenegraph.addEntity(tile);
-                    tile.setScaleSingle(10);
-                    tile.x = x * 20;
-                    tile.z = z * 20;
-                }
-            }
+            this.engine.graphics.SetLightDir(vec3.fromValues(0, 0.7, 0.7));
+            var tile = new Tile.Tile(this.engine);
+            this.scenegraph.addEntity(tile);
+            tile.setScaleSingle(1);
+            tile.x = 0;
+            tile.z = 0;
+            tile.y = 0;
         };
         return Scene;
     })();

@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 02-Jul-15.
  */
-define(["require", "exports", "graphics/filetypes/objloader"], function (require, exports, ObjLoader) {
+define(["require", "exports", "graphics/filetypes/objloader", "graphics/debugLine"], function (require, exports, ObjLoader, DebugLine) {
     ///<reference path="../../lib/gl-matrix.d.ts" />
     var Mesh = (function () {
         function Mesh(ctx) {
@@ -11,6 +11,7 @@ define(["require", "exports", "graphics/filetypes/objloader"], function (require
             this.indexBuffer = ctx.createBuffer();
             this.normalBuffer = ctx.createBuffer();
             this.texturePositionBuffer = ctx.createBuffer();
+            this.normalLines = [];
         }
         Mesh.prototype.LoadVerticesFromFile = function (file) {
             var modelData = new ObjLoader.ObjLoader().readFile(file);
@@ -19,6 +20,7 @@ define(["require", "exports", "graphics/filetypes/objloader"], function (require
         Mesh.prototype.LoadVertices = function (vertices, indices, colors, normals, texCoords) {
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
             this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(vertices), this.ctx.STATIC_DRAW);
+            this.vertices = vertices;
             this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
             this.ctx.bufferData(this.ctx.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this.ctx.STATIC_DRAW);
             if (colors != undefined) {
@@ -28,28 +30,35 @@ define(["require", "exports", "graphics/filetypes/objloader"], function (require
             if (normals != undefined) {
                 this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
                 this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(normals), this.ctx.STATIC_DRAW);
+                this.normals = normals;
+                this.createNormalLines();
             }
             if (texCoords != undefined) {
                 this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.texturePositionBuffer);
                 this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(texCoords), this.ctx.STATIC_DRAW);
             }
             this.numIndices = indices.length;
-            this.vertices = vertices;
+        };
+        Mesh.prototype.createNormalLines = function () {
+            for (var i = 0; i < this.vertices.length; i += 3) {
+                var line = new DebugLine.DebugLine(this.ctx, vec3.fromValues(this.vertices[i], this.vertices[i + 1], this.vertices[i + 2]), vec3.fromValues(this.vertices[i] + this.normals[i], this.vertices[i + 1] + this.normals[i + 1], this.vertices[i + 2] + this.normals[i + 2]));
+                this.normalLines.push(line);
+            }
         };
         Mesh.prototype.MakeSquare = function () {
             var vertices = [
                 -1.0,
                 -1.0,
-                1.0,
-                1.0,
-                -1.0,
-                1.0,
-                1.0,
-                1.0,
+                0.0,
                 1.0,
                 -1.0,
+                0.0,
                 1.0,
-                1.0
+                1.0,
+                0.0,
+                -1.0,
+                1.0,
+                0.0
             ]; //top left
             var indices = [0, 1, 2, 0, 2, 3];
             var colors = [
@@ -69,16 +78,16 @@ define(["require", "exports", "graphics/filetypes/objloader"], function (require
             var normals = [
                 0.0,
                 0.0,
-                1.0,
+                -1.0,
                 0.0,
                 0.0,
-                1.0,
+                -1.0,
                 0.0,
                 0.0,
-                1.0,
+                -1.0,
                 0.0,
                 0.0,
-                1.0,
+                -1.0,
             ];
             var texCoords = [
                 0.0,
@@ -234,6 +243,11 @@ define(["require", "exports", "graphics/filetypes/objloader"], function (require
             ];
             this.LoadVertices(vertices, indices, colors, null, null);
         };
+        Mesh.prototype.DrawNormals = function (shader, modelMatrix) {
+            for (var i = 0; i < this.normalLines.length; i++) {
+                this.normalLines[i].Draw(shader, modelMatrix);
+            }
+        };
         Mesh.prototype.Draw = function (shader, modelMatrix) {
             //Need to have texture//colours bound at this point
             //if this.material -> this.material.bind
@@ -242,8 +256,6 @@ define(["require", "exports", "graphics/filetypes/objloader"], function (require
             shader.PassMatrix("uMVMatrix", modelMatrix);
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
             this.ctx.vertexAttribPointer(shader.attributes["aVertexPosition"], 3, this.ctx.FLOAT, false, 0, 0);
-            this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.colorBuffer);
-            this.ctx.vertexAttribPointer(shader.attributes["aVertexColour"], 3, this.ctx.FLOAT, false, 0, 0);
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
             this.ctx.vertexAttribPointer(shader.attributes["aVertexNormal"], 3, this.ctx.FLOAT, false, 0, 0);
             this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);

@@ -19,9 +19,10 @@ define(["require", "exports", "game/gameObject"], function (require, exports, Ga
             this.engine = engine;
             this.setMesh(engine.graphics.GetMesh("man"));
             this.setTexture(engine.graphics.GetTexture("mantexture"));
-            this.setScaleSingle(0.5);
-            this.pickRandomPosition();
+            this.setScaleSingle(1);
+            //this.pickRandomPosition();
             this.randomOrientation();
+            this.y = -5;
         }
         Peon.prototype.pickRandomPosition = function () {
             var randomX = Math.random() * this.maxX + 50;
@@ -34,6 +35,7 @@ define(["require", "exports", "game/gameObject"], function (require, exports, Ga
             this.nextChange = Math.random() * 150 + 10;
         };
         Peon.prototype.update = function () {
+            return;
             this.timer++;
             if (this.timer > this.nextChange) {
                 this.randomOrientation();

@@ -83,14 +83,13 @@ define(["require", "exports", "graphics/shaders", "graphics/mesh", "graphics/tex
         Graphics.prototype.Draw = function (camera, scenegraph) {
             this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
             this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
-            mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 1000);
+            mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.01, 100);
             /* Mesh position */
             this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
             this.currentShader.PassVec3("lightDirection", this._lightDir);
             if (!camera)
                 throw new Error("Can't draw if a camera isn't set");
             // console.log(camera.GetMatrix());
-            var x = camera.GetMatrix();
             this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
             for (var i = 0; i < scenegraph.graph.length; i++) {
                 var entity = scenegraph.graph[i];
@@ -112,6 +111,13 @@ define(["require", "exports", "graphics/shaders", "graphics/mesh", "graphics/tex
             for (var i = 0; i < scenegraph.debugGraph.length; i++) {
                 var line = scenegraph.debugGraph[i];
                 line.Draw(this.currentShader, mat4.create());
+            }
+            if (true)
+                return;
+            for (var i = 0; i < scenegraph.graph.length; i++) {
+                var entity = scenegraph.graph[i];
+                var modelMatrix = entity.getMatrix();
+                entity.mesh.DrawNormals(this.currentShader, modelMatrix);
             }
         };
         return Graphics;

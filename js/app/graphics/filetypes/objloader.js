@@ -12,6 +12,7 @@ define(["require", "exports"], function (require, exports) {
             this.vertexNormalCount = [];
             this.texCoords = [];
             this.textureIndices = [];
+            this.faces = [];
         }
         ObjLoader.prototype.readObjectLine = function (line) {
             if (line[0] === 'o') {
@@ -84,6 +85,8 @@ define(["require", "exports"], function (require, exports) {
                 var index1 = this.indices[i];
                 var index2 = this.indices[i + 1];
                 var index3 = this.indices[i + 2];
+                console.log("Indices of face " + i / 3);
+                console.log(index1, index2, index3);
                 var vpos1 = index1 * 3;
                 var vpos2 = index2 * 3;
                 var vpos3 = index3 * 3;
@@ -96,9 +99,9 @@ define(["require", "exports"], function (require, exports) {
                 vec3.subtract(U, vertex2, vertex1);
                 vec3.subtract(P, vertex3, vertex1);
                 vec3.cross(N, U, P);
-                this.faceNormals.push(N[0]);
-                this.faceNormals.push(N[1]);
-                this.faceNormals.push(N[2]);
+                vec3.normalize(N, N);
+                console.log("Resulting normal");
+                console.log(N[0], N[1], N[2]);
                 //add to vertex 1
                 this.vertexNormals[vpos1] += N[0];
                 this.vertexNormals[vpos1 + 1] += N[1];
@@ -115,12 +118,23 @@ define(["require", "exports"], function (require, exports) {
                 this.vertexNormals[vpos3 + 2] += N[2];
                 this.vertexNormalCount[index3] += 1;
             }
-            for (var i = 0; i < this.indices.length; i++) {
-                var index = this.indices[i];
-                var vpos = index1 * 3;
-                this.vertexNormals[vpos] /= this.vertexNormalCount[index];
-                this.vertexNormals[vpos + 1] /= this.vertexNormalCount[index];
-                this.vertexNormals[vpos + 2] /= this.vertexNormalCount[index];
+            for (var i = 0; i < this.vertices.length; i += 3) {
+                console.log("Index + " + i);
+                var vpos = i;
+                //this.vertexNormals[vpos] /= this.vertexNormalCount[index];
+                //this.vertexNormals[vpos+1] /= this.vertexNormalCount[index];
+                //this.vertexNormals[vpos+2] /= this.vertexNormalCount[index];
+                console.log(this.vertexNormals[vpos], this.vertexNormals[vpos + 1], this.vertexNormals[vpos + 2]);
+                var sq1 = this.vertexNormals[vpos] * this.vertexNormals[vpos];
+                var sq2 = this.vertexNormals[vpos + 1] * this.vertexNormals[vpos + 1];
+                var sq3 = this.vertexNormals[vpos + 2] * this.vertexNormals[vpos + 2];
+                var magnitude = Math.sqrt(sq1 + sq2 + sq3);
+                console.log("Magnitude " + magnitude);
+                this.vertexNormals[vpos] /= magnitude;
+                this.vertexNormals[vpos + 1] /= magnitude;
+                this.vertexNormals[vpos + 2] /= magnitude;
+                console.log("Normalized");
+                console.log(this.vertexNormals[vpos], this.vertexNormals[vpos + 1], this.vertexNormals[vpos + 2]);
             }
         };
         ObjLoader.prototype.duplicateTexturePositions = function () {
@@ -159,6 +173,7 @@ define(["require", "exports"], function (require, exports) {
                 var line = lines[i];
                 (this.readVertexLine(line) || this.readFaceLine(line) || this.readVertexTextureLine(line) || this.readObjectLine(line));
             }
+            this.calculateFaceNormals();
             this.duplicateTexturePositions();
             var result = {
                 vertices: this.vertices,

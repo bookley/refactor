@@ -4,6 +4,7 @@ define(["require", "exports"], function (require, exports) {
             this.ctx = ctx;
             var vertices = [pos1[0], pos1[1], pos1[2], pos2[0], pos2[1], pos2[2]];
             var indices = [0, 1];
+            //green to blue
             var colors = [0, 1, 0, 0, 0, 1];
             this.vertexBuffer = ctx.createBuffer();
             this.colorBuffer = ctx.createBuffer();

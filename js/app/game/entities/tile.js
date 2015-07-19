@@ -17,9 +17,9 @@ define(["require", "exports", "game/gameObject", "engine"], function (require, e
             this.setMesh(engine.graphics.GetMesh("square"));
             this.setTexture(engine.graphics.GetTexture("exclamation"));
             var orientation = mat4.create();
-            mat4.rotateX(orientation, orientation, Math.PI / 2);
-            this.setOrientation(orientation);
-            this.y = -10;
+            //mat4.rotateX(orientation, orientation, Math.PI / 2);
+            //this.setOrientation(orientation);
+            //this.y = -10;
         }
         return Tile;
     })(GameObject.GameObject);

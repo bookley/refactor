@@ -63,14 +63,14 @@ define(["require", "exports", "graphics/graphics", "graphics/assets", "camera/ca
                 self.ready = true;
                 self.graphics.SetAssets(self.assetLoader);
                 self.LoadShaders();
-                self.graphics.SetLightDir([0, -1, 1]);
+                self.graphics.SetLightDir([0, 0, 1]);
                 scene.onStart();
             }).catch(function (err) {
                 console.error(err.stack);
             });
         }
         Engine.prototype.LoadShaders = function () {
-            this.graphics.LoadShader("TexturedShader", "texturedVert", "texturedFrag", ["aVertexPosition", "aVertexColour", "aVertexNormal", "aTexCoords"], ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
+            this.graphics.LoadShader("TexturedShader", "texturedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords"], ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
             this.graphics.LoadShader("DebugShader", "debugVert", "debugFrag", ["aVertexPosition", "aVertexColour"], ["uMVMatrix", "uPMatrix", "uCMatrix"]);
         };
         return Engine;

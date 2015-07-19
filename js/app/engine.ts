@@ -86,7 +86,7 @@ export class Engine {
             self.ready = true;
             self.graphics.SetAssets(self.assetLoader);
             self.LoadShaders();
-            self.graphics.SetLightDir([0, -1, 1]);
+            self.graphics.SetLightDir([0, 0, 1]);
             scene.onStart();
         }).catch(function(err){
             console.error(err.stack);
@@ -95,7 +95,7 @@ export class Engine {
 
     LoadShaders(){
         this.graphics.LoadShader("TexturedShader", "texturedVert", "texturedFrag",
-            ["aVertexPosition", "aVertexColour", "aVertexNormal", "aTexCoords"],
+            ["aVertexPosition", "aVertexNormal", "aTexCoords"],
             ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
 
         this.graphics.LoadShader("DebugShader", "debugVert", "debugFrag",
