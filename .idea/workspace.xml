@@ -5,35 +5,10 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.js.map" afterPath="$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.js" afterPath="$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.ts" afterPath="$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/debugLine.js.map" afterPath="$PROJECT_DIR$/js/app/graphics/debugLine.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/debugLine.js" afterPath="$PROJECT_DIR$/js/app/graphics/debugLine.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/debugLine.ts" afterPath="$PROJECT_DIR$/js/app/graphics/debugLine.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/engine.js.map" afterPath="$PROJECT_DIR$/js/app/engine.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/engine.js" afterPath="$PROJECT_DIR$/js/app/engine.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/engine.ts" afterPath="$PROJECT_DIR$/js/app/engine.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/graphics.js.map" afterPath="$PROJECT_DIR$/js/app/graphics/graphics.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/graphics.js" afterPath="$PROJECT_DIR$/js/app/graphics/graphics.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/graphics.ts" afterPath="$PROJECT_DIR$/js/app/graphics/graphics.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/mesh.js.map" afterPath="$PROJECT_DIR$/js/app/graphics/mesh.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/mesh.js" afterPath="$PROJECT_DIR$/js/app/graphics/mesh.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/mesh.ts" afterPath="$PROJECT_DIR$/js/app/graphics/mesh.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/filetypes/objloader.js.map" afterPath="$PROJECT_DIR$/js/app/graphics/filetypes/objloader.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/filetypes/objloader.js" afterPath="$PROJECT_DIR$/js/app/graphics/filetypes/objloader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/graphics/filetypes/objloader.ts" afterPath="$PROJECT_DIR$/js/app/graphics/filetypes/objloader.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/entities/peon.js.map" afterPath="$PROJECT_DIR$/js/app/game/entities/peon.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/entities/peon.js" afterPath="$PROJECT_DIR$/js/app/game/entities/peon.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/entities/peon.ts" afterPath="$PROJECT_DIR$/js/app/game/entities/peon.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/scene.js.map" afterPath="$PROJECT_DIR$/js/app/game/scene.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/scene.js" afterPath="$PROJECT_DIR$/js/app/game/scene.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/scene.ts" afterPath="$PROJECT_DIR$/js/app/game/scene.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/scenegraph.js.map" afterPath="$PROJECT_DIR$/js/app/game/scenegraph.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/scenegraph.js" afterPath="$PROJECT_DIR$/js/app/game/scenegraph.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/shaders/texturedFrag.frag" afterPath="$PROJECT_DIR$/assets/shaders/texturedFrag.frag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/shaders/texturedVert.vert" afterPath="$PROJECT_DIR$/assets/shaders/texturedVert.vert" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/entities/tile.js.map" afterPath="$PROJECT_DIR$/js/app/game/entities/tile.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/entities/tile.js" afterPath="$PROJECT_DIR$/js/app/game/entities/tile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game/entities/tile.ts" afterPath="$PROJECT_DIR$/js/app/game/entities/tile.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WebGL2.iws" />
@@ -58,8 +33,8 @@
       <file leaf-file-name="graphics.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/app/graphics/graphics.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="127" column="96" selection-start-line="127" selection-start-column="96" selection-end-line="127" selection-end-column="96" />
+            <state vertical-scroll-proportion="-14.655172">
+              <caret line="46" column="87" selection-start-line="46" selection-start-column="87" selection-end-line="46" selection-end-column="87" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -70,8 +45,8 @@
       <file leaf-file-name="cameraClickPickerBehaviour.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47863248">
-              <caret line="63" column="49" selection-start-line="63" selection-start-column="49" selection-end-line="63" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.17475729">
+              <caret line="54" column="49" selection-start-line="54" selection-start-column="49" selection-end-line="54" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -166,14 +141,14 @@
         <option value="$PROJECT_DIR$/assets/shaders/texturedVert.vert" />
         <option value="$PROJECT_DIR$/assets/shaders/texturedFrag.frag" />
         <option value="$PROJECT_DIR$/js/app/graphics/filetypes/objloader.ts" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/app/game/entities/peon.ts" />
         <option value="$PROJECT_DIR$/js/app/graphics/debugLine.ts" />
         <option value="$PROJECT_DIR$/js/app/game/entities/tile.ts" />
         <option value="$PROJECT_DIR$/js/app/graphics/mesh.ts" />
         <option value="$PROJECT_DIR$/js/app/game/scene.ts" />
-        <option value="$PROJECT_DIR$/js/app/graphics/graphics.ts" />
         <option value="$PROJECT_DIR$/js/app/input/input.ts" />
+        <option value="$PROJECT_DIR$/js/app/graphics/graphics.ts" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.ts" />
       </list>
     </option>
@@ -214,6 +189,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -297,50 +273,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="graphics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebGL2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebGL2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebGL2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebGL2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -383,7 +315,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -481,7 +412,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24947916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31784582" sideWeight="0.49791667" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31784582" sideWeight="0.49791667" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11087645" sideWeight="0.50625" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -489,7 +420,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.47624075" sideWeight="0.49789694" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47624075" sideWeight="0.49789694" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -713,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -786,7 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.52072966">
           <caret line="143" column="25" selection-start-line="143" selection-start-column="25" selection-end-line="143" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,7 +723,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.073993474">
           <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -818,7 +746,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18498367">
           <caret line="10" column="88" selection-start-line="10" selection-start-column="88" selection-end-line="10" selection-end-column="88" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -826,7 +753,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31447226">
           <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -842,7 +768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20348205">
           <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -858,14 +783,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5734494">
           <caret line="33" column="18" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -886,10 +803,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8846154">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/app/graphics/graphics.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="127" column="96" selection-start-line="127" selection-start-column="96" selection-end-line="127" selection-end-column="96" />
+        <state vertical-scroll-proportion="-14.655172">
+          <caret line="46" column="87" selection-start-line="46" selection-start-column="87" selection-end-line="46" selection-end-column="87" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -898,8 +823,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/app/camera/behaviours/cameraClickPickerBehaviour.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47863248">
-          <caret line="63" column="49" selection-start-line="63" selection-start-column="49" selection-end-line="63" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.17475729">
+          <caret line="54" column="49" selection-start-line="54" selection-start-column="49" selection-end-line="54" selection-end-column="49" />
           <folding />
         </state>
       </provider>

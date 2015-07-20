@@ -29,32 +29,23 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
         };
         CameraClickPickerBehaviour.prototype.isClickOnEntity = function (click, entity, cameraMatrix) {
             var boundingCube = entity.getBoundingCube();
-            console.log("Clip3");
-            console.log(click);
-            var mouseClipNear = vec4.fromValues(click.x, click.y, -100, 1);
-            var transform = mat4.create();
             var perspective = mat4.create();
-            mat4.perspective(perspective, 45, 600 / 600, 0.01, 100);
-            mat4.mul(transform, cameraMatrix, perspective);
-            mat4.invert(transform, transform);
+            mat4.perspective(perspective, 45, 800 / 600, 1.0, 100.0);
+            mat4.mul(perspective, perspective, cameraMatrix);
+            var mouseClipNear = this.unproject(click.x, click.y, -1, perspective, [0, 0, 600, 600]);
+            var mouseClipFar = this.unproject(click.x, click.y, 0, perspective, [0, 0, 600, 600]);
+            var dir = vec3.create();
+            vec3.sub(dir, mouseClipFar, mouseClipNear);
+            vec3.scale(dir, dir, 100);
+            console.log(mouseClipNear);
+            console.log(mouseClipFar);
+            var result = vec3.create();
             var inverseCamera = mat4.create();
             mat4.invert(inverseCamera, cameraMatrix);
             var cameraPosition = vec3.fromValues(inverseCamera[12], inverseCamera[13], inverseCamera[14]);
-            vec4.transformMat4(mouseClipNear, mouseClipNear, transform);
-            console.log("After");
-            var result = vec3.fromValues(mouseClipNear[0], mouseClipNear[1], mouseClipNear[2]);
-            vec3.normalize(result, result);
-            console.log(result);
-            console.log("Camera");
-            console.log(cameraPosition);
-            var toTopLeft = vec3.fromValues(-1, 1, 0);
-            vec3.subtract(toTopLeft, toTopLeft, cameraPosition);
-            vec3.normalize(toTopLeft, toTopLeft);
-            console.log("To Top Left");
-            console.log(toTopLeft);
             vec3.scale(result, result, 10);
-            vec3.add(result, cameraPosition, result);
-            this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result);
+            vec3.add(result, cameraPosition, dir);
+            this.sceneGraph.currentScene.drawDebugLine(cameraPosition, dir);
             /*
     
             var result = this.testRayOBBIntersection(mouseClipNear, n, boundingCube);
@@ -107,6 +98,30 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
             vec3.scale(collisionPoint, vector, tmin);
             vec3.add(collisionPoint, collisionPoint, point);
             return collisionPoint;
+        };
+        /* unproject - convert screen coordinate to WebGL Coordinates
+         *   winx, winy - point on the screen
+         *   winz       - winz=0 corresponds to newPoint and winzFar corresponds to farPoint
+         *   mat        - model-view-projection matrix
+         *   viewport   - array describing the canvas [x,y,width,height]
+         */
+        CameraClickPickerBehaviour.prototype.unproject = function (winx, winy, winz, mat, viewport) {
+            /*
+            console.log(winx, winy);
+            winx  = ((winx * 2) / viewport[2]) - 1;
+            winy = 1.0 - ((winy * 2) / viewport[3]);
+            console.log(winx, winy);
+            */
+            //winx = 2 * (winx - viewport[0])/viewport[2] - 1;
+            //winy = 2 * (winy - viewport[1])/viewport[3] - 1;
+            winz = 2 * winz - 1;
+            var invMat = mat4.create();
+            mat4.invert(invMat, mat);
+            var n = vec4.fromValues(winx, winy, winz, 1);
+            vec4.transformMat4(n, n, invMat);
+            var n2 = vec3.fromValues(n[0] / n[3], n[1] / n[3], n[2] / n[3]);
+            //vec3.scale(n2, n2, 1/n[3]);
+            return n2;
         };
         return CameraClickPickerBehaviour;
     })();

@@ -14,6 +14,7 @@ define(["require", "exports", "graphics/shaders", "graphics/mesh", "graphics/tex
             this.ctx.clearColor(0.0, 0.2, 0.0, 1.0);
             this.ctx.enable(this.ctx.DEPTH_TEST);
             this.pMatrix = mat4.create();
+            mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
             this.mvMatrix = mat4.create();
         }
         Graphics.prototype.setBackground = function (r, g, b) {
@@ -83,7 +84,6 @@ define(["require", "exports", "graphics/shaders", "graphics/mesh", "graphics/tex
         Graphics.prototype.Draw = function (camera, scenegraph) {
             this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
             this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
-            mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.01, 100);
             /* Mesh position */
             this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
             this.currentShader.PassVec3("lightDirection", this._lightDir);
