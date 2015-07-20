@@ -36,7 +36,6 @@ export class GameObject {
 
     getBoundingCube() : Mesh.BoundingCube{
         var boundingCube = this.mesh.getBoundingCube();
-        boundingCube.transform(this.getMatrix());
         return boundingCube;
     }
 
@@ -60,7 +59,6 @@ export class GameObject {
         var matrix = mat4.create();
 
         mat4.translate(matrix, matrix, vec3.fromValues(this.x, this.y, this.z));
-
         mat4.mul(matrix, matrix, this.orientation);
 
         var scale = mat4.create();

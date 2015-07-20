@@ -14,7 +14,7 @@ define(["require", "exports", "graphics/shaders", "graphics/mesh", "graphics/tex
             this.ctx.clearColor(0.0, 0.2, 0.0, 1.0);
             this.ctx.enable(this.ctx.DEPTH_TEST);
             this.pMatrix = mat4.create();
-            mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
+            mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 1, 100);
             this.mvMatrix = mat4.create();
         }
         Graphics.prototype.setBackground = function (r, g, b) {

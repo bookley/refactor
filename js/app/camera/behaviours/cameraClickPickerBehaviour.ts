@@ -37,8 +37,8 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
     }
 
     onClick(position:MousePosition.MousePosition): void {
-        console.log("Mouse position");
-        console.log(position);
+        //console.log("Mouse position");
+        //console.log(position);
 
         for(var i = 0; i < this.sceneGraph.graph.length; i++){
             var entity = this.sceneGraph.graph[i];
@@ -49,45 +49,41 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
     }
 
     isClickOnEntity(click:MousePosition.MousePosition, entity:GameObject.GameObject, cameraMatrix:Float32Array){
-        var boundingCube:Mesh.BoundingCube = entity.getBoundingCube();
-
+        //TODO: Figure out why ZNear has to be 1
         var perspective = mat4.create();
-        mat4.perspective(perspective, 45, 800 / 600, 1.0, 100.0);
+        mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);
+        //console.log(perspective);
         mat4.mul(perspective, perspective, cameraMatrix);
+
         var mouseClipNear:Float32Array = this.unproject(click.x, click.y, -1, perspective, [0, 0, 600, 600]);
         var mouseClipFar:Float32Array = this.unproject(click.x, click.y, 0, perspective, [0, 0, 600, 600]);
 
         var dir = vec3.create();
         vec3.sub(dir, mouseClipFar, mouseClipNear);
-        vec3.scale(dir, dir, 100);
+        vec3.normalize(dir, dir);
 
-        console.log(mouseClipNear);
-        console.log(mouseClipFar);
-
-        var result = vec3.create();
         var inverseCamera = mat4.create();
         mat4.invert(inverseCamera, cameraMatrix);
         var cameraPosition = vec3.fromValues(inverseCamera[12], inverseCamera[13], inverseCamera[14]);
 
-        vec3.scale(result, result, 10);
-        vec3.add(result, cameraPosition, dir);
+        var result2 = vec3.create();
+        vec3.copy(result2, dir);
+        vec3.scale(result2, result2, 100);
+        vec3.add(result2, cameraPosition, result2);
 
-        this.sceneGraph.currentScene.drawDebugLine(cameraPosition, dir);
+        this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result2);
 
-        /*
+        var boundingCube:Mesh.BoundingCube = entity.getBoundingCube();
+        boundingCube.transform(entity.getMatrix());
+        //console.log(boundingCube);
 
-        var result = this.testRayOBBIntersection(mouseClipNear, n, boundingCube);
-        //if(result) {
-          //  console.log("hit");
-            //this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result);
-        //} else {
-            var endPos = vec3.create();
-            var endPosDir = vec3.create();
-            vec3.scale(endPosDir, n, 100);
-            vec3.add(endPos, mouseClipNear, mouseClipFar);
-            this.sceneGraph.currentScene.drawDebugLine(cameraPosition, mouseClipFar);
-        //}
-        */
+        var result = this.testRayOBBIntersection(cameraPosition, dir, boundingCube);
+        if(result) {
+           console.log("hit");
+        } else {
+
+        }
+
     }
 
     testRayOBBIntersection(point:Float32Array, vector:Float32Array, box:Mesh.BoundingCube) {
@@ -106,6 +102,7 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
                 var ood = 1.0 / vector[i];
                 var t1 = (box.lowest[i] - point[i]) * ood;
                 var t2 = (box.highest[i] - point[i]) * ood;
+                //console.log("t1 " + t1 + " t2 " + t2);
                 if (t1 > t2) {
                     //swap
                     var w = t1;
@@ -135,22 +132,12 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
      *   viewport   - array describing the canvas [x,y,width,height]
      */
     unproject(winx,winy,winz,mat,viewport){
-        /*
-        console.log(winx, winy);
-        winx  = ((winx * 2) / viewport[2]) - 1;
-        winy = 1.0 - ((winy * 2) / viewport[3]);
-        console.log(winx, winy);
-        */
-
-        //winx = 2 * (winx - viewport[0])/viewport[2] - 1;
-        //winy = 2 * (winy - viewport[1])/viewport[3] - 1;
         winz = 2 * winz - 1;
         var invMat = mat4.create();
         mat4.invert(invMat,mat);
         var n = vec4.fromValues(winx, winy, winz, 1);
         vec4.transformMat4(n,n,invMat);
         var n2 = vec3.fromValues(n[0]/n[3], n[1]/n[3], n[2]/n[3]);
-        //vec3.scale(n2, n2, 1/n[3]);
         return n2;
     }
 

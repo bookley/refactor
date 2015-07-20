@@ -263,7 +263,7 @@ define(["require", "exports", "graphics/filetypes/objloader", "graphics/debugLin
         };
         Mesh.prototype.getBoundingCube = function () {
             var boundingCube = new BoundingCube();
-            for (var i = 0; i < this.vertices.length; i += 3) {
+            for (var i = 0; i < this.vertices.length / 3; i++) {
                 var currentVertex = {
                     x: this.vertices[i * 3],
                     y: this.vertices[i * 3 + 1],

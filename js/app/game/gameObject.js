@@ -18,7 +18,6 @@ define(["require", "exports"], function (require, exports) {
         };
         GameObject.prototype.getBoundingCube = function () {
             var boundingCube = this.mesh.getBoundingCube();
-            boundingCube.transform(this.getMatrix());
             return boundingCube;
         };
         GameObject.prototype.setPosition = function (x, y, z) {

@@ -33,4 +33,8 @@ export class Scene {
         tile.z = 0;
         tile.y = 0;
    }
+
+    onUpdate(){
+
+    }
 };

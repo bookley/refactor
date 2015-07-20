@@ -19,6 +19,8 @@ define(["require", "exports", "graphics/debugLine", "game/entities/tile"], funct
             tile.z = 0;
             tile.y = 0;
         };
+        Scene.prototype.onUpdate = function () {
+        };
         return Scene;
     })();
     exports.Scene = Scene;

@@ -203,8 +203,9 @@ export class Mesh {
 
     getBoundingCube(): BoundingCube{
         var boundingCube = new BoundingCube();
+        //console.log(this.vertices);
 
-        for(var i = 0; i < this.vertices.length; i+=3) {
+        for(var i = 0; i < this.vertices.length/3; i++) {
             var currentVertex = {
                 x: this.vertices[i * 3],
                 y: this.vertices[i * 3 + 1],

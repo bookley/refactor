@@ -44,7 +44,7 @@ export class Graphics {
         this.ctx.enable(this.ctx.DEPTH_TEST);
 
         this.pMatrix = mat4.create();
-        mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 0.1, 100);
+        mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 1, 100);
         this.mvMatrix = mat4.create();
     }
 
