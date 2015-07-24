@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 03-Apr-15.
  */
-define(["require", "exports", "graphics/graphics", "graphics/assets", "camera/camera", "input/input", "game/scene", "game/scenegraph", "camera/behaviours/cameraClickPickerBehaviour"], function (require, exports, Graphics, Assets, Camera, Input, Scene, Scenegraph, CameraClickBehaviour) {
+define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader", "camera/camera", "input/input", "game/scene", "game/scenegraph", "camera/behaviours/cameraClickPickerBehaviour"], function (require, exports, Graphics, Assets, Camera, Input, Scene, Scenegraph, CameraClickBehaviour) {
     var assetUrls = [
         {
             url: "assets/shaders/texturedFrag.frag",
@@ -53,25 +53,22 @@ define(["require", "exports", "graphics/graphics", "graphics/assets", "camera/ca
             this.graphics = new Graphics.Graphics(this.canvas);
             this.input = new Input.Input(this.canvas);
             this.input.ControlCamera(this.camera);
-            var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour();
+            var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(sceneGraph, this.camera);
             pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
-            pickingBehaviour.setScenegraph(sceneGraph);
-            pickingBehaviour.setCamera(this.camera);
             this.input.setOnCameraClickBehaviour(pickingBehaviour);
             this.assetLoader = new Assets.AssetLoader(assetUrls);
             this.assetLoader.loadAll().then(function () {
                 self.ready = true;
                 self.graphics.SetAssets(self.assetLoader);
                 self.LoadShaders();
-                self.graphics.SetLightDir([0, 0, 1]);
                 scene.onStart();
             }).catch(function (err) {
                 console.error(err.stack);
             });
         }
         Engine.prototype.LoadShaders = function () {
-            this.graphics.LoadShader("TexturedShader", "texturedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords"], ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
-            this.graphics.LoadShader("DebugShader", "debugVert", "debugFrag", ["aVertexPosition", "aVertexColour"], ["uMVMatrix", "uPMatrix", "uCMatrix"]);
+            this.graphics.createShader("TexturedShader", "texturedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords"], ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
+            this.graphics.createShader("DebugShader", "debugVert", "debugFrag", ["aVertexPosition", "aVertexColour"], ["uMVMatrix", "uPMatrix", "uCMatrix"]);
         };
         return Engine;
     })();

@@ -23,4 +23,4 @@ define(["require", "exports"], function (require, exports) {
     exports.Scenegraph = Scenegraph;
     ;
 });
-//# sourceMappingURL=sceneGraph.js.map
+//# sourceMappingURL=scenegraph.js.map

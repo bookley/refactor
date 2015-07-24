@@ -1,19 +1,9 @@
-export class Asset {
-    data:string;
-    name:string;
-    type:string;
-
-    constructor(data:string, name:string, type:string) {
-        this.data = data;
-        this.name = name;
-        this.type = type;
-    }
-}
+import Asset = require("graphics/assets/asset");
+import RemoteAsset = require("graphics/assets/RemoteAsset");
 
 export class AssetLoader {
-
-    urls:Asset[];
-    assets:Asset[];
+    urls:RemoteAsset.RemoteAsset[];
+    assets:Asset.Asset[];
 
     constructor(urls) {
         this.urls = urls;
@@ -48,7 +38,7 @@ export class AssetLoader {
         var self = this;
         var promise = new Promise(function(resolve, reject){
             self.resolveFile(url).then(function(data){
-                self.assets[name] = new Asset(data, name, type);
+                self.assets[name] = new Asset.Asset(data, name, type);
                 console.log("Resolved asset " + name);
                 resolve();
             });
@@ -62,7 +52,7 @@ export class AssetLoader {
             var image = new Image();
             image.onload = function(){
                 console.log("image loaded");
-                self.assets[name] = new Asset(image, name, type);
+                self.assets[name] = new Asset.Asset(image, name, type);
                 resolve();
             };
             image.src = url;
@@ -87,11 +77,11 @@ export class AssetLoader {
         return loadingPromise;
     }
 
-    getAsset(assetName):Asset{
+    getAsset(assetName):Asset.Asset{
         return this.assets[assetName];
     }
 
-    getByType(type):Asset[]{
+    getByType(type):Asset.Asset[]{
         var results = [];
         var keys = Object.keys(this.assets);
         for(var i = 0; i < keys.length; i++){

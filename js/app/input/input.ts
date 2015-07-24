@@ -4,7 +4,6 @@ import CameraClickBehaviour = require("camera/behaviours/clickBehaviour");
 import Camera = require("camera/camera");
 
 export class Input {
-
     previousMouse:MousePosition.MousePosition;
     currentMouse:MousePosition.MousePosition;
     currentClientMouse:MousePosition.MousePosition;

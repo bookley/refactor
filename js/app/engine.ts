@@ -46,7 +46,7 @@ var assetUrls = [
 ]
 
 import Graphics = require("graphics/graphics");
-import Assets = require("graphics/assets");
+import Assets = require("graphics/assets/assetLoader");
 import Camera = require("camera/camera");
 import Input = require("input/input");
 import Scene = require("game/scene");
@@ -69,16 +69,13 @@ export class Engine {
         this.canvas = <HTMLCanvasElement>document.getElementById(canvas);
 
         this.camera = new Camera.Camera();
-
         this.graphics = new Graphics.Graphics(this.canvas);
 
         this.input = new Input.Input(this.canvas);
         this.input.ControlCamera(this.camera);
 
-        var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour();
+        var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(sceneGraph, this.camera);
         pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
-        pickingBehaviour.setScenegraph(sceneGraph);
-        pickingBehaviour.setCamera(this.camera);
         this.input.setOnCameraClickBehaviour(pickingBehaviour);
 
         this.assetLoader = new Assets.AssetLoader(assetUrls);
@@ -86,7 +83,7 @@ export class Engine {
             self.ready = true;
             self.graphics.SetAssets(self.assetLoader);
             self.LoadShaders();
-            self.graphics.SetLightDir([0, 0, 1]);
+
             scene.onStart();
         }).catch(function(err){
             console.error(err.stack);
@@ -94,11 +91,11 @@ export class Engine {
     }
 
     LoadShaders(){
-        this.graphics.LoadShader("TexturedShader", "texturedVert", "texturedFrag",
+        this.graphics.createShader("TexturedShader", "texturedVert", "texturedFrag",
             ["aVertexPosition", "aVertexNormal", "aTexCoords"],
             ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
 
-        this.graphics.LoadShader("DebugShader", "debugVert", "debugFrag",
+        this.graphics.createShader("DebugShader", "debugVert", "debugFrag",
             ["aVertexPosition", "aVertexColour"],
             ["uMVMatrix", "uPMatrix", "uCMatrix"]);
     }
@@ -112,8 +109,10 @@ function loop(){
     if(engine.ready) {
         engine.input.Update();
         sceneGraph.update(0);
+
         engine.graphics.UseShader("TexturedShader");
         engine.graphics.Draw(engine.camera, sceneGraph);
+
         engine.graphics.UseShader("DebugShader");
         engine.graphics.DebugDraw(engine.camera, sceneGraph);
     }

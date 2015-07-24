@@ -3,8 +3,11 @@
  */
 import Shaders = require("graphics/shaders");
 import Mesh = require("graphics/mesh");
+import MeshHelpers = require("graphics/helpers/meshhelper");
 import Texture = require("graphics/texture");
-import Assets = require("graphics/assets");
+import Asset = require("graphics/assets/asset");
+import AssetLoader = require("graphics/assets/assetLoader");
+import AssetCollection = require("graphics/assets/assetCollection");
 
 export class Graphics {
     ctx:WebGLRenderingContext;
@@ -17,18 +20,22 @@ export class Graphics {
     _lightDir:number[];
     _shaders:Shaders.Shader[];
 
-    _meshAssets:Assets.Asset[];
-    _textureAssets:Assets.Asset[];
+    _meshAssets:Asset.Asset[];
+    _textureAssets:Asset.Asset[];
 
     meshes:Mesh.Mesh[];
     textures:Texture.Texture[];
     currentShader:Shaders.Shader;
 
-    assetLoader:Assets.AssetLoader;
+    assetCollection:AssetCollection.AssetCollection;
+    meshHelper:MeshHelpers.MeshHelper;
 
 
     constructor(canvas) {
         this.ctx = canvas.getContext("webgl");
+        this.meshHelper = new MeshHelpers.MeshHelper(this.ctx);
+        this.assetCollection = new AssetCollection.AssetCollection();
+
         this.viewportWidth = canvas.width;
         this.viewportHeight = canvas.height;
         if (!this.ctx) alert("Error initializing WebGL context");
@@ -38,7 +45,7 @@ export class Graphics {
         this.meshes = [];
         this.textures = [];
 
-        this._lightDir = [0.0, 1.0, 0.0];
+        this._lightDir = [0.0, 0.0, 1.0];
 
         this.ctx.clearColor(0.0, 0.2, 0.0, 1.0);
         this.ctx.enable(this.ctx.DEPTH_TEST);
@@ -52,39 +59,25 @@ export class Graphics {
         this.ctx.clearColor(r, g, b, 1.0);
     }
 
-    SetAssets(assetLoader) {
-        this.assetLoader = assetLoader;
+    SetAssets(assetLoader:AssetLoader.AssetLoader) {
+        var self = this;
+        assetLoader.getByType("mesh").forEach(function(meshAsset){
+            self.assetCollection.addMesh(meshAsset.name, self.meshHelper.CreateMeshFromAsset(meshAsset));
+        });
+        self.assetCollection.addMesh("square", this.meshHelper.CreateSquare());
 
-        this._meshAssets = this.assetLoader.getByType("mesh");
-        for (var i = 0; i < this._meshAssets.length; i++) {
-            var meshAsset = this._meshAssets[i];
-            this.meshes[meshAsset.name] = (this.CreateMeshFromAsset(meshAsset));
-        }
-        this.meshes["cube"] = this.CreateCube();
-        this.meshes["square"] = this.CreateSquare();
+        assetLoader.getByType("texture").forEach(function(textureAsset){
+            self.assetCollection.addTexture(textureAsset.name, new Texture.Texture(self.ctx, textureAsset.data));
+        });
 
-        this._textureAssets = assetLoader.getByType("texture");
-        for (var i = 0; i < this._textureAssets.length; i++) {
-            var textureAsset = this._textureAssets[i];
-            this.textures[textureAsset.name] = new Texture.Texture(this.ctx, textureAsset.data);
-        }
+        assetLoader.getByType("shader").forEach(function(shaderAsset){
+            self.assetCollection.addShaderFile(shaderAsset.name, shaderAsset);
+        });
     }
 
-    GetMesh(meshName) {
-        var mesh = this.meshes[meshName];
-        if (mesh == null) throw new Error("Attempted to access mesh '" + meshName + "', but this mesh could not be found");
-        return mesh;
-    }
-
-    GetTexture(textureName) {
-        var texture = this.textures[textureName];
-        if (texture == null) throw new Error("Attempted to access texture '" + textureName + "', but this texture could not be found");
-        return texture;
-    }
-
-    LoadShader(shaderName, vShaderName, fShaderName, attributes, uniforms) {
-        var vShader = this.assetLoader.getAsset(vShaderName);
-        var fShader = this.assetLoader.getAsset(fShaderName);
+    createShader(shaderName, vShaderName, fShaderName, attributes, uniforms) {
+        var vShader = this.assetCollection.getShaderFile(vShaderName);
+        var fShader = this.assetCollection.getShaderFile(fShaderName);
         var mainShader = new Shaders.Shader(this.ctx, vShader.data, fShader.data);
         mainShader.LoadAttributes(attributes);
         mainShader.LoadUniforms(uniforms);
@@ -94,29 +87,6 @@ export class Graphics {
     UseShader(shaderName) {
         this._shaders[shaderName].Activate();
         this.currentShader = this._shaders[shaderName];
-    }
-
-    GetShader(shaderName) {
-        return this._shaders[shaderName];
-    }
-
-    /* Helper for creating a cube */
-    CreateCube() {
-        var mesh = new Mesh.Mesh(this.ctx);
-        mesh.MakeCube();
-        return mesh;
-    }
-
-    CreateSquare() {
-        var mesh = new Mesh.Mesh(this.ctx);
-        mesh.MakeSquare();
-        return mesh;
-    }
-
-    CreateMeshFromAsset(asset) {
-        var mesh = new Mesh.Mesh(this.ctx);
-        mesh.LoadVerticesFromFile(asset.data);
-        return mesh;
     }
 
     SetLightDir(vec) {

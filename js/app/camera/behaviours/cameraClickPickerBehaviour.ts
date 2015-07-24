@@ -12,21 +12,14 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
     sceneGraph:Scenegraph.Scenegraph;
     camera:Camera.Camera;
 
-    constructor(){
-
+    constructor(sceneGraph:Scenegraph.Scenegraph, camera:Camera.Camera){
+        this.sceneGraph = sceneGraph;
+        this.camera = camera;
     }
 
     setViewportDimensions(width:number, height:number):void{
         this.viewportWidth = width;
         this.viewportHeight = height;
-    }
-
-    setScenegraph(sceneGraph:Scenegraph.Scenegraph){
-        this.sceneGraph = sceneGraph;
-    }
-
-    setCamera(camera:Camera.Camera){
-        this.camera = camera;
     }
 
     private getClipCameraPosition(position:MousePosition.MousePosition) : MousePosition.MousePosition {

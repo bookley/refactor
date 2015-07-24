@@ -1,16 +1,12 @@
 define(["require", "exports", "input/mousePosition"], function (require, exports, MousePosition) {
     var CameraClickPickerBehaviour = (function () {
-        function CameraClickPickerBehaviour() {
+        function CameraClickPickerBehaviour(sceneGraph, camera) {
+            this.sceneGraph = sceneGraph;
+            this.camera = camera;
         }
         CameraClickPickerBehaviour.prototype.setViewportDimensions = function (width, height) {
             this.viewportWidth = width;
             this.viewportHeight = height;
-        };
-        CameraClickPickerBehaviour.prototype.setScenegraph = function (sceneGraph) {
-            this.sceneGraph = sceneGraph;
-        };
-        CameraClickPickerBehaviour.prototype.setCamera = function (camera) {
-            this.camera = camera;
         };
         CameraClickPickerBehaviour.prototype.getClipCameraPosition = function (position) {
             var x = ((position.x * 2) / this.viewportWidth) - 1;
