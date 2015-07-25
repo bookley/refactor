@@ -31,6 +31,6 @@ define(["require", "exports"], function (require, exports) {
         };
         return DebugLine;
     })();
-    exports.DebugLine = DebugLine;
+    return DebugLine;
 });
 //# sourceMappingURL=debugLine.js.map

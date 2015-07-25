@@ -1,5 +1,5 @@
 
-export class Shader {
+class Shader {
     ctx:WebGLRenderingContext;
     vSource:string;
     fSource:string;
@@ -77,3 +77,5 @@ export class Shader {
         this.ctx.uniform3f(this.uniforms[uniformName], vector[0], vector[1], vector[2]);
     }
 }
+
+export = Shader;

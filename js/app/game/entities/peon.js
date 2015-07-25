@@ -51,7 +51,7 @@ define(["require", "exports", "game/gameObject"], function (require, exports, Ga
             }
         };
         return Peon;
-    })(GameObject.GameObject);
+    })(GameObject);
     exports.Peon = Peon;
 });
 //# sourceMappingURL=peon.js.map

@@ -6,6 +6,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return MousePosition;
     })();
-    exports.MousePosition = MousePosition;
+    return MousePosition;
 });
 //# sourceMappingURL=mousePosition.js.map

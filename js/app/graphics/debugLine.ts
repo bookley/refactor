@@ -1,4 +1,4 @@
-export class DebugLine {
+class DebugLine {
 
     ctx:WebGLRenderingContext;
     vertexBuffer:WebGLRenderbuffer;
@@ -43,3 +43,5 @@ export class DebugLine {
         this.ctx.drawElements(this.ctx.LINES, 2, this.ctx.UNSIGNED_SHORT, 0);
     }
 }
+
+export = DebugLine;

@@ -1,9 +1,9 @@
-define(["require", "exports", "graphics/shaders", "graphics/helpers/meshhelper", "graphics/texture", "graphics/assets/assetCollection"], function (require, exports, Shaders, MeshHelpers, Texture, AssetCollection) {
+define(["require", "exports", "graphics/shaders", "graphics/helpers/meshhelper", "graphics/texture", "graphics/assets/assetCollection"], function (require, exports, Shader, MeshHelper, Texture, AssetCollection) {
     var Graphics = (function () {
         function Graphics(canvas) {
             this.ctx = canvas.getContext("webgl");
-            this.meshHelper = new MeshHelpers.MeshHelper(this.ctx);
-            this.assetCollection = new AssetCollection.AssetCollection();
+            this.meshHelper = new MeshHelper(this.ctx);
+            this.assetCollection = new AssetCollection();
             this.viewportWidth = canvas.width;
             this.viewportHeight = canvas.height;
             if (!this.ctx)
@@ -29,7 +29,7 @@ define(["require", "exports", "graphics/shaders", "graphics/helpers/meshhelper",
             });
             self.assetCollection.addMesh("square", this.meshHelper.CreateSquare());
             assetLoader.getByType("texture").forEach(function (textureAsset) {
-                self.assetCollection.addTexture(textureAsset.name, new Texture.Texture(self.ctx, textureAsset.data));
+                self.assetCollection.addTexture(textureAsset.name, new Texture(self.ctx, textureAsset.data));
             });
             assetLoader.getByType("shader").forEach(function (shaderAsset) {
                 self.assetCollection.addShaderFile(shaderAsset.name, shaderAsset);
@@ -38,7 +38,7 @@ define(["require", "exports", "graphics/shaders", "graphics/helpers/meshhelper",
         Graphics.prototype.createShader = function (shaderName, vShaderName, fShaderName, attributes, uniforms) {
             var vShader = this.assetCollection.getShaderFile(vShaderName);
             var fShader = this.assetCollection.getShaderFile(fShaderName);
-            var mainShader = new Shaders.Shader(this.ctx, vShader.data, fShader.data);
+            var mainShader = new Shader(this.ctx, vShader.data, fShader.data);
             mainShader.LoadAttributes(attributes);
             mainShader.LoadUniforms(uniforms);
             this._shaders[shaderName] = mainShader;
@@ -91,6 +91,6 @@ define(["require", "exports", "graphics/shaders", "graphics/helpers/meshhelper",
         };
         return Graphics;
     })();
-    exports.Graphics = Graphics;
+    return Graphics;
 });
 //# sourceMappingURL=graphics.js.map

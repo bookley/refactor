@@ -37,6 +37,6 @@ define(["require", "exports"], function (require, exports) {
         };
         return AssetCollection;
     })();
-    exports.AssetCollection = AssetCollection;
+    return AssetCollection;
 });
 //# sourceMappingURL=assetCollection.js.map

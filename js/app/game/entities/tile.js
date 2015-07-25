@@ -8,7 +8,7 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 define(["require", "exports", "game/gameObject", "engine"], function (require, exports, GameObject, Engine) {
-    engine: Engine.Engine;
+    engine: Engine;
     var Tile = (function (_super) {
         __extends(Tile, _super);
         function Tile(engine) {
@@ -22,7 +22,7 @@ define(["require", "exports", "game/gameObject", "engine"], function (require, e
             //this.y = -10;
         }
         return Tile;
-    })(GameObject.GameObject);
-    exports.Tile = Tile;
+    })(GameObject);
+    return Tile;
 });
 //# sourceMappingURL=tile.js.map

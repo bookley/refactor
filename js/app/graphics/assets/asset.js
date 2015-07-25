@@ -10,6 +10,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return Asset;
     })();
-    exports.Asset = Asset;
+    return Asset;
 });
 //# sourceMappingURL=asset.js.map

@@ -22,14 +22,14 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
         this.viewportHeight = height;
     }
 
-    private getClipCameraPosition(position:MousePosition.MousePosition) : MousePosition.MousePosition {
+    private getClipCameraPosition(position:MousePosition) : MousePosition {
         var x:number = ((position.x * 2) / this.viewportWidth) - 1;
         var y:number = 1.0 - ((position.y * 2) / this.viewportHeight);
 
-        return new MousePosition.MousePosition(x, y);
+        return new MousePosition(x, y);
     }
 
-    onClick(position:MousePosition.MousePosition): void {
+    onClick(position:MousePosition): void {
         //console.log("Mouse position");
         //console.log(position);
 
@@ -41,7 +41,7 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
         }
     }
 
-    isClickOnEntity(click:MousePosition.MousePosition, entity:GameObject.GameObject, cameraMatrix:Float32Array){
+    isClickOnEntity(click:MousePosition, entity:GameObject, cameraMatrix:Float32Array){
         //TODO: Figure out why ZNear has to be 1
         var perspective = mat4.create();
         mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);

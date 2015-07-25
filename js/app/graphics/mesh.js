@@ -14,7 +14,7 @@ define(["require", "exports", "graphics/filetypes/objloader", "graphics/debugLin
             this.normalLines = [];
         }
         Mesh.prototype.LoadVerticesFromFile = function (file) {
-            var modelData = new ObjLoader.ObjLoader().readFile(file);
+            var modelData = new ObjLoader().readFile(file);
             this.LoadVertices(modelData.vertices, modelData.indices, modelData.colors, modelData.normals, modelData.texCoords);
         };
         Mesh.prototype.LoadVertices = function (vertices, indices, colors, normals, texCoords) {
@@ -41,7 +41,7 @@ define(["require", "exports", "graphics/filetypes/objloader", "graphics/debugLin
         };
         Mesh.prototype.createNormalLines = function () {
             for (var i = 0; i < this.vertices.length; i += 3) {
-                var line = new DebugLine.DebugLine(this.ctx, vec3.fromValues(this.vertices[i], this.vertices[i + 1], this.vertices[i + 2]), vec3.fromValues(this.vertices[i] + this.normals[i], this.vertices[i + 1] + this.normals[i + 1], this.vertices[i + 2] + this.normals[i + 2]));
+                var line = new DebugLine(this.ctx, vec3.fromValues(this.vertices[i], this.vertices[i + 1], this.vertices[i + 2]), vec3.fromValues(this.vertices[i] + this.normals[i], this.vertices[i + 1] + this.normals[i + 1], this.vertices[i + 2] + this.normals[i + 2]));
                 this.normalLines.push(line);
             }
         };

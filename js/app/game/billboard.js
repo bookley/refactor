@@ -17,7 +17,7 @@ define(["require", "exports", "game/gameObject"], function (require, exports, Ga
             this.fixed = value;
         };
         return Billboard;
-    })(GameObject.GameObject);
+    })(GameObject);
     exports.Billboard = Billboard;
 });
 //# sourceMappingURL=billboard.js.map

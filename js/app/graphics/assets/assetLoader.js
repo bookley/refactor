@@ -32,7 +32,7 @@ define(["require", "exports", "graphics/assets/asset"], function (require, expor
             var self = this;
             var promise = new Promise(function (resolve, reject) {
                 self.resolveFile(url).then(function (data) {
-                    self.assets[name] = new Asset.Asset(data, name, type);
+                    self.assets[name] = new Asset(data, name, type);
                     console.log("Resolved asset " + name);
                     resolve();
                 });
@@ -45,7 +45,7 @@ define(["require", "exports", "graphics/assets/asset"], function (require, expor
                 var image = new Image();
                 image.onload = function () {
                     console.log("image loaded");
-                    self.assets[name] = new Asset.Asset(image, name, type);
+                    self.assets[name] = new Asset(image, name, type);
                     resolve();
                 };
                 image.src = url;
@@ -81,6 +81,6 @@ define(["require", "exports", "graphics/assets/asset"], function (require, expor
         };
         return AssetLoader;
     })();
-    exports.AssetLoader = AssetLoader;
+    return AssetLoader;
 });
 //# sourceMappingURL=assetLoader.js.map

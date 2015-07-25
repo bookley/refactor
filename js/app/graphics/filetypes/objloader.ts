@@ -5,7 +5,7 @@
 ///<reference path="../../../lib/gl-matrix.d.ts" />
 import FileLoader = require("fileLoader");
 
-export class ObjLoader implements FileLoader.FileLoader {
+class ObjLoader implements FileLoader.FileLoader {
     vertices: number[];
     indices: number[];
     colors: number[];
@@ -24,7 +24,6 @@ export class ObjLoader implements FileLoader.FileLoader {
         this.vertexNormalCount = [];
         this.texCoords = [];
         this.textureIndices = [];
-        this.faces = [];
     }
 
     readObjectLine(line:string) : boolean {
@@ -223,3 +222,5 @@ export class ObjLoader implements FileLoader.FileLoader {
         return result;
     }
 }
+
+export = ObjLoader;

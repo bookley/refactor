@@ -5,7 +5,7 @@
 ///<reference path="../../lib/gl-matrix.d.ts" />
 import Mesh = require("graphics/mesh");
 
-export class GameObject {
+class GameObject {
     mesh: Mesh.Mesh;
     texture: any;
     orientation: Float32Array;
@@ -72,3 +72,5 @@ export class GameObject {
 
     }
 }
+
+export = GameObject;

@@ -1,15 +1,15 @@
 /**
  * Created by Jamie on 04-Jul-15.
  */
-import Shaders = require("graphics/shaders");
+import Shader = require("graphics/shaders");
 import Mesh = require("graphics/mesh");
-import MeshHelpers = require("graphics/helpers/meshhelper");
+import MeshHelper = require("graphics/helpers/meshhelper");
 import Texture = require("graphics/texture");
 import Asset = require("graphics/assets/asset");
 import AssetLoader = require("graphics/assets/assetLoader");
 import AssetCollection = require("graphics/assets/assetCollection");
 
-export class Graphics {
+class Graphics {
     ctx:WebGLRenderingContext;
     viewportWidth:number;
     viewportHeight:number;
@@ -18,23 +18,23 @@ export class Graphics {
     mvMatrix:Float32Array;
 
     _lightDir:number[];
-    _shaders:Shaders.Shader[];
+    _shaders:Shader[];
 
-    _meshAssets:Asset.Asset[];
-    _textureAssets:Asset.Asset[];
+    _meshAssets:Asset[];
+    _textureAssets:Asset[];
 
     meshes:Mesh.Mesh[];
-    textures:Texture.Texture[];
-    currentShader:Shaders.Shader;
+    textures:Texture[];
+    currentShader:Shader;
 
-    assetCollection:AssetCollection.AssetCollection;
-    meshHelper:MeshHelpers.MeshHelper;
+    assetCollection:AssetCollection;
+    meshHelper:MeshHelper;
 
 
     constructor(canvas) {
         this.ctx = canvas.getContext("webgl");
-        this.meshHelper = new MeshHelpers.MeshHelper(this.ctx);
-        this.assetCollection = new AssetCollection.AssetCollection();
+        this.meshHelper = new MeshHelper(this.ctx);
+        this.assetCollection = new AssetCollection();
 
         this.viewportWidth = canvas.width;
         this.viewportHeight = canvas.height;
@@ -59,7 +59,7 @@ export class Graphics {
         this.ctx.clearColor(r, g, b, 1.0);
     }
 
-    SetAssets(assetLoader:AssetLoader.AssetLoader) {
+    SetAssets(assetLoader:AssetLoader) {
         var self = this;
         assetLoader.getByType("mesh").forEach(function(meshAsset){
             self.assetCollection.addMesh(meshAsset.name, self.meshHelper.CreateMeshFromAsset(meshAsset));
@@ -67,7 +67,7 @@ export class Graphics {
         self.assetCollection.addMesh("square", this.meshHelper.CreateSquare());
 
         assetLoader.getByType("texture").forEach(function(textureAsset){
-            self.assetCollection.addTexture(textureAsset.name, new Texture.Texture(self.ctx, textureAsset.data));
+            self.assetCollection.addTexture(textureAsset.name, new Texture(self.ctx, textureAsset.data));
         });
 
         assetLoader.getByType("shader").forEach(function(shaderAsset){
@@ -78,7 +78,7 @@ export class Graphics {
     createShader(shaderName, vShaderName, fShaderName, attributes, uniforms) {
         var vShader = this.assetCollection.getShaderFile(vShaderName);
         var fShader = this.assetCollection.getShaderFile(fShaderName);
-        var mainShader = new Shaders.Shader(this.ctx, vShader.data, fShader.data);
+        var mainShader = new Shader(this.ctx, vShader.data, fShader.data);
         mainShader.LoadAttributes(attributes);
         mainShader.LoadUniforms(uniforms);
         this._shaders[shaderName] = mainShader;
@@ -137,3 +137,5 @@ export class Graphics {
         }
     }
 }
+
+export = Graphics;

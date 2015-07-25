@@ -40,8 +40,8 @@ define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballB
             this.cameraClickBehaviour = cameraClickBehaviour;
         };
         Input.prototype.OnMouseMove = function (evt) {
-            this.currentMouse = new MousePosition.MousePosition(evt.x, evt.y);
-            this.currentClientMouse = new MousePosition.MousePosition(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop);
+            this.currentMouse = new MousePosition(evt.x, evt.y);
+            this.currentClientMouse = new MousePosition(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop);
             if (!this.previousMouse)
                 this.previousMouse = this.currentMouse;
         };
@@ -59,6 +59,6 @@ define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballB
         };
         return Input;
     })();
-    exports.Input = Input;
+    return Input;
 });
 //# sourceMappingURL=input.js.map

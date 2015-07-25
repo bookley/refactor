@@ -11,7 +11,7 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
         CameraClickPickerBehaviour.prototype.getClipCameraPosition = function (position) {
             var x = ((position.x * 2) / this.viewportWidth) - 1;
             var y = 1.0 - ((position.y * 2) / this.viewportHeight);
-            return new MousePosition.MousePosition(x, y);
+            return new MousePosition(x, y);
         };
         CameraClickPickerBehaviour.prototype.onClick = function (position) {
             //console.log("Mouse position");

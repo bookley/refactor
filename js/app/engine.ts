@@ -46,7 +46,7 @@ var assetUrls = [
 ]
 
 import Graphics = require("graphics/graphics");
-import Assets = require("graphics/assets/assetLoader");
+import AssetLoader = require("graphics/assets/assetLoader");
 import Camera = require("camera/camera");
 import Input = require("input/input");
 import Scene = require("game/scene");
@@ -55,12 +55,12 @@ import Scenegraph = require("game/scenegraph");
 import CameraClickBehaviour = require("camera/behaviours/cameraClickPickerBehaviour");
 
 
-export class Engine {
+class Engine {
     canvas:HTMLCanvasElement;
     camera:Camera.Camera;
-    input:Input.Input;
-    graphics:Graphics.Graphics;
-    assetLoader:Assets.AssetLoader;
+    input:Input;
+    graphics:Graphics;
+    assetLoader:AssetLoader;
     ready:boolean;
 
     constructor(canvas) {
@@ -69,16 +69,16 @@ export class Engine {
         this.canvas = <HTMLCanvasElement>document.getElementById(canvas);
 
         this.camera = new Camera.Camera();
-        this.graphics = new Graphics.Graphics(this.canvas);
+        this.graphics = new Graphics(this.canvas);
 
-        this.input = new Input.Input(this.canvas);
+        this.input = new Input(this.canvas);
         this.input.ControlCamera(this.camera);
 
         var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(sceneGraph, this.camera);
         pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
         this.input.setOnCameraClickBehaviour(pickingBehaviour);
 
-        this.assetLoader = new Assets.AssetLoader(assetUrls);
+        this.assetLoader = new AssetLoader(assetUrls);
         this.assetLoader.loadAll().then(function () {
             self.ready = true;
             self.graphics.SetAssets(self.assetLoader);
@@ -119,3 +119,5 @@ function loop(){
     window.requestAnimationFrame(loop);
 }
 window.requestAnimationFrame(loop);
+
+export = Engine;

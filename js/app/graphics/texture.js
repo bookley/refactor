@@ -22,6 +22,6 @@ define(["require", "exports"], function (require, exports) {
         };
         return Texture;
     })();
-    exports.Texture = Texture;
+    return Texture;
 });
 //# sourceMappingURL=texture.js.map

@@ -5,10 +5,10 @@
 import GameObject = require("game/gameObject");
 import Engine = require("engine");
 
-engine:Engine.Engine;
+engine:Engine;
 
-export class Tile extends GameObject.GameObject{
-    engine:Engine.Engine;
+class Tile extends GameObject{
+    engine:Engine;
 
     constructor(engine){
         super();
@@ -21,3 +21,5 @@ export class Tile extends GameObject.GameObject{
         //this.y = -10;
     }
 }
+
+export = Tile;

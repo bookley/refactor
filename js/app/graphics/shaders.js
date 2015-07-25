@@ -54,6 +54,6 @@ define(["require", "exports"], function (require, exports) {
         };
         return Shader;
     })();
-    exports.Shader = Shader;
+    return Shader;
 });
 //# sourceMappingURL=shaders.js.map

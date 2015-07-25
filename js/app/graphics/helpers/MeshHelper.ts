@@ -3,7 +3,7 @@
  */
 import Mesh = require("graphics/mesh");
 
-export class MeshHelper {
+class MeshHelper {
     ctx:WebGLRenderingContext;
 
     constructor(ctx:WebGLRenderingContext){
@@ -58,3 +58,5 @@ export class MeshHelper {
         return mesh;
     }
 }
+
+export = MeshHelper;

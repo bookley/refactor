@@ -3,10 +3,10 @@ import ArcballBehaviour = require("camera/behaviours/arcballBehaviour");
 import CameraClickBehaviour = require("camera/behaviours/clickBehaviour");
 import Camera = require("camera/camera");
 
-export class Input {
-    previousMouse:MousePosition.MousePosition;
-    currentMouse:MousePosition.MousePosition;
-    currentClientMouse:MousePosition.MousePosition;
+class Input {
+    previousMouse:MousePosition;
+    currentMouse:MousePosition;
+    currentClientMouse:MousePosition;
 
     isLeftMouseDown:boolean;
     isMiddleMouseDown:boolean;
@@ -65,8 +65,8 @@ export class Input {
     }
 
     OnMouseMove(evt){
-        this.currentMouse = new MousePosition.MousePosition(evt.x, evt.y);
-        this.currentClientMouse = new MousePosition.MousePosition(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop);
+        this.currentMouse = new MousePosition(evt.x, evt.y);
+        this.currentClientMouse = new MousePosition(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop);
         if(!this.previousMouse) this.previousMouse = this.currentMouse;
     }
 
@@ -85,3 +85,5 @@ export class Input {
         this.previousMouse = this.currentMouse;
     }
 }
+
+export = Input;

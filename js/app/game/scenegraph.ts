@@ -7,8 +7,8 @@ import DebugLine = require("graphics/debugLine");
 import Scene = require("game/scene");
 
 export class Scenegraph {
-    graph:GameObject.GameObject[];
-    debugGraph:DebugLine.DebugLine[];
+    graph:GameObject[];
+    debugGraph:DebugLine[];
     currentScene:Scene.Scene;
 
     constructor(){
@@ -16,7 +16,7 @@ export class Scenegraph {
         this.debugGraph = [];
     }
 
-    addEntity(entity:GameObject.GameObject){
+    addEntity(entity:GameObject){
         this.graph.push(entity);
     }
 

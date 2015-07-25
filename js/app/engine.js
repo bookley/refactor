@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 03-Apr-15.
  */
-define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader", "camera/camera", "input/input", "game/scene", "game/scenegraph", "camera/behaviours/cameraClickPickerBehaviour"], function (require, exports, Graphics, Assets, Camera, Input, Scene, Scenegraph, CameraClickBehaviour) {
+define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader", "camera/camera", "input/input", "game/scene", "game/scenegraph", "camera/behaviours/cameraClickPickerBehaviour"], function (require, exports, Graphics, AssetLoader, Camera, Input, Scene, Scenegraph, CameraClickBehaviour) {
     var assetUrls = [
         {
             url: "assets/shaders/texturedFrag.frag",
@@ -50,13 +50,13 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
             this.ready = false;
             this.canvas = document.getElementById(canvas);
             this.camera = new Camera.Camera();
-            this.graphics = new Graphics.Graphics(this.canvas);
-            this.input = new Input.Input(this.canvas);
+            this.graphics = new Graphics(this.canvas);
+            this.input = new Input(this.canvas);
             this.input.ControlCamera(this.camera);
             var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(sceneGraph, this.camera);
             pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
             this.input.setOnCameraClickBehaviour(pickingBehaviour);
-            this.assetLoader = new Assets.AssetLoader(assetUrls);
+            this.assetLoader = new AssetLoader(assetUrls);
             this.assetLoader.loadAll().then(function () {
                 self.ready = true;
                 self.graphics.SetAssets(self.assetLoader);
@@ -72,7 +72,6 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
         };
         return Engine;
     })();
-    exports.Engine = Engine;
     var sceneGraph = new Scenegraph.Scenegraph();
     var engine = new Engine("mycanvas");
     var scene = new Scene.Scene(engine, sceneGraph);
@@ -88,5 +87,6 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
         window.requestAnimationFrame(loop);
     }
     window.requestAnimationFrame(loop);
+    return Engine;
 });
 //# sourceMappingURL=engine.js.map

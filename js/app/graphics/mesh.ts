@@ -16,7 +16,7 @@ export class Mesh {
     normalBuffer:WebGLBuffer;
     texturePositionBuffer:WebGLBuffer;
 
-    normalLines:DebugLine.DebugLine[];
+    normalLines:DebugLine[];
 
     numIndices:number;
     vertices:number[];
@@ -35,7 +35,7 @@ export class Mesh {
     }
 
     LoadVerticesFromFile(file:string){
-        var modelData = new ObjLoader.ObjLoader().readFile(file);
+        var modelData = new ObjLoader().readFile(file);
         this.LoadVertices(modelData.vertices, modelData.indices, modelData.colors, modelData.normals, modelData.texCoords);
     }
 
@@ -69,7 +69,7 @@ export class Mesh {
 
     createNormalLines():void{
         for(var i = 0; i < this.vertices.length; i+=3){
-            var line = new DebugLine.DebugLine(this.ctx,
+            var line = new DebugLine(this.ctx,
                 vec3.fromValues(this.vertices[i], this.vertices[i+1], this.vertices[i+2]),
                     vec3.fromValues(this.vertices[i] + this.normals[i], this.vertices[i+1] + this.normals[i+1], this.vertices[i+2] + this.normals[i+2]));
             this.normalLines.push(line);

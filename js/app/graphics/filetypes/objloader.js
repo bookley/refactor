@@ -12,7 +12,6 @@ define(["require", "exports"], function (require, exports) {
             this.vertexNormalCount = [];
             this.texCoords = [];
             this.textureIndices = [];
-            this.faces = [];
         }
         ObjLoader.prototype.readObjectLine = function (line) {
             if (line[0] === 'o') {
@@ -187,6 +186,6 @@ define(["require", "exports"], function (require, exports) {
         };
         return ObjLoader;
     })();
-    exports.ObjLoader = ObjLoader;
+    return ObjLoader;
 });
 //# sourceMappingURL=objloader.js.map

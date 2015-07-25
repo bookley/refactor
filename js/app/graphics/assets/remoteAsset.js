@@ -7,6 +7,6 @@ define(["require", "exports"], function (require, exports) {
         }
         return RemoteAsset;
     })();
-    exports.RemoteAsset = RemoteAsset;
+    return RemoteAsset;
 });
 //# sourceMappingURL=RemoteAsset.js.map

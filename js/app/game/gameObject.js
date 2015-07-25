@@ -46,6 +46,6 @@ define(["require", "exports"], function (require, exports) {
         };
         return GameObject;
     })();
-    exports.GameObject = GameObject;
+    return GameObject;
 });
 //# sourceMappingURL=gameObject.js.map

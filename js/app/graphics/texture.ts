@@ -1,12 +1,12 @@
 /**
  * Created by Jamie on 28-Jun-15.
  */
-export class Texture {
+class Texture {
     ctx:WebGLRenderingContext;
     image:HTMLImageElement;
     id:WebGLTexture;
 
-    constructor(ctx:WebGLRenderingContext, img:string){
+    constructor(ctx:WebGLRenderingContext, img:HTMLImageElement){
         if(ctx == null) throw new Error("Ctx cannot be null for texture to load");
         this.ctx = ctx;
         this.image = img;
@@ -24,3 +24,5 @@ export class Texture {
         this.ctx.bindTexture(this.ctx.TEXTURE_2D, this.id);
     }
 }
+
+export = Texture;

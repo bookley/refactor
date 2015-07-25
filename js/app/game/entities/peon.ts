@@ -5,9 +5,9 @@
 import GameObject = require("game/gameObject");
 import Engine = require("engine");
 
-export class Peon extends GameObject.GameObject{
+export class Peon extends GameObject{
 
-    engine:Engine.Engine;
+    engine:Engine;
 
     maxX = -100;
     maxZ = -100;

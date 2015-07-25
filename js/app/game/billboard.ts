@@ -3,7 +3,7 @@
  */
 
 import GameObject = require("game/gameObject");
-export class Billboard extends GameObject.GameObject {
+export class Billboard extends GameObject {
     fixed:boolean;
 
     constructor(){

@@ -73,6 +73,6 @@ define(["require", "exports", "graphics/mesh"], function (require, exports, Mesh
         };
         return MeshHelper;
     })();
-    exports.MeshHelper = MeshHelper;
+    return MeshHelper;
 });
 //# sourceMappingURL=meshhelper.js.map
