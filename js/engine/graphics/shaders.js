@@ -45,6 +45,9 @@ define(["require", "exports"], function (require, exports) {
         };
         Shader.prototype.Deactivate = function () {
             this.ctx.useProgram(null);
+            this.attributes.forEach(function (element) {
+                this.ctx.disableVertexAttribArray(element);
+            });
         };
         Shader.prototype.PassMatrix = function (uniformName, matrix) {
             this.ctx.uniformMatrix4fv(this.uniforms[uniformName], false, matrix);

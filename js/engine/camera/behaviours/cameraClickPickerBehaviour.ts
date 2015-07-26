@@ -9,10 +9,10 @@ import Mesh = require("graphics/mesh");
 export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBehaviour {
     viewportWidth:number;
     viewportHeight:number;
-    sceneGraph:Scenegraph.Scenegraph;
+    sceneGraph:Scenegraph;
     camera:Camera.Camera;
 
-    constructor(sceneGraph:Scenegraph.Scenegraph, camera:Camera.Camera){
+    constructor(sceneGraph:Scenegraph, camera:Camera.Camera){
         this.sceneGraph = sceneGraph;
         this.camera = camera;
     }

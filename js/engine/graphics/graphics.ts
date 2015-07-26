@@ -3,6 +3,7 @@
  */
 import Shader = require("graphics/shaders");
 import Mesh = require("graphics/mesh");
+import MeshInstance = require("graphics/meshInstance");
 import Texture = require("graphics/texture");
 import Asset = require("graphics/assets/asset");
 import AssetLoader = require("graphics/assets/assetLoader");
@@ -32,6 +33,8 @@ class Graphics {
 
     assetCollection:AssetCollection;
 
+    testInstancedMesh:MeshInstance;
+
 
     constructor(canvas:HTMLCanvasElement) {
         this.initGL(canvas)
@@ -57,6 +60,20 @@ class Graphics {
 
     SetAssets(assetLoader:AssetLoader) {
         this.assetCollection.setAssets(assetLoader);
+
+        this.testInstancedMesh = new MeshInstance(this.ctx);
+        this.testInstancedMesh.setMesh(this.assetCollection.getMesh("square"));
+
+        var numbers = [];
+        for(var x = -100; x < 100; x++) {
+            for (var i = -100; i < 100; i++) {
+                numbers.push(i * 4);
+                numbers.push(x * 4);
+                numbers.push(-20);
+            }
+        }
+
+        this.testInstancedMesh.setInstanceRepeatData(numbers);
     }
 
     createShader(shaderName:string, vShaderName:string, fShaderName:string, attributes:string[], uniforms:string[]) {
@@ -79,6 +96,8 @@ class Graphics {
      * @constructor
      */
     Draw(camera, scenegraph) {
+        this.ctx.disableVertexAttribArray(3);
+
         this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
         this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
 
@@ -137,6 +156,8 @@ class Graphics {
 
         if (!camera) throw new Error("Can't draw if a camera isn't set");
         this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
+
+        this.testInstancedMesh.Draw(this.currentShader, null);
     }
 }
 

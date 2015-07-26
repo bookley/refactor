@@ -54,6 +54,18 @@ class Input {
                     break;
             }
         }
+
+        document.onkeydown = function(evt){
+            if(evt.keyCode == 87){
+                self.isMiddleMouseDown = true;
+            }
+        }
+
+        document.onkeyup = function(evt){
+            if(evt.keyCode == 87){
+                self.isMiddleMouseDown = false;
+            }
+        }
     }
 
     ControlCamera(camera){

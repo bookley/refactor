@@ -14,6 +14,11 @@ var assetUrls = [
         type: "shader"
     },
     {
+        url: "assets/shaders/instancedVert.vert",
+        name: "instancedVert",
+        type: "shader"
+    },
+    {
         url: "assets/shaders/debugFrag.frag",
         name: "debugFrag",
         type: "shader"
@@ -97,9 +102,17 @@ class Engine {
             ["aVertexPosition", "aVertexNormal", "aTexCoords"],
             ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
 
+
         this.graphics.createShader("DebugShader", "debugVert", "debugFrag",
             ["aVertexPosition", "aVertexColour"],
             ["uMVMatrix", "uPMatrix", "uCMatrix"]);
+
+
+
+        this.graphics.createShader("InstancedShader", "instancedVert", "texturedFrag",
+            ["aVertexPosition", "aVertexNormal", "aTexCoords", "aModelCentre"],
+            ["uPMatrix", "uCMatrix", "lightDirection"]);
+
     }
 }
 
@@ -112,6 +125,8 @@ function loop(){
 
         engine.graphics.UseShader("TexturedShader");
         engine.graphics.Draw(engine.camera, engine.sceneGraph);
+
+        engine.graphics.UseShader("InstancedShader");
         engine.graphics.InstancedDraw(engine.camera);
 
         engine.graphics.UseShader("DebugShader");

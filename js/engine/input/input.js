@@ -32,6 +32,16 @@ define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballB
                         break;
                 }
             };
+            document.onkeydown = function (evt) {
+                if (evt.keyCode == 87) {
+                    self.isMiddleMouseDown = true;
+                }
+            };
+            document.onkeyup = function (evt) {
+                if (evt.keyCode == 87) {
+                    self.isMiddleMouseDown = false;
+                }
+            };
         }
         Input.prototype.ControlCamera = function (camera) {
             this.camera = camera;

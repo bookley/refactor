@@ -1,4 +1,4 @@
-define(["require", "exports", "graphics/assets/assetCollection"], function (require, exports, AssetCollection) {
+define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCollection"], function (require, exports, MeshInstance, AssetCollection) {
     /**
      * Responsible for initializing and maintaining the main WebGL context
      */
@@ -24,6 +24,17 @@ define(["require", "exports", "graphics/assets/assetCollection"], function (requ
         };
         Graphics.prototype.SetAssets = function (assetLoader) {
             this.assetCollection.setAssets(assetLoader);
+            this.testInstancedMesh = new MeshInstance(this.ctx);
+            this.testInstancedMesh.setMesh(this.assetCollection.getMesh("square"));
+            var numbers = [];
+            for (var x = -100; x < 100; x++) {
+                for (var i = -100; i < 100; i++) {
+                    numbers.push(i * 4);
+                    numbers.push(x * 4);
+                    numbers.push(-20);
+                }
+            }
+            this.testInstancedMesh.setInstanceRepeatData(numbers);
         };
         Graphics.prototype.createShader = function (shaderName, vShaderName, fShaderName, attributes, uniforms) {
             this.assetCollection.createShader(shaderName, vShaderName, fShaderName, attributes, uniforms);
@@ -42,6 +53,7 @@ define(["require", "exports", "graphics/assets/assetCollection"], function (requ
          * @constructor
          */
         Graphics.prototype.Draw = function (camera, scenegraph) {
+            this.ctx.disableVertexAttribArray(3);
             this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
             this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
             /* Mesh position */
@@ -92,6 +104,7 @@ define(["require", "exports", "graphics/assets/assetCollection"], function (requ
             if (!camera)
                 throw new Error("Can't draw if a camera isn't set");
             this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
+            this.testInstancedMesh.Draw(this.currentShader, null);
         };
         Graphics.DRAW_DEBUG_INFO = false;
         Graphics.DEFAULT_LIGHT_DIRECTION = [0, 0, 1];

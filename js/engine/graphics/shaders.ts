@@ -67,6 +67,11 @@ class Shader {
 
     Deactivate() : void {
         this.ctx.useProgram(null);
+
+        this.attributes.forEach(function(element){
+            this.ctx.disableVertexAttribArray(element);
+        });
+
     }
 
     PassMatrix(uniformName, matrix) : void{

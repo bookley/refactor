@@ -14,6 +14,11 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
             type: "shader"
         },
         {
+            url: "assets/shaders/instancedVert.vert",
+            name: "instancedVert",
+            type: "shader"
+        },
+        {
             url: "assets/shaders/debugFrag.frag",
             name: "debugFrag",
             type: "shader"
@@ -66,6 +71,7 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
         Engine.prototype.LoadShaders = function () {
             this.graphics.createShader("TexturedShader", "texturedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords"], ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
             this.graphics.createShader("DebugShader", "debugVert", "debugFrag", ["aVertexPosition", "aVertexColour"], ["uMVMatrix", "uPMatrix", "uCMatrix"]);
+            this.graphics.createShader("InstancedShader", "instancedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords", "aModelCentre"], ["uPMatrix", "uCMatrix", "lightDirection"]);
         };
         return Engine;
     })();
@@ -76,6 +82,7 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
             engine.sceneGraph.update(0);
             engine.graphics.UseShader("TexturedShader");
             engine.graphics.Draw(engine.camera, engine.sceneGraph);
+            engine.graphics.UseShader("InstancedShader");
             engine.graphics.InstancedDraw(engine.camera);
             engine.graphics.UseShader("DebugShader");
             engine.graphics.DebugDraw(engine.camera, engine.sceneGraph);
