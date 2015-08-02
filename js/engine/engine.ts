@@ -42,7 +42,17 @@ var assetUrls = [
         url: "assets/textures/wood.png",
         name:"exclamation",
         type:"texture"
-    }
+    },
+    {
+        url: "assets/textures/tileMap2.png",
+        name:"tileMap",
+        type:"texture"
+    },
+    {
+        url:"assets/textures/selectTile.png",
+        name:"selectTile",
+        type:"texture"
+    },
 ]
 
 import Graphics = require("graphics/graphics");
@@ -58,7 +68,7 @@ import CameraClickBehaviour = require("camera/behaviours/cameraClickPickerBehavi
 class Engine {
     canvas:HTMLCanvasElement;
     camera:Camera.Camera;
-    input:Input;
+    input:Input.InputListener;
 
     graphics:Graphics;
     assetLoader:AssetLoader;
@@ -79,7 +89,7 @@ class Engine {
         this.sceneGraph = new Scenegraph();
         this.scene = new sceneClass(this);
 
-        this.input = new Input(this.canvas);
+        this.input = new Input.InputListener(this.canvas);
         this.input.ControlCamera(this.camera);
 
         var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(this.sceneGraph, this.camera);
@@ -91,6 +101,7 @@ class Engine {
             self.ready = true;
             self.graphics.SetAssets(self.assetLoader);
             self.LoadShaders();
+            engine.input.setMouseMoveListener(self.scene);
             self.scene.onStart();
         }).catch(function(err){
             console.error(err.stack);
@@ -110,7 +121,7 @@ class Engine {
 
 
         this.graphics.createShader("InstancedShader", "instancedVert", "texturedFrag",
-            ["aVertexPosition", "aVertexNormal", "aTexCoords", "aModelCentre"],
+            ["aVertexPosition", "aVertexNormal", "aTexCoords"],
             ["uPMatrix", "uCMatrix", "lightDirection"]);
 
     }
@@ -123,11 +134,11 @@ function loop(){
         engine.input.Update();
         engine.sceneGraph.update(0);
 
-        engine.graphics.UseShader("TexturedShader");
-        engine.graphics.Draw(engine.camera, engine.sceneGraph);
-
         engine.graphics.UseShader("InstancedShader");
         engine.graphics.InstancedDraw(engine.camera);
+
+        engine.graphics.UseShader("TexturedShader");
+        engine.graphics.Draw(engine.camera, engine.sceneGraph);
 
         engine.graphics.UseShader("DebugShader");
         engine.graphics.DebugDraw(engine.camera, engine.sceneGraph);

@@ -19,7 +19,6 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
             for (var i = 0; i < this.sceneGraph.graph.length; i++) {
                 var entity = this.sceneGraph.graph[i];
                 if (this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.GetMatrix())) {
-                    alert("clicked!");
                 }
             }
         };
@@ -27,7 +26,6 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
             //TODO: Figure out why ZNear has to be 1
             var perspective = mat4.create();
             mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);
-            //console.log(perspective);
             mat4.mul(perspective, perspective, cameraMatrix);
             var mouseClipNear = this.unproject(click.x, click.y, -1, perspective, [0, 0, 600, 600]);
             var mouseClipFar = this.unproject(click.x, click.y, 0, perspective, [0, 0, 600, 600]);

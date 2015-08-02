@@ -10,28 +10,33 @@ class MeshHelper {
         this.ctx = ctx;
     }
 
-    makeSquare():Mesh.Mesh {
+    makeSquare():Mesh.Mesh{
+        return this.makeSquareFromPosition([0, 0, 0], 1);
+    }
+
+    makeSquareFromPosition(position:number[], size:number):Mesh.Mesh {
+        var left = position[0];
+        var bottom = position[2];
+
+        var right = position[0] + size;
+        var top = position[2] + size;
+
+        var y = position[1];
+
         var vertices = [
             // Front face
-            -1.0, -1.0,  0.0, //bottom left
-            1.0, -1.0,  0.0, //bottom right
-            1.0,  1.0,  0.0, //top right
-            -1.0,  1.0,  0.0]; //top left
+            left, y,  bottom, //bottom left
+            right, y,  bottom, //bottom right
+            right,  y,  top, //top right
+            left,  y,  top]; //top left
 
         var indices = [0, 1, 2, 0, 2, 3];
 
-        var colors = [
-            1.0, 0.0, 0.0,
-            1.0, 0.0, 0.0,
-            1.0, 0.0, 0.0,
-            1.0, 0.0, 0.0,
-        ];
-
         var normals = [
-            0.0, 0.0, -1.0,
-            0.0, 0.0, -1.0,
-            0.0, 0.0, -1.0,
-            0.0, 0.0, -1.0,
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
+            0.0, -1.0, 0.0,
         ];
 
         var texCoords = [
@@ -42,7 +47,7 @@ class MeshHelper {
         ];
 
         var mesh = new Mesh.Mesh(this.ctx);
-        mesh.LoadVertices(vertices, indices, colors, normals, texCoords);
+        mesh.LoadVertices(vertices, indices, null, normals, texCoords);
         return mesh;
     }
 

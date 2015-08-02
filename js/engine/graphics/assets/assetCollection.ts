@@ -34,6 +34,7 @@ class AssetCollection {
     setAssets(assetLoader:AssetLoader) {
         var self = this;
         self.addMesh("square", this.meshHelper.makeSquare());
+
         assetLoader.getByType("mesh").forEach(function(meshAsset){
             self.addMesh(meshAsset.name, self.meshHelper.CreateMeshFromAsset(meshAsset));
         });

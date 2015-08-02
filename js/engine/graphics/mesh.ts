@@ -82,14 +82,30 @@ export class Mesh {
         }
     }
 
-    bindBuffers(shader:any, modelMatrix:mat4):void {
+    bindPositionBuffer(shader:any):void {
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
         this.ctx.vertexAttribPointer(shader.attributes["aVertexPosition"], 3, this.ctx.FLOAT, false, 0, 0);
+    }
 
+    bindNormalBuffer(shader:any):void {
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
         this.ctx.vertexAttribPointer(shader.attributes["aVertexNormal"], 3, this.ctx.FLOAT, false, 0, 0);
+    }
 
+    bindTextureCoordinatesBuffer(shader:any):void {
+        this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.texturePositionBuffer);
+        this.ctx.vertexAttribPointer(shader.attributes["aTexCoords"], 2, this.ctx.FLOAT, false, 0, 0);
+    }
+
+    bindIndexBuffer(shader:any):void {
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+    }
+
+    bindBuffers(shader:any, modelMatrix:mat4):void {
+        this.bindPositionBuffer(shader);
+        this.bindNormalBuffer(shader);
+        this.bindTextureCoordinatesBuffer(shader);
+        this.bindIndexBuffer(shader);
     }
 
     Draw(shader:any, modelMatrix:mat4):void{

@@ -2,37 +2,71 @@
  * Created by Jamie on 25-Jul-15.
  */
 define(["require", "exports"], function (require, exports) {
-    /**
-     * Create an array of tiles with an imagemap put in
-     * where each tile has a position, orientation and imageMap index
-     */
     var TileMap = (function () {
-        function TileMap(ctx) {
-            this.tileRows = [];
-            var bottomTileLevel = new TileLevel();
-            for (var x = 0; x < 10; x++) {
-                for (var y = 0; y < 10; y++) {
-                    var tile = new TileMapTile(x, y, 0);
-                    bottomTileLevel.tiles[x * 10 + y] = tile;
-                }
-            }
+        function TileMap(tileWidth, tileHeight) {
+            this.tileWidth = tileWidth;
+            this.tileHeight = tileHeight;
+            this.tileLevels = [];
+            this.isInvalidated = true;
         }
+        TileMap.prototype.setImageMap = function (imageMap) {
+            this.imageMap = imageMap;
+        };
+        TileMap.prototype.getImageMap = function () {
+            return this.imageMap;
+        };
+        TileMap.prototype.getTileLevels = function () {
+            return this.tileLevels;
+        };
+        TileMap.prototype.getTileWidth = function () {
+            return this.tileWidth;
+        };
+        TileMap.prototype.getTileHeight = function () {
+            return this.tileHeight;
+        };
+        TileMap.prototype.reset = function () {
+            this.isInvalidated = false;
+        };
+        TileMap.prototype.invalidate = function () {
+            this.isInvalidated = true;
+        };
         return TileMap;
     })();
+    exports.TileMap = TileMap;
     var TileLevel = (function () {
-        function TileLevel() {
+        function TileLevel(invalidationListener) {
             this.tiles = [];
+            this.invalidationListener = invalidationListener;
         }
+        TileLevel.prototype.getTiles = function () {
+            return this.tiles;
+        };
+        TileLevel.prototype.setTiles = function (tileMapTiles) {
+            this.tiles = tileMapTiles;
+            this.invalidationListener.invalidate();
+        };
+        TileLevel.prototype.setTile = function (index, tile) {
+            this.tiles[index] = tile;
+            this.invalidationListener.invalidate();
+        };
         return TileLevel;
     })();
+    exports.TileLevel = TileLevel;
     var TileMapTile = (function () {
         function TileMapTile(x, y, z) {
             this.x = x;
             this.y = y;
             this.z = z;
+            this.imageMapIndex = 0;
         }
+        TileMapTile.prototype.setImageMapIndex = function (index) {
+            this.imageMapIndex = index;
+        };
+        TileMapTile.prototype.getImageMapIndex = function () {
+            return this.imageMapIndex;
+        };
         return TileMapTile;
     })();
-    return TileMap;
+    exports.TileMapTile = TileMapTile;
 });
 //# sourceMappingURL=tileMap.js.map

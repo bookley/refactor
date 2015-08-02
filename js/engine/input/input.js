@@ -1,6 +1,6 @@
 define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballBehaviour"], function (require, exports, MousePosition, ArcballBehaviour) {
-    var Input = (function () {
-        function Input(element) {
+    var InputListener = (function () {
+        function InputListener(element) {
             var self = this;
             this.previousMouse = null;
             this.currentMouse = null;
@@ -43,22 +43,40 @@ define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballB
                 }
             };
         }
-        Input.prototype.ControlCamera = function (camera) {
+        InputListener.prototype.setMouseMoveListener = function (listener) {
+            this.mouseMoveListener = listener;
+        };
+        InputListener.prototype.setMouseClickListener = function (listener) {
+            this.mouseClickListener = listener;
+        };
+        InputListener.prototype.setMouseRayListener = function (listener) {
+            this.mouseRayListener = listener;
+        };
+        InputListener.prototype.setKeyDownListener = function (listener) {
+            this.keyDownListener = listener;
+        };
+        InputListener.prototype.setKeyUpListener = function (listener) {
+            this.keyUpListener = listener;
+        };
+        InputListener.prototype.ControlCamera = function (camera) {
             this.camera = camera;
         };
-        Input.prototype.setOnCameraClickBehaviour = function (cameraClickBehaviour) {
+        InputListener.prototype.setOnCameraClickBehaviour = function (cameraClickBehaviour) {
             this.cameraClickBehaviour = cameraClickBehaviour;
         };
-        Input.prototype.OnMouseMove = function (evt) {
+        InputListener.prototype.OnMouseMove = function (evt) {
             this.currentMouse = new MousePosition(evt.x, evt.y);
             this.currentClientMouse = new MousePosition(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop);
             if (!this.previousMouse)
                 this.previousMouse = this.currentMouse;
+            if (this.mouseMoveListener)
+                this.mouseMoveListener.onMouseMove(this.previousMouse.x, this.previousMouse.y, this.currentClientMouse.x, this.currentClientMouse.y);
         };
-        Input.prototype.onClick = function () {
+        InputListener.prototype.onClick = function () {
             this.cameraClickBehaviour.onClick(this.currentClientMouse);
+            //if(this.mouseClickListener)
         };
-        Input.prototype.Update = function () {
+        InputListener.prototype.Update = function () {
             if (!this.previousMouse || !this.currentMouse) {
                 return;
             }
@@ -67,8 +85,8 @@ define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballB
             }
             this.previousMouse = this.currentMouse;
         };
-        return Input;
+        return InputListener;
     })();
-    return Input;
+    exports.InputListener = InputListener;
 });
 //# sourceMappingURL=input.js.map

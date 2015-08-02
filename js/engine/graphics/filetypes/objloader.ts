@@ -115,7 +115,6 @@ class ObjLoader implements FileLoader.FileLoader {
             vec3.cross(N, U, P);
             vec3.normalize(N, N);
 
-            console.log(N[0], N[1], N[2]);
 
             //add to vertex 1
             this.vertexNormals[vpos1] += N[0];
@@ -143,7 +142,6 @@ class ObjLoader implements FileLoader.FileLoader {
             //this.vertexNormals[vpos+1] /= this.vertexNormalCount[index];
             //this.vertexNormals[vpos+2] /= this.vertexNormalCount[index];
 
-            console.log(this.vertexNormals[vpos], this.vertexNormals[vpos+1], this.vertexNormals[vpos+2]);
 
             var sq1 = this.vertexNormals[vpos] * this.vertexNormals[vpos];
             var sq2 = this.vertexNormals[vpos+1] * this.vertexNormals[vpos+1];
@@ -211,8 +209,6 @@ class ObjLoader implements FileLoader.FileLoader {
             normals: this.vertexNormals,
             texCoords: this.texCoords
         }
-
-        console.log(result);
         return result;
     }
 }

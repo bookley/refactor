@@ -9,6 +9,7 @@ class GameObject {
     mesh: Mesh.Mesh;
     texture: any;
     orientation: Float32Array;
+    visible:boolean = true;
 
     x: number;
     y: number;
@@ -43,7 +44,6 @@ class GameObject {
         this.x = x;
         this.y = y;
         this.z = z;
-        console.log(this.x, this.y, this.z);
     }
 
     setScaleSingle(scale:number) {

@@ -2,45 +2,109 @@
  * Created by Jamie on 25-Jul-15.
  */
 
+import ImageMap = require("graphics/imageMap");
+
 /**
  * Create an array of tiles with an imagemap put in
  * where each tile has a position, orientation and imageMap index
  */
-class TileMap {
-    tileRows:TileLevel[];
-    ctx:WebGLRenderingContext;
 
-    constructor(ctx:WebGLRenderingContext){
+interface InvalidationListener {
+    invalidate():void;
+}
 
-        this.tileRows = [];
-        var bottomTileLevel = new TileLevel();
-        for(var x = 0; x < 10; x++){
-            for(var y = 0; y < 10; y++) {
-                var tile = new TileMapTile(x, y, 0);
-                bottomTileLevel.tiles[x * 10 + y] = tile;
-            }
-        }
+export class TileMap implements InvalidationListener {
+
+    private tileLevels:TileLevel[];
+    private tileWidth:number;
+    private tileHeight:number;
+
+    private isInvalidated:boolean;
+    private imageMap:ImageMap;
+
+
+    constructor(tileWidth, tileHeight){
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
+
+        this.tileLevels = [];
+        this.isInvalidated = true;
+    }
+
+    setImageMap(imageMap:ImageMap){
+        this.imageMap = imageMap;
+    }
+
+    getImageMap():ImageMap{
+        return this.imageMap;
+    }
+
+    getTileLevels():TileLevel[]{
+        return this.tileLevels;
+    }
+
+    getTileWidth():number {
+        return this.tileWidth;
+    }
+
+    getTileHeight():number {
+        return this.tileHeight;
+    }
+
+    reset():void {
+        this.isInvalidated = false;
+    }
+
+    invalidate():void {
+        this.isInvalidated = true;
     }
 }
 
-class TileLevel {
-    tiles:TileMapTile[];
+export class TileLevel {
+    private tiles:TileMapTile[];
+    private invalidationListener:InvalidationListener;
 
-    constructor(){
+    constructor(invalidationListener:InvalidationListener){
         this.tiles = [];
+        this.invalidationListener = invalidationListener;
+    }
+
+    getTiles():TileMapTile[]{
+        return this.tiles;
+    }
+
+    setTiles(tileMapTiles:TileMapTile[]){
+        this.tiles = tileMapTiles;
+        this.invalidationListener.invalidate();
+    }
+
+    setTile(index, tile){
+        this.tiles[index] = tile;
+        this.invalidationListener.invalidate();
     }
 }
 
-class TileMapTile {
+export class TileMapTile {
     x: number;
     y: number;
     z: number;
+
+    imageMapIndex:number;
 
     constructor(x, y, z){
         this.x = x;
         this.y = y;
         this.z = z;
-    }
-}
 
-export = TileMap;
+        this.imageMapIndex = 0;
+    }
+
+    setImageMapIndex(index:number){
+        this.imageMapIndex = index;
+    }
+
+    getImageMapIndex():number{
+        return this.imageMapIndex;
+    }
+
+}

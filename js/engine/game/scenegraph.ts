@@ -5,11 +5,14 @@
 import GameObject = require("game/gameObject");
 import DebugLine = require("graphics/debugLine");
 import Scene = require("game/scene");
+import TileMap = require("game/tileMap");
 
 class Scenegraph {
     graph:GameObject[];
     debugGraph:DebugLine[];
-    currentScene:Scene.Scene;
+    tileMap:TileMap.TileMap;
+
+    currentScene:Scene;
 
     constructor(){
         this.graph = [];

@@ -13,9 +13,9 @@ class Tile extends GameObject{
     constructor(engine){
         super();
         this.engine = engine;
+
         this.setMesh(engine.graphics.assetCollection.getMesh("square"));
-        this.setTexture(engine.graphics.assetCollection.getTexture("exclamation"));
-        var orientation = mat4.create();
+        this.setTexture(engine.graphics.assetCollection.getTexture("selectTile"));
     }
 }
 

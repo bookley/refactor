@@ -4,6 +4,7 @@
 define(["require", "exports"], function (require, exports) {
     var GameObject = (function () {
         function GameObject() {
+            this.visible = true;
             this.orientation = mat4.create();
             this.scaleX = 1;
             this.scaleY = 1;
@@ -24,7 +25,6 @@ define(["require", "exports"], function (require, exports) {
             this.x = x;
             this.y = y;
             this.z = z;
-            console.log(this.x, this.y, this.z);
         };
         GameObject.prototype.setScaleSingle = function (scale) {
             this.scaleX = scale;

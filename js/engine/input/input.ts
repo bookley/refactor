@@ -3,7 +3,27 @@ import ArcballBehaviour = require("camera/behaviours/arcballBehaviour");
 import CameraClickBehaviour = require("camera/behaviours/clickBehaviour");
 import Camera = require("camera/camera");
 
-class Input {
+export interface MouseMoveListener {
+    onMouseMove(fromX, fromY, toX, toY);
+}
+
+export interface MouseRayListener {
+
+}
+
+export interface MouseClickListener {
+    onMouseClick(x, y);
+}
+
+export interface KeyDownListener {
+    onKeyDown(keyCode);
+}
+
+export interface KeyUpListener {
+    onKeyUp(keyCode);
+}
+
+export class InputListener {
     previousMouse:MousePosition;
     currentMouse:MousePosition;
     currentClientMouse:MousePosition;
@@ -15,6 +35,12 @@ class Input {
     cameraClickBehaviour:CameraClickBehaviour.CameraClickBehaviour;
     camera:Camera.Camera;
     element:HTMLElement;
+
+    private mouseMoveListener:MouseMoveListener;
+    private mouseClickListener:MouseClickListener;
+    private keyDownListener:KeyDownListener;
+    private keyUpListener:KeyUpListener;
+    private mouseRayListener:MouseRayListener;
 
     constructor(element) {
         var self = this;
@@ -68,6 +94,26 @@ class Input {
         }
     }
 
+    setMouseMoveListener(listener:MouseMoveListener){
+        this.mouseMoveListener = listener;
+    }
+
+    setMouseClickListener(listener:MouseClickListener){
+        this.mouseClickListener = listener;
+    }
+
+    setMouseRayListener(listener:MouseRayListener){
+        this.mouseRayListener = listener;
+    }
+
+    setKeyDownListener(listener:KeyDownListener){
+        this.keyDownListener = listener;
+    }
+
+    setKeyUpListener(listener:KeyUpListener){
+        this.keyUpListener = listener;
+    }
+
     ControlCamera(camera){
         this.camera = camera;
     }
@@ -80,10 +126,15 @@ class Input {
         this.currentMouse = new MousePosition(evt.x, evt.y);
         this.currentClientMouse = new MousePosition(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop);
         if(!this.previousMouse) this.previousMouse = this.currentMouse;
+
+        if(this.mouseMoveListener)
+            this.mouseMoveListener.onMouseMove(this.previousMouse.x, this.previousMouse.y, this.currentClientMouse.x, this.currentClientMouse.y);
     }
 
     onClick():void {
         this.cameraClickBehaviour.onClick(this.currentClientMouse);
+        //if(this.mouseClickListener)
+
     }
 
     Update(){
@@ -97,5 +148,3 @@ class Input {
         this.previousMouse = this.currentMouse;
     }
 }
-
-export = Input;

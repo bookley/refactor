@@ -8,6 +8,9 @@ import Texture = require("graphics/texture");
 import Asset = require("graphics/assets/asset");
 import AssetLoader = require("graphics/assets/assetLoader");
 import AssetCollection = require("graphics/assets/assetCollection");
+import TileMapRenderer = require("graphics/tileMapRenderer");
+import TileMap = require("game/tileMap");
+import ImageMap = require("graphics/imageMap");
 
 /**
  * Responsible for initializing and maintaining the main WebGL context
@@ -17,9 +20,9 @@ class Graphics {
     static DRAW_DEBUG_INFO:boolean = false;
     static DEFAULT_LIGHT_DIRECTION:number[] = [0, 0, 1];
     static DEFAULT_CLEAR_COLOR = {
-        r:0,
-        g:0,
-        b:0,
+        r:1,
+        g:1,
+        b:1,
         a:1
     };
 
@@ -33,12 +36,13 @@ class Graphics {
 
     assetCollection:AssetCollection;
 
-    testInstancedMesh:MeshInstance;
+    tileMapRenderer:TileMapRenderer;
 
 
     constructor(canvas:HTMLCanvasElement) {
         this.initGL(canvas)
         this.assetCollection = new AssetCollection(this.ctx);
+        this.tileMapRenderer = new TileMapRenderer(this.ctx);
     }
 
     private initGL(canvas:HTMLCanvasElement):void{
@@ -48,7 +52,8 @@ class Graphics {
         if (!this.ctx) alert("Error initializing WebGL context");
         this._lightDir = Graphics.DEFAULT_LIGHT_DIRECTION;
         this.ctx.clearColor(Graphics.DEFAULT_CLEAR_COLOR.r, Graphics.DEFAULT_CLEAR_COLOR.g, Graphics.DEFAULT_CLEAR_COLOR.b, Graphics.DEFAULT_CLEAR_COLOR.a);
-        this.ctx.enable(this.ctx.DEPTH_TEST);
+        //this.ctx.enable(this.ctx.DEPTH_TEST);
+        this.ctx.disable(this.ctx.CULL_FACE);
 
         this.pMatrix = mat4.create();
         mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 1, 100);
@@ -60,20 +65,6 @@ class Graphics {
 
     SetAssets(assetLoader:AssetLoader) {
         this.assetCollection.setAssets(assetLoader);
-
-        this.testInstancedMesh = new MeshInstance(this.ctx);
-        this.testInstancedMesh.setMesh(this.assetCollection.getMesh("square"));
-
-        var numbers = [];
-        for(var x = -100; x < 100; x++) {
-            for (var i = -100; i < 100; i++) {
-                numbers.push(i * 4);
-                numbers.push(x * 4);
-                numbers.push(-20);
-            }
-        }
-
-        this.testInstancedMesh.setInstanceRepeatData(numbers);
     }
 
     createShader(shaderName:string, vShaderName:string, fShaderName:string, attributes:string[], uniforms:string[]) {
@@ -97,10 +88,6 @@ class Graphics {
      */
     Draw(camera, scenegraph) {
         this.ctx.disableVertexAttribArray(3);
-
-        this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
-        this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
-
         /* Mesh position */
         this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
         this.currentShader.PassVec3("lightDirection", this._lightDir);
@@ -110,12 +97,13 @@ class Graphics {
 
         for (var i = 0; i < scenegraph.graph.length; i++) {
             var entity = scenegraph.graph[i];
+            if(!entity.visible) continue;
 
             var modelMatrix = entity.getMatrix();
             if (entity.texture != null) {
                 entity.texture.Bind();
-                this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, entity.mesh.texturePositionBuffer);
-                this.ctx.vertexAttribPointer(this.currentShader.attributes["aTexCoords"], 2, this.ctx.FLOAT, false, 0, 0);
+                //this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, entity.mesh.texturePositionBuffer);
+                //this.ctx.vertexAttribPointer(this.currentShader.attributes["aTexCoords"], 2, this.ctx.FLOAT, false, 0, 0);
             }
             entity.mesh.Draw(this.currentShader, modelMatrix);
         }
@@ -157,7 +145,7 @@ class Graphics {
         if (!camera) throw new Error("Can't draw if a camera isn't set");
         this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
 
-        this.testInstancedMesh.Draw(this.currentShader, null);
+        this.tileMapRenderer.draw(this.currentShader);
     }
 }
 

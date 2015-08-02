@@ -36,7 +36,7 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
         for(var i = 0; i < this.sceneGraph.graph.length; i++){
             var entity = this.sceneGraph.graph[i];
             if(this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.GetMatrix())){
-                alert("clicked!");
+
             }
         }
     }
@@ -45,7 +45,6 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
         //TODO: Figure out why ZNear has to be 1
         var perspective = mat4.create();
         mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);
-        //console.log(perspective);
         mat4.mul(perspective, perspective, cameraMatrix);
 
         var mouseClipNear:Float32Array = this.unproject(click.x, click.y, -1, perspective, [0, 0, 600, 600]);
@@ -63,7 +62,6 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
         vec3.copy(result2, dir);
         vec3.scale(result2, result2, 100);
         vec3.add(result2, cameraPosition, result2);
-
         this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result2);
 
         var boundingCube:Mesh.BoundingCube = entity.getBoundingCube();

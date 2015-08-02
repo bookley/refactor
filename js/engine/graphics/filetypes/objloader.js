@@ -97,7 +97,6 @@ define(["require", "exports"], function (require, exports) {
                 vec3.subtract(P, vertex3, vertex1);
                 vec3.cross(N, U, P);
                 vec3.normalize(N, N);
-                console.log(N[0], N[1], N[2]);
                 //add to vertex 1
                 this.vertexNormals[vpos1] += N[0];
                 this.vertexNormals[vpos1 + 1] += N[1];
@@ -119,7 +118,6 @@ define(["require", "exports"], function (require, exports) {
                 //this.vertexNormals[vpos] /= this.vertexNormalCount[index];
                 //this.vertexNormals[vpos+1] /= this.vertexNormalCount[index];
                 //this.vertexNormals[vpos+2] /= this.vertexNormalCount[index];
-                console.log(this.vertexNormals[vpos], this.vertexNormals[vpos + 1], this.vertexNormals[vpos + 2]);
                 var sq1 = this.vertexNormals[vpos] * this.vertexNormals[vpos];
                 var sq2 = this.vertexNormals[vpos + 1] * this.vertexNormals[vpos + 1];
                 var sq3 = this.vertexNormals[vpos + 2] * this.vertexNormals[vpos + 2];
@@ -174,7 +172,6 @@ define(["require", "exports"], function (require, exports) {
                 normals: this.vertexNormals,
                 texCoords: this.texCoords
             };
-            console.log(result);
             return result;
         };
         return ObjLoader;

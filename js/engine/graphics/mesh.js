@@ -50,12 +50,26 @@ define(["require", "exports", "graphics/filetypes/objloader", "graphics/debugLin
                 this.normalLines[i].Draw(shader, modelMatrix);
             }
         };
-        Mesh.prototype.bindBuffers = function (shader, modelMatrix) {
+        Mesh.prototype.bindPositionBuffer = function (shader) {
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
             this.ctx.vertexAttribPointer(shader.attributes["aVertexPosition"], 3, this.ctx.FLOAT, false, 0, 0);
+        };
+        Mesh.prototype.bindNormalBuffer = function (shader) {
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
             this.ctx.vertexAttribPointer(shader.attributes["aVertexNormal"], 3, this.ctx.FLOAT, false, 0, 0);
+        };
+        Mesh.prototype.bindTextureCoordinatesBuffer = function (shader) {
+            this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.texturePositionBuffer);
+            this.ctx.vertexAttribPointer(shader.attributes["aTexCoords"], 2, this.ctx.FLOAT, false, 0, 0);
+        };
+        Mesh.prototype.bindIndexBuffer = function (shader) {
             this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+        };
+        Mesh.prototype.bindBuffers = function (shader, modelMatrix) {
+            this.bindPositionBuffer(shader);
+            this.bindNormalBuffer(shader);
+            this.bindTextureCoordinatesBuffer(shader);
+            this.bindIndexBuffer(shader);
         };
         Mesh.prototype.Draw = function (shader, modelMatrix) {
             //Need to have texture//colours bound at this point

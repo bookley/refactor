@@ -1,4 +1,4 @@
-define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCollection"], function (require, exports, MeshInstance, AssetCollection) {
+define(["require", "exports", "graphics/assets/assetCollection", "graphics/tileMapRenderer"], function (require, exports, AssetCollection, TileMapRenderer) {
     /**
      * Responsible for initializing and maintaining the main WebGL context
      */
@@ -6,6 +6,7 @@ define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCol
         function Graphics(canvas) {
             this.initGL(canvas);
             this.assetCollection = new AssetCollection(this.ctx);
+            this.tileMapRenderer = new TileMapRenderer(this.ctx);
         }
         Graphics.prototype.initGL = function (canvas) {
             this.ctx = canvas.getContext("webgl");
@@ -15,7 +16,8 @@ define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCol
                 alert("Error initializing WebGL context");
             this._lightDir = Graphics.DEFAULT_LIGHT_DIRECTION;
             this.ctx.clearColor(Graphics.DEFAULT_CLEAR_COLOR.r, Graphics.DEFAULT_CLEAR_COLOR.g, Graphics.DEFAULT_CLEAR_COLOR.b, Graphics.DEFAULT_CLEAR_COLOR.a);
-            this.ctx.enable(this.ctx.DEPTH_TEST);
+            //this.ctx.enable(this.ctx.DEPTH_TEST);
+            this.ctx.disable(this.ctx.CULL_FACE);
             this.pMatrix = mat4.create();
             mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 1, 100);
         };
@@ -24,17 +26,6 @@ define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCol
         };
         Graphics.prototype.SetAssets = function (assetLoader) {
             this.assetCollection.setAssets(assetLoader);
-            this.testInstancedMesh = new MeshInstance(this.ctx);
-            this.testInstancedMesh.setMesh(this.assetCollection.getMesh("square"));
-            var numbers = [];
-            for (var x = -100; x < 100; x++) {
-                for (var i = -100; i < 100; i++) {
-                    numbers.push(i * 4);
-                    numbers.push(x * 4);
-                    numbers.push(-20);
-                }
-            }
-            this.testInstancedMesh.setInstanceRepeatData(numbers);
         };
         Graphics.prototype.createShader = function (shaderName, vShaderName, fShaderName, attributes, uniforms) {
             this.assetCollection.createShader(shaderName, vShaderName, fShaderName, attributes, uniforms);
@@ -54,8 +45,6 @@ define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCol
          */
         Graphics.prototype.Draw = function (camera, scenegraph) {
             this.ctx.disableVertexAttribArray(3);
-            this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
-            this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
             /* Mesh position */
             this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
             this.currentShader.PassVec3("lightDirection", this._lightDir);
@@ -64,11 +53,11 @@ define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCol
             this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
             for (var i = 0; i < scenegraph.graph.length; i++) {
                 var entity = scenegraph.graph[i];
+                if (!entity.visible)
+                    continue;
                 var modelMatrix = entity.getMatrix();
                 if (entity.texture != null) {
                     entity.texture.Bind();
-                    this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, entity.mesh.texturePositionBuffer);
-                    this.ctx.vertexAttribPointer(this.currentShader.attributes["aTexCoords"], 2, this.ctx.FLOAT, false, 0, 0);
                 }
                 entity.mesh.Draw(this.currentShader, modelMatrix);
             }
@@ -104,14 +93,14 @@ define(["require", "exports", "graphics/meshInstance", "graphics/assets/assetCol
             if (!camera)
                 throw new Error("Can't draw if a camera isn't set");
             this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
-            this.testInstancedMesh.Draw(this.currentShader, null);
+            this.tileMapRenderer.draw(this.currentShader);
         };
         Graphics.DRAW_DEBUG_INFO = false;
         Graphics.DEFAULT_LIGHT_DIRECTION = [0, 0, 1];
         Graphics.DEFAULT_CLEAR_COLOR = {
-            r: 0,
-            g: 0,
-            b: 0,
+            r: 1,
+            g: 1,
+            b: 1,
             a: 1
         };
         return Graphics;

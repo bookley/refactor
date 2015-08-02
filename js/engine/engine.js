@@ -42,7 +42,17 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
             url: "assets/textures/wood.png",
             name: "exclamation",
             type: "texture"
-        }
+        },
+        {
+            url: "assets/textures/tileMap2.png",
+            name: "tileMap",
+            type: "texture"
+        },
+        {
+            url: "assets/textures/selectTile.png",
+            name: "selectTile",
+            type: "texture"
+        },
     ];
     var Engine = (function () {
         function Engine(canvas, sceneClass) {
@@ -53,7 +63,7 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
             this.graphics = new Graphics(this.canvas);
             this.sceneGraph = new Scenegraph();
             this.scene = new sceneClass(this);
-            this.input = new Input(this.canvas);
+            this.input = new Input.InputListener(this.canvas);
             this.input.ControlCamera(this.camera);
             var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(this.sceneGraph, this.camera);
             pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
@@ -63,6 +73,7 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
                 self.ready = true;
                 self.graphics.SetAssets(self.assetLoader);
                 self.LoadShaders();
+                engine.input.setMouseMoveListener(self.scene);
                 self.scene.onStart();
             }).catch(function (err) {
                 console.error(err.stack);
@@ -71,7 +82,7 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
         Engine.prototype.LoadShaders = function () {
             this.graphics.createShader("TexturedShader", "texturedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords"], ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
             this.graphics.createShader("DebugShader", "debugVert", "debugFrag", ["aVertexPosition", "aVertexColour"], ["uMVMatrix", "uPMatrix", "uCMatrix"]);
-            this.graphics.createShader("InstancedShader", "instancedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords", "aModelCentre"], ["uPMatrix", "uCMatrix", "lightDirection"]);
+            this.graphics.createShader("InstancedShader", "instancedVert", "texturedFrag", ["aVertexPosition", "aVertexNormal", "aTexCoords"], ["uPMatrix", "uCMatrix", "lightDirection"]);
         };
         return Engine;
     })();
@@ -80,10 +91,10 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
         if (engine.ready) {
             engine.input.Update();
             engine.sceneGraph.update(0);
-            engine.graphics.UseShader("TexturedShader");
-            engine.graphics.Draw(engine.camera, engine.sceneGraph);
             engine.graphics.UseShader("InstancedShader");
             engine.graphics.InstancedDraw(engine.camera);
+            engine.graphics.UseShader("TexturedShader");
+            engine.graphics.Draw(engine.camera, engine.sceneGraph);
             engine.graphics.UseShader("DebugShader");
             engine.graphics.DebugDraw(engine.camera, engine.sceneGraph);
         }
