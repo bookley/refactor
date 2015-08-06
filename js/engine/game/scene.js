@@ -1,4 +1,4 @@
-define(["require", "exports", "graphics/debugLine", "game/entities/peon", "game/entities/tile", "game/tileMap", "graphics/imageMap", "game/ray"], function (require, exports, DebugLine, Peon, Tile, TileMap, ImageMap, Ray) {
+define(["require", "exports", "core/debugLine", "game/entities/peon", "game/entities/tile", "game/tileMap", "core/imageMap", "game/ray"], function (require, exports, DebugLine, Peon, Tile, TileMap, ImageMap, Ray) {
     var Scene = (function () {
         function Scene(engine) {
             this.engine = engine;

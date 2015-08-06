@@ -55,8 +55,8 @@ var assetUrls = [
     },
 ]
 
-import Graphics = require("graphics/graphics");
-import AssetLoader = require("graphics/assets/assetLoader");
+import Graphics = require("core/graphics");
+import AssetLoader = require("core/assets/assetLoader");
 import Camera = require("camera/camera");
 import Input = require("input/input");
 import Scene = require("game/scene");

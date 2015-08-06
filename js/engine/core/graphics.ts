@@ -1,16 +1,16 @@
 /**
  * Created by Jamie on 04-Jul-15.
  */
-import Shader = require("graphics/shaders");
-import Mesh = require("graphics/mesh");
-import MeshInstance = require("graphics/meshInstance");
-import Texture = require("graphics/texture");
-import Asset = require("graphics/assets/asset");
-import AssetLoader = require("graphics/assets/assetLoader");
-import AssetCollection = require("graphics/assets/assetCollection");
-import TileMapRenderer = require("graphics/tileMapRenderer");
+import Shader = require("core/shaders");
+import Mesh = require("core/mesh");
+import MeshInstance = require("core/meshInstance");
+import Texture = require("core/texture");
+import Asset = require("core/assets/asset");
+import AssetLoader = require("core/assets/assetLoader");
+import AssetCollection = require("core/assets/assetCollection");
+import TileMapRenderer = require("core/tileMapRenderer");
 import TileMap = require("game/tileMap");
-import ImageMap = require("graphics/imageMap");
+import ImageMap = require("core/imageMap");
 
 /**
  * Responsible for initializing and maintaining the main WebGL context

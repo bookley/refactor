@@ -2,7 +2,7 @@
  * Created by Jamie on 25-Jul-15.
  */
 
-import Mesh = require("graphics/mesh");
+import Mesh = require("core/mesh");
 
 class MeshInstance {
     ctx:WebGLRenderingContext;

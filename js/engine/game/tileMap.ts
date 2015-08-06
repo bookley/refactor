@@ -2,7 +2,7 @@
  * Created by Jamie on 25-Jul-15.
  */
 
-import ImageMap = require("graphics/imageMap");
+import ImageMap = require("core/imageMap");
 
 /**
  * Create an array of tiles with an imagemap put in

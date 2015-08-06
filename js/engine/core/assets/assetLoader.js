@@ -1,4 +1,4 @@
-define(["require", "exports", "graphics/assets/asset"], function (require, exports, Asset) {
+define(["require", "exports", "core/assets/asset"], function (require, exports, Asset) {
     /**
      * Responsible for resolving a collection of urls into asset objects
      */

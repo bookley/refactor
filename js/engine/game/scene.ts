@@ -3,11 +3,11 @@
  */
 import GameObjects = require("game/gameObject");
 import Billboard = require("game/billboard");
-import DebugLine = require("graphics/debugLine");
+import DebugLine = require("core/debugLine");
 import Peon = require("game/entities/peon");
 import Tile = require("game/entities/tile");
 import TileMap = require("game/tileMap");
-import ImageMap = require("graphics/imageMap");
+import ImageMap = require("core/imageMap");
 import Input = require("input/input");
 import SceneGraph = require("game/scenegraph");
 import Ray = require("game/ray");

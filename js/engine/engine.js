@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 03-Apr-15.
  */
-define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader", "camera/camera", "input/input", "game/scene", "game/scenegraph", "camera/behaviours/cameraClickPickerBehaviour"], function (require, exports, Graphics, AssetLoader, Camera, Input, Scene, Scenegraph, CameraClickBehaviour) {
+define(["require", "exports", "core/graphics", "core/assets/assetLoader", "camera/camera", "input/input", "game/scene", "game/scenegraph", "camera/behaviours/cameraClickPickerBehaviour"], function (require, exports, Graphics, AssetLoader, Camera, Input, Scene, Scenegraph, CameraClickBehaviour) {
     var assetUrls = [
         {
             url: "assets/shaders/texturedFrag.frag",

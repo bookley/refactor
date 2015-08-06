@@ -1,4 +1,4 @@
-define(["require", "exports", "graphics/mesh"], function (require, exports, Mesh) {
+define(["require", "exports", "core/mesh"], function (require, exports, Mesh) {
     var MeshHelper = (function () {
         function MeshHelper(ctx) {
             this.ctx = ctx;

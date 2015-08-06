@@ -2,12 +2,12 @@
  * Created by Jamie on 20-Jul-15.
  */
 
-import Texture = require("graphics/texture");
-import Asset = require("graphics/assets/asset");
-import AssetLoader = require("graphics/assets/assetLoader");
-import Mesh = require("graphics/mesh");
-import MeshHelper = require("graphics/helpers/meshhelper");
-import Shader = require("graphics/shaders");
+import Texture = require("core/texture");
+import Asset = require("core/assets/asset");
+import AssetLoader = require("core/assets/assetLoader");
+import Mesh = require("core/mesh");
+import MeshHelper = require("core/helpers/meshhelper");
+import Shader = require("core/shaders");
 
 /**
  * Responsible for turning a collection of resolved remote assets into real assets (Textures/Meshes etc.) and storing them

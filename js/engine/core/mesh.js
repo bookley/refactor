@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 02-Jul-15.
  */
-define(["require", "exports", "graphics/filetypes/objloader", "graphics/debugLine"], function (require, exports, ObjLoader, DebugLine) {
+define(["require", "exports", "core/filetypes/objloader", "core/debugLine"], function (require, exports, ObjLoader, DebugLine) {
     ///<reference path="../../lib/gl-matrix.d.ts" />
     var Mesh = (function () {
         function Mesh(ctx) {

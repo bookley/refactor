@@ -3,7 +3,7 @@
  */
 
 import TileMap = require("game/tileMap");
-import Shader = require("graphics/shaders");
+import Shader = require("core/shaders");
 
 class TileMapRenderer {
     private ctx:WebGLRenderingContext;

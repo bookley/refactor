@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 20-Jul-15.
  */
-import Mesh = require("graphics/mesh");
+import Mesh = require("core/mesh");
 
 class MeshHelper {
     ctx:WebGLRenderingContext;

@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 20-Jul-15.
  */
-define(["require", "exports", "graphics/texture", "graphics/helpers/meshhelper", "graphics/shaders"], function (require, exports, Texture, MeshHelper, Shader) {
+define(["require", "exports", "core/texture", "core/helpers/meshhelper", "core/shaders"], function (require, exports, Texture, MeshHelper, Shader) {
     /**
      * Responsible for turning a collection of resolved remote assets into real assets (Textures/Meshes etc.) and storing them
      */

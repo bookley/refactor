@@ -3,7 +3,7 @@
  */
 
 import GameObject = require("game/gameObject");
-import DebugLine = require("graphics/debugLine");
+import DebugLine = require("core/debugLine");
 import Scene = require("game/scene");
 import TileMap = require("game/tileMap");
 

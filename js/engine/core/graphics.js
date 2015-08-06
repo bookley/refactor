@@ -1,4 +1,4 @@
-define(["require", "exports", "graphics/assets/assetCollection", "graphics/tileMapRenderer"], function (require, exports, AssetCollection, TileMapRenderer) {
+define(["require", "exports", "core/assets/assetCollection", "core/tileMapRenderer"], function (require, exports, AssetCollection, TileMapRenderer) {
     /**
      * Responsible for initializing and maintaining the main WebGL context
      */

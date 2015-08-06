@@ -1,5 +1,5 @@
-import Asset = require("graphics/assets/asset");
-import RemoteAsset = require("graphics/assets/RemoteAsset");
+import Asset = require("core/assets/asset");
+import RemoteAsset = require("core/assets/RemoteAsset");
 
 /**
  * Responsible for resolving a collection of urls into asset objects

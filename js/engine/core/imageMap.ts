@@ -2,7 +2,7 @@
  * Created by Jamie on 25-Jul-15.
  */
 
-import Texture = require("graphics/texture");
+import Texture = require("core/texture");
 class ImageMap {
     private width:number;
     private height:number;
