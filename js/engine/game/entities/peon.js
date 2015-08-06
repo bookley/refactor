@@ -21,27 +21,20 @@ define(["require", "exports", "game/gameObject"], function (require, exports, Ga
             this.setTexture(engine.graphics.assetCollection.getTexture("mantexture"));
             this.setScaleSingle(0.2);
             this.randomOrientation();
-            this.setPosition(0, -2, 0);
         }
-        Peon.prototype.pickRandomPosition = function () {
-            var randomX = Math.random() * this.maxX + 50;
-            var randomZ = Math.random() * this.maxZ + 50;
-            this.setPosition(randomX, -10, randomZ);
-        };
         Peon.prototype.randomOrientation = function () {
             this.direction = vec2.fromValues(Math.random() * 2 - 1, Math.random() * 2 - 1);
             vec2.normalize(this.direction, this.direction);
             this.nextChange = Math.random() * 150 + 10;
         };
         Peon.prototype.update = function () {
-            return;
             this.timer++;
             if (this.timer > this.nextChange) {
                 this.randomOrientation();
                 this.timer = 0;
             }
-            this.x += this.direction[0] * 0.1;
-            this.z += this.direction[1] * 0.1;
+            this.x += this.direction[0] * 0.01;
+            this.z += this.direction[1] * 0.01;
             if (this.x > 50 || this.x < -50) {
                 this.direction[0] *= -1;
             }

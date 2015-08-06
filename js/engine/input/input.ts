@@ -133,7 +133,8 @@ export class InputListener {
 
     onClick():void {
         this.cameraClickBehaviour.onClick(this.currentClientMouse);
-        //if(this.mouseClickListener)
+        if(this.mouseClickListener)
+            this.mouseClickListener.onMouseClick(this.currentClientMouse.x, this.currentClientMouse.y);
 
     }
 

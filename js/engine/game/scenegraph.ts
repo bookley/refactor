@@ -10,17 +10,23 @@ import TileMap = require("game/tileMap");
 class Scenegraph {
     graph:GameObject[];
     debugGraph:DebugLine[];
-    tileMap:TileMap.TileMap;
+    transparentGraph:GameObject[];
 
+    tileMap:TileMap.TileMap;
     currentScene:Scene;
 
     constructor(){
         this.graph = [];
         this.debugGraph = [];
+        this.transparentGraph = [];
     }
 
     addEntity(entity:GameObject){
         this.graph.push(entity);
+    }
+
+    addTransparentEntity(entity:GameObject){
+        this.transparentGraph.push(entity);
     }
 
     setScene(scene:Scene){

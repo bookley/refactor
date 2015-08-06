@@ -61,10 +61,10 @@ define(["require", "exports", "graphics/graphics", "graphics/assets/assetLoader"
             this.canvas = document.getElementById(canvas);
             this.camera = new Camera.Camera();
             this.graphics = new Graphics(this.canvas);
-            this.sceneGraph = new Scenegraph();
-            this.scene = new sceneClass(this);
             this.input = new Input.InputListener(this.canvas);
             this.input.ControlCamera(this.camera);
+            this.sceneGraph = new Scenegraph();
+            this.scene = new sceneClass(this);
             var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(this.sceneGraph, this.camera);
             pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
             this.input.setOnCameraClickBehaviour(pickingBehaviour);

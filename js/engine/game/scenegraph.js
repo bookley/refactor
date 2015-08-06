@@ -6,9 +6,13 @@ define(["require", "exports"], function (require, exports) {
         function Scenegraph() {
             this.graph = [];
             this.debugGraph = [];
+            this.transparentGraph = [];
         }
         Scenegraph.prototype.addEntity = function (entity) {
             this.graph.push(entity);
+        };
+        Scenegraph.prototype.addTransparentEntity = function (entity) {
+            this.transparentGraph.push(entity);
         };
         Scenegraph.prototype.setScene = function (scene) {
             this.currentScene = scene;

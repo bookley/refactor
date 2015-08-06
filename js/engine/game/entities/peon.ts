@@ -23,13 +23,6 @@ class Peon extends GameObject{
         this.setTexture(engine.graphics.assetCollection.getTexture("mantexture"));
         this.setScaleSingle(0.2);
         this.randomOrientation();
-        this.setPosition(0, -2, 0);
-    }
-
-    pickRandomPosition(){
-        var randomX = Math.random() * this.maxX + 50;
-        var randomZ = Math.random() * this.maxZ + 50;
-        this.setPosition(randomX, -10, randomZ);
     }
 
     randomOrientation(){
@@ -39,15 +32,14 @@ class Peon extends GameObject{
     }
 
     update(){
-        return;
         this.timer++;
         if(this.timer > this.nextChange){
             this.randomOrientation();
             this.timer = 0;
         }
 
-        this.x += this.direction[0] * 0.1;
-        this.z += this.direction[1] * 0.1;
+        this.x += this.direction[0] * 0.01;
+        this.z += this.direction[1] * 0.01;
 
         if(this.x > 50 || this.x < -50){
             this.direction[0] *= -1;

@@ -18,7 +18,7 @@ import ImageMap = require("graphics/imageMap");
 class Graphics {
 
     static DRAW_DEBUG_INFO:boolean = false;
-    static DEFAULT_LIGHT_DIRECTION:number[] = [0, 0, 1];
+    static DEFAULT_LIGHT_DIRECTION:number[] = [0, -1, 0];
     static DEFAULT_CLEAR_COLOR = {
         r:1,
         g:1,
@@ -52,7 +52,7 @@ class Graphics {
         if (!this.ctx) alert("Error initializing WebGL context");
         this._lightDir = Graphics.DEFAULT_LIGHT_DIRECTION;
         this.ctx.clearColor(Graphics.DEFAULT_CLEAR_COLOR.r, Graphics.DEFAULT_CLEAR_COLOR.g, Graphics.DEFAULT_CLEAR_COLOR.b, Graphics.DEFAULT_CLEAR_COLOR.a);
-        //this.ctx.enable(this.ctx.DEPTH_TEST);
+        this.ctx.enable(this.ctx.DEPTH_TEST);
         this.ctx.disable(this.ctx.CULL_FACE);
 
         this.pMatrix = mat4.create();
@@ -94,7 +94,7 @@ class Graphics {
 
         if (!camera) throw new Error("Can't draw if a camera isn't set");
         this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
-
+        this.ctx.enable(this.ctx.DEPTH_TEST);
         for (var i = 0; i < scenegraph.graph.length; i++) {
             var entity = scenegraph.graph[i];
             if(!entity.visible) continue;
@@ -102,8 +102,18 @@ class Graphics {
             var modelMatrix = entity.getMatrix();
             if (entity.texture != null) {
                 entity.texture.Bind();
-                //this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, entity.mesh.texturePositionBuffer);
-                //this.ctx.vertexAttribPointer(this.currentShader.attributes["aTexCoords"], 2, this.ctx.FLOAT, false, 0, 0);
+            }
+            entity.mesh.Draw(this.currentShader, modelMatrix);
+        }
+
+        this.ctx.disable(this.ctx.DEPTH_TEST);
+        for (var i = 0; i < scenegraph.transparentGraph.length; i++) {
+            var entity = scenegraph.transparentGraph[i];
+            if(!entity.visible) continue;
+
+            var modelMatrix = entity.getMatrix();
+            if (entity.texture != null) {
+                entity.texture.Bind();
             }
             entity.mesh.Draw(this.currentShader, modelMatrix);
         }

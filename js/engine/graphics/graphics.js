@@ -16,7 +16,7 @@ define(["require", "exports", "graphics/assets/assetCollection", "graphics/tileM
                 alert("Error initializing WebGL context");
             this._lightDir = Graphics.DEFAULT_LIGHT_DIRECTION;
             this.ctx.clearColor(Graphics.DEFAULT_CLEAR_COLOR.r, Graphics.DEFAULT_CLEAR_COLOR.g, Graphics.DEFAULT_CLEAR_COLOR.b, Graphics.DEFAULT_CLEAR_COLOR.a);
-            //this.ctx.enable(this.ctx.DEPTH_TEST);
+            this.ctx.enable(this.ctx.DEPTH_TEST);
             this.ctx.disable(this.ctx.CULL_FACE);
             this.pMatrix = mat4.create();
             mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 1, 100);
@@ -51,8 +51,20 @@ define(["require", "exports", "graphics/assets/assetCollection", "graphics/tileM
             if (!camera)
                 throw new Error("Can't draw if a camera isn't set");
             this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
+            this.ctx.enable(this.ctx.DEPTH_TEST);
             for (var i = 0; i < scenegraph.graph.length; i++) {
                 var entity = scenegraph.graph[i];
+                if (!entity.visible)
+                    continue;
+                var modelMatrix = entity.getMatrix();
+                if (entity.texture != null) {
+                    entity.texture.Bind();
+                }
+                entity.mesh.Draw(this.currentShader, modelMatrix);
+            }
+            this.ctx.disable(this.ctx.DEPTH_TEST);
+            for (var i = 0; i < scenegraph.transparentGraph.length; i++) {
+                var entity = scenegraph.transparentGraph[i];
                 if (!entity.visible)
                     continue;
                 var modelMatrix = entity.getMatrix();
@@ -96,7 +108,7 @@ define(["require", "exports", "graphics/assets/assetCollection", "graphics/tileM
             this.tileMapRenderer.draw(this.currentShader);
         };
         Graphics.DRAW_DEBUG_INFO = false;
-        Graphics.DEFAULT_LIGHT_DIRECTION = [0, 0, 1];
+        Graphics.DEFAULT_LIGHT_DIRECTION = [0, -1, 0];
         Graphics.DEFAULT_CLEAR_COLOR = {
             r: 1,
             g: 1,

@@ -10,6 +10,7 @@ import TileMap = require("game/tileMap");
 import ImageMap = require("graphics/imageMap");
 import Input = require("input/input");
 import SceneGraph = require("game/scenegraph");
+import Ray = require("game/ray");
 
 class Scene implements Input.MouseMoveListener {
    engine:any;
@@ -19,8 +20,10 @@ class Scene implements Input.MouseMoveListener {
 
    constructor(engine:any){
       this.engine = engine;
+       this.engine.graphics._lightDir = [0, 1, 0];
       this.sceneGraph = this.engine.sceneGraph;
       this.sceneGraph.setScene(this);
+       this.engine.input.setMouseClickListener(this);
    }
 
    drawDebugLine(p1:Float32Array, p2:Float32Array){
@@ -63,30 +66,20 @@ class Scene implements Input.MouseMoveListener {
 
     }
 
+    onMouseClick(x, y){
+        var peon = new Peon(this.engine);
+        peon.setPosition(this.selectTile.x + 0.5, 0, this.selectTile.z + 0.5);
+        this.sceneGraph.addEntity(peon);
+    }
+
     onMouseMove(fromX, fromY, toX, toY) {
         var x:number = ((toX * 2) / 800) - 1;
         var y:number =  1 - ((toY * 2) / 600);
 
-        var perspective = mat4.create();
-        mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);
-        mat4.mul(perspective, perspective, this.engine.camera.GetMatrix());
+        var ray = new Ray(x, y);
+        var position = ray.getYPlaneIntersection(this.engine.camera.GetMatrix(), null);
 
-        var mouseClipNear:Float32Array = this.unproject(x, y, -1, perspective, [0, 0, 600, 600]);
-        var mouseClipFar:Float32Array = this.unproject(x, y, 0, perspective, [0, 0, 600, 600]);
-
-        var dir = vec3.create();
-        vec3.sub(dir, mouseClipFar, mouseClipNear);
-        vec3.normalize(dir, dir);
-
-        var inverseCamera = mat4.create();
-        mat4.invert(inverseCamera, this.engine.camera.GetMatrix());
-        var cameraPosition = vec3.fromValues(inverseCamera[12], inverseCamera[13], inverseCamera[14]);
-        var distance = -cameraPosition[1] / dir[1];
-        vec3.scale(dir, dir, distance);
-
-        var roundexX = Math.floor(cameraPosition[0] + dir [0]);
-        var roundedZ = Math.floor(cameraPosition[2] + dir[2]);
-        this.selectTile.setPosition(roundexX, 0, roundedZ);
+        this.selectTile.setPosition(position[0], 0, position[2]);
     }
 
     unproject(winx,winy,winz,mat,viewport){

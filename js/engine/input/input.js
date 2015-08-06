@@ -74,7 +74,8 @@ define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballB
         };
         InputListener.prototype.onClick = function () {
             this.cameraClickBehaviour.onClick(this.currentClientMouse);
-            //if(this.mouseClickListener)
+            if (this.mouseClickListener)
+                this.mouseClickListener.onMouseClick(this.currentClientMouse.x, this.currentClientMouse.y);
         };
         InputListener.prototype.Update = function () {
             if (!this.previousMouse || !this.currentMouse) {
