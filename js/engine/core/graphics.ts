@@ -53,7 +53,7 @@ class Graphics {
         this._lightDir = Graphics.DEFAULT_LIGHT_DIRECTION;
         this.ctx.clearColor(Graphics.DEFAULT_CLEAR_COLOR.r, Graphics.DEFAULT_CLEAR_COLOR.g, Graphics.DEFAULT_CLEAR_COLOR.b, Graphics.DEFAULT_CLEAR_COLOR.a);
         this.ctx.enable(this.ctx.DEPTH_TEST);
-        this.ctx.disable(this.ctx.CULL_FACE);
+        //this.ctx.disable(this.ctx.CULL_FACE);
 
         this.pMatrix = mat4.create();
         mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 1, 100);
@@ -97,18 +97,6 @@ class Graphics {
         this.ctx.enable(this.ctx.DEPTH_TEST);
         for (var i = 0; i < scenegraph.graph.length; i++) {
             var entity = scenegraph.graph[i];
-            if(!entity.visible) continue;
-
-            var modelMatrix = entity.getMatrix();
-            if (entity.texture != null) {
-                entity.texture.Bind();
-            }
-            entity.mesh.Draw(this.currentShader, modelMatrix);
-        }
-
-        this.ctx.disable(this.ctx.DEPTH_TEST);
-        for (var i = 0; i < scenegraph.transparentGraph.length; i++) {
-            var entity = scenegraph.transparentGraph[i];
             if(!entity.visible) continue;
 
             var modelMatrix = entity.getMatrix();

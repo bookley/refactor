@@ -53,6 +53,16 @@ var assetUrls = [
         name:"selectTile",
         type:"texture"
     },
+    {
+        url:"assets/text/test.png",
+        name:"test",
+        type:"texture"
+    },
+    {
+        url:"assets/text/test.fnt",
+        name:"test_fnt",
+        type:"fnt"
+    },
 ]
 
 import Graphics = require("core/graphics");

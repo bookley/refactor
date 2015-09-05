@@ -8,6 +8,7 @@ import AssetLoader = require("core/assets/assetLoader");
 import Mesh = require("core/mesh");
 import MeshHelper = require("core/helpers/meshhelper");
 import Shader = require("core/shaders");
+import Font = require("core/font");
 
 /**
  * Responsible for turning a collection of resolved remote assets into real assets (Textures/Meshes etc.) and storing them
@@ -20,6 +21,7 @@ class AssetCollection {
     textures:Texture[];
     shaderFiles:Asset[];
     shaders:Shader[];
+    fontsFiles:Font[];
 
     constructor(ctx:WebGLRenderingContext){
         this.ctx = ctx;
@@ -29,6 +31,7 @@ class AssetCollection {
         this.textures = [];
         this.shaderFiles = [];
         this.shaders = [];
+        this.fonts = [];
     }
 
     setAssets(assetLoader:AssetLoader) {
@@ -47,6 +50,10 @@ class AssetCollection {
         assetLoader.getByType("shader").forEach(function(shaderAsset){
             self.addShaderFile(shaderAsset.name, shaderAsset);
         });
+
+        assetLoader.getByType("fnt").forEach(function(shaderAsset){
+            self.addShaderFile(shaderAsset.name, shaderAsset);
+        });
     }
 
     addMesh(name:string, mesh:Mesh.Mesh){
@@ -59,6 +66,10 @@ class AssetCollection {
 
     addShaderFile(name:string, shaderFile:Asset){
         this.shaderFiles[name] = shaderFile;
+    }
+
+    addFont(name:string, fontFile:Asset){
+        this.fontsFiles[name] = fontFile;
     }
 
     createShader(shaderName:string, vShaderName:string, fShaderName:string, attributes:string[], uniforms:string[]) {

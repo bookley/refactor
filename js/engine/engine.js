@@ -53,6 +53,16 @@ define(["require", "exports", "core/graphics", "core/assets/assetLoader", "camer
             name: "selectTile",
             type: "texture"
         },
+        {
+            url: "assets/text/test.png",
+            name: "test",
+            type: "texture"
+        },
+        {
+            url: "assets/text/test.fnt",
+            name: "test_fnt",
+            type: "fnt"
+        },
     ];
     var Engine = (function () {
         function Engine(canvas, sceneClass) {

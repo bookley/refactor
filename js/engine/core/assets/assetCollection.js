@@ -13,6 +13,7 @@ define(["require", "exports", "core/texture", "core/helpers/meshhelper", "core/s
             this.textures = [];
             this.shaderFiles = [];
             this.shaders = [];
+            this.fonts = [];
         }
         AssetCollection.prototype.setAssets = function (assetLoader) {
             var self = this;
@@ -26,6 +27,9 @@ define(["require", "exports", "core/texture", "core/helpers/meshhelper", "core/s
             assetLoader.getByType("shader").forEach(function (shaderAsset) {
                 self.addShaderFile(shaderAsset.name, shaderAsset);
             });
+            assetLoader.getByType("fnt").forEach(function (shaderAsset) {
+                self.addShaderFile(shaderAsset.name, shaderAsset);
+            });
         };
         AssetCollection.prototype.addMesh = function (name, mesh) {
             this.meshes[name] = mesh;
@@ -35,6 +39,9 @@ define(["require", "exports", "core/texture", "core/helpers/meshhelper", "core/s
         };
         AssetCollection.prototype.addShaderFile = function (name, shaderFile) {
             this.shaderFiles[name] = shaderFile;
+        };
+        AssetCollection.prototype.addFont = function (name, fontFile) {
+            this.fontsFiles[name] = fontFile;
         };
         AssetCollection.prototype.createShader = function (shaderName, vShaderName, fShaderName, attributes, uniforms) {
             var vShader = this.getShaderFile(vShaderName);

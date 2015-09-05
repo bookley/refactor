@@ -57,7 +57,7 @@ class Scene implements Input.MouseMoveListener {
        this.engine.graphics.tileMapRenderer.setTileMap(tileMap);
        this.engine.graphics._lightDir = [0, -1, 0];
 
-       this.selectTile.setPosition(0, 0, 0);
+       this.selectTile.setPosition(0, 50, 0);
        this.selectTile.setScaleSingle(1);
        this.engine.sceneGraph.addEntity(this.selectTile);
    }
@@ -79,7 +79,7 @@ class Scene implements Input.MouseMoveListener {
         var ray = new Ray(x, y);
         var position = ray.getYPlaneIntersection(this.engine.camera.GetMatrix(), null);
 
-        this.selectTile.setPosition(position[0], 0, position[2]);
+        this.selectTile.setPosition(position[0], 0.01, position[2]);
     }
 
     unproject(winx,winy,winz,mat,viewport){
