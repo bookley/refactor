@@ -82,7 +82,7 @@ define(["require", "exports", "input/mousePosition", "camera/behaviours/arcballB
                 return;
             }
             if (this.isMiddleMouseDown) {
-                this.camera.matrix = this.cameraBehaviour.CalculateMoveMatrix(this.previousMouse, this.currentMouse);
+                this.camera.setMatrix(this.cameraBehaviour.CalculateMoveMatrix(this.previousMouse, this.currentMouse));
             }
             this.previousMouse = this.currentMouse;
         };

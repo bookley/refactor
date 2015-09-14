@@ -49,10 +49,10 @@ define(["require", "exports"], function (require, exports) {
                 this.ctx.disableVertexAttribArray(element);
             });
         };
-        Shader.prototype.PassMatrix = function (uniformName, matrix) {
+        Shader.prototype.passMatrix = function (uniformName, matrix) {
             this.ctx.uniformMatrix4fv(this.uniforms[uniformName], false, matrix);
         };
-        Shader.prototype.PassVec3 = function (uniformName, vector) {
+        Shader.prototype.passVec3 = function (uniformName, vector) {
             this.ctx.uniform3f(this.uniforms[uniformName], vector[0], vector[1], vector[2]);
         };
         return Shader;

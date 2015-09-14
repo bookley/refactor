@@ -35,7 +35,7 @@ class MeshInstance {
 
         this.mesh.bindBuffers(shader, modelMatrix);
 
-        // Draw the instanced meshes
+        // draw the instanced meshes
         ext.drawElementsInstancedANGLE(this.ctx.TRIANGLES, this.mesh.numIndices, this.ctx.UNSIGNED_SHORT, 0, this.numberOfInstances);
         //todo: bind mesh's buffers (if not already bound)
         //todo: bind instance buffers

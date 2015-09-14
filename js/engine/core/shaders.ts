@@ -74,11 +74,11 @@ class Shader {
 
     }
 
-    PassMatrix(uniformName, matrix) : void{
+    passMatrix(uniformName, matrix) : void{
         this.ctx.uniformMatrix4fv(this.uniforms[uniformName], false, matrix);
     }
 
-    PassVec3(uniformName, vector) : void {
+    passVec3(uniformName, vector) : void {
         this.ctx.uniform3f(this.uniforms[uniformName], vector[0], vector[1], vector[2]);
     }
 }

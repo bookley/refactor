@@ -21,7 +21,7 @@ define(["require", "exports"], function (require, exports) {
             //if this.material -> this.material.bind
             //add something to notify if shader.attributes["name"] doesn't exist
             //console.log("drawing");
-            shader.PassMatrix("uMVMatrix", modelMatrix);
+            shader.passMatrix("uMVMatrix", modelMatrix);
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
             this.ctx.vertexAttribPointer(shader.attributes["aVertexPosition"], 3, this.ctx.FLOAT, false, 0, 0);
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.colorBuffer);

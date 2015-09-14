@@ -32,7 +32,7 @@ define(["require", "exports", "core/debugLine", "game/entities/peon", "game/enti
             }
             tileMap.getTileLevels().push(bottomTileLevel);
             this.engine.graphics.tileMapRenderer.setTileMap(tileMap);
-            this.engine.graphics._lightDir = [0, -1, 0];
+            this.engine.graphics._lightDir = [0, 1, 0];
             this.selectTile.setPosition(0, 50, 0);
             this.selectTile.setScaleSingle(1);
             this.engine.sceneGraph.addEntity(this.selectTile);
@@ -48,7 +48,7 @@ define(["require", "exports", "core/debugLine", "game/entities/peon", "game/enti
             var x = ((toX * 2) / 800) - 1;
             var y = 1 - ((toY * 2) / 600);
             var ray = new Ray(x, y);
-            var position = ray.getYPlaneIntersection(this.engine.camera.GetMatrix(), null);
+            var position = ray.getYPlaneIntersection(this.engine.camera.getMatrix(), null);
             this.selectTile.setPosition(position[0], 0.01, position[2]);
         };
         Scene.prototype.unproject = function (winx, winy, winz, mat, viewport) {

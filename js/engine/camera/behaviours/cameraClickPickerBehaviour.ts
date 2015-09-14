@@ -4,7 +4,7 @@ import MousePosition = require("input/mousePosition");
 import Scenegraph = require("game/sceneGraph");
 import Camera = require("camera/camera");
 import GameObject = require("game/gameObject");
-import Mesh = require("graphics/mesh");
+import Mesh = require("../../core/mesh");
 import Ray = require("game/ray");
 
 export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBehaviour {
@@ -33,7 +33,7 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
     onClick(position:MousePosition): void {
         for(var i = 0; i < this.sceneGraph.graph.length; i++){
             var entity = this.sceneGraph.graph[i];
-            if(this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.GetMatrix())){
+            if(this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.getMatrix())){
 
             }
         }

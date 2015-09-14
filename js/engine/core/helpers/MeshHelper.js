@@ -29,16 +29,16 @@ define(["require", "exports", "core/mesh"], function (require, exports, Mesh) {
             var indices = [0, 1, 2, 0, 2, 3];
             var normals = [
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
             ];
             var texCoords = [

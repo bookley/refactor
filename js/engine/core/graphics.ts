@@ -3,20 +3,16 @@
  */
 import Shader = require("core/shaders");
 import Mesh = require("core/mesh");
-import MeshInstance = require("core/meshInstance");
 import Texture = require("core/texture");
-import Asset = require("core/assets/asset");
 import AssetLoader = require("core/assets/assetLoader");
 import AssetCollection = require("core/assets/assetCollection");
 import TileMapRenderer = require("core/tileMapRenderer");
-import TileMap = require("game/tileMap");
-import ImageMap = require("core/imageMap");
+import Context = require("core/context");
 
 /**
  * Responsible for initializing and maintaining the main WebGL context
  */
 class Graphics {
-
     static DRAW_DEBUG_INFO:boolean = false;
     static DEFAULT_LIGHT_DIRECTION:number[] = [0, -1, 0];
     static DEFAULT_CLEAR_COLOR = {
@@ -35,8 +31,9 @@ class Graphics {
     pMatrix:Float32Array;
 
     assetCollection:AssetCollection;
-
     tileMapRenderer:TileMapRenderer;
+
+    context:Context.Context;
 
 
     constructor(canvas:HTMLCanvasElement) {
@@ -46,24 +43,23 @@ class Graphics {
     }
 
     private initGL(canvas:HTMLCanvasElement):void{
+        this.context = new Context.DefaultContext(canvas);
         this.ctx = canvas.getContext("webgl");
+
         this.viewportWidth = canvas.width;
         this.viewportHeight = canvas.height;
+
         if (!this.ctx) alert("Error initializing WebGL context");
         this._lightDir = Graphics.DEFAULT_LIGHT_DIRECTION;
-        this.ctx.clearColor(Graphics.DEFAULT_CLEAR_COLOR.r, Graphics.DEFAULT_CLEAR_COLOR.g, Graphics.DEFAULT_CLEAR_COLOR.b, Graphics.DEFAULT_CLEAR_COLOR.a);
-        this.ctx.enable(this.ctx.DEPTH_TEST);
-        //this.ctx.disable(this.ctx.CULL_FACE);
-
-        this.pMatrix = mat4.create();
-        mat4.perspective(this.pMatrix, 45, this.viewportWidth / this.viewportHeight, 1, 100);
+        this.context.clearColor(Graphics.DEFAULT_CLEAR_COLOR.r, Graphics.DEFAULT_CLEAR_COLOR.g, Graphics.DEFAULT_CLEAR_COLOR.b, Graphics.DEFAULT_CLEAR_COLOR.a);
+        this.context.setDepthTestEnabled(true)
     }
 
     setBackground(r, g, b) {
-        this.ctx.clearColor(r, g, b, 1.0);
+        this.context.clearColor(r, g, b, 1.0);
     }
 
-    SetAssets(assetLoader:AssetLoader) {
+    setAssets(assetLoader:AssetLoader) {
         this.assetCollection.setAssets(assetLoader);
     }
 
@@ -71,12 +67,12 @@ class Graphics {
         this.assetCollection.createShader(shaderName, vShaderName, fShaderName, attributes, uniforms);
     }
 
-    UseShader(shaderName) {
+    useShader(shaderName) {
         this.currentShader = this.assetCollection.getShader(shaderName);
         this.currentShader.Activate();
     }
 
-    SetLightDir(vec) {
+    setLightDir(vec) {
         this._lightDir = vec;
     }
 
@@ -86,14 +82,14 @@ class Graphics {
      * @param scenegraph The scenegraph to interate over
      * @constructor
      */
-    Draw(camera, scenegraph) {
-        this.ctx.disableVertexAttribArray(3);
+    draw(camera, scenegraph) {
+        this.context.setVertexAttribArrayEnabled(3, false);
         /* Mesh position */
-        this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
-        this.currentShader.PassVec3("lightDirection", this._lightDir);
+        this.currentShader.passMatrix("uPMatrix", camera.getPerspectiveMatrix());
+        this.currentShader.passVec3("lightDirection", this._lightDir);
 
         if (!camera) throw new Error("Can't draw if a camera isn't set");
-        this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
+        this.currentShader.passMatrix("uCMatrix", camera.getMatrix());
         this.ctx.enable(this.ctx.DEPTH_TEST);
         for (var i = 0; i < scenegraph.graph.length; i++) {
             var entity = scenegraph.graph[i];
@@ -112,16 +108,16 @@ class Graphics {
      * @param camera The camera to use when rendering the scene
      * @param scenegraph The scenegraph to interate over
      */
-    DebugDraw(camera, scenegraph){
+    debugDraw(camera, scenegraph){
         if(!Graphics.DRAW_DEBUG_INFO) return;
 
-        this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
         if (!camera) throw new Error("Can't draw if a camera isn't set");
 
-        this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
+        this.currentShader.passMatrix("uPMatrix", camera.getPerspectiveMatrix());
+        this.currentShader.passMatrix("uCMatrix", camera.GetMatrix());
         for(var i = 0; i < scenegraph.debugGraph.length; i++){
             var line = scenegraph.debugGraph[i];
-            line.Draw(this.currentShader, mat4.create());
+            line.draw(this.currentShader, mat4.create());
         }
 
 
@@ -132,16 +128,16 @@ class Graphics {
         }
     }
 
-    InstancedDraw(camera){
+    instancedDraw(camera){
         this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
         this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
 
         /* Mesh position */
-        this.currentShader.PassMatrix("uPMatrix", this.pMatrix);
-        this.currentShader.PassVec3("lightDirection", this._lightDir);
+        this.currentShader.passMatrix("uPMatrix", camera.getPerspectiveMatrix());
+        this.currentShader.passVec3("lightDirection", this._lightDir);
 
         if (!camera) throw new Error("Can't draw if a camera isn't set");
-        this.currentShader.PassMatrix("uCMatrix", camera.GetMatrix());
+        this.currentShader.passMatrix("uCMatrix", camera.getMatrix());
 
         this.tileMapRenderer.draw(this.currentShader);
     }

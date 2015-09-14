@@ -22,7 +22,7 @@ define(["require", "exports"], function (require, exports) {
             this.ctx.vertexAttribPointer(shader.attributes["aModelCentre"], 3, this.ctx.FLOAT, false, 12, 0);
             ext.vertexAttribDivisorANGLE(shader.attributes["aModelCentre"], 1);
             this.mesh.bindBuffers(shader, modelMatrix);
-            // Draw the instanced meshes
+            // draw the instanced meshes
             ext.drawElementsInstancedANGLE(this.ctx.TRIANGLES, this.mesh.numIndices, this.ctx.UNSIGNED_SHORT, 0, this.numberOfInstances);
             //todo: bind mesh's buffers (if not already bound)
             //todo: bind instance buffers

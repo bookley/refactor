@@ -88,29 +88,45 @@ class Engine {
 
     ready:boolean;
 
-    constructor(canvas, sceneClass) {
+    /**
+     *
+     * @param canvas The name of the canvas element to use for the renderer
+     * @param sceneClass
+     */
+    constructor(canvas:string, sceneClass) {
         var self = this;
         this.ready = false;
+
+        //Dep 1
         this.canvas = <HTMLCanvasElement>document.getElementById(canvas);
 
-        this.camera = new Camera.Camera();
+        //Dep 2
+        this.camera = new Camera.Camera(this.canvas.width, this.canvas.height, 45, 1, 100);
+
+        //Dep 3
         this.graphics = new Graphics(this.canvas);
 
+        //Dep 4
         this.input = new Input.InputListener(this.canvas);
         this.input.ControlCamera(this.camera);
 
+        //Dep 5
         this.sceneGraph = new Scenegraph();
+
+        //Dep 6
         this.scene = new sceneClass(this);
 
+        //Dep 7
         var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(this.sceneGraph, this.camera);
         pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
         this.input.setOnCameraClickBehaviour(pickingBehaviour);
 
+        //Dep 8
         this.assetLoader = new AssetLoader(assetUrls);
         this.assetLoader.loadAll().then(function () {
             self.ready = true;
-            self.graphics.SetAssets(self.assetLoader);
-            self.LoadShaders();
+            self.graphics.setAssets(self.assetLoader);
+            self.loadShaders();
             engine.input.setMouseMoveListener(self.scene);
             self.scene.onStart();
         }).catch(function(err){
@@ -118,7 +134,7 @@ class Engine {
         });
     }
 
-    LoadShaders(){
+    loadShaders(){
         this.graphics.createShader("TexturedShader", "texturedVert", "texturedFrag",
             ["aVertexPosition", "aVertexNormal", "aTexCoords"],
             ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
@@ -144,14 +160,14 @@ function loop(){
         engine.input.Update();
         engine.sceneGraph.update(0);
 
-        engine.graphics.UseShader("InstancedShader");
-        engine.graphics.InstancedDraw(engine.camera);
+        engine.graphics.useShader("InstancedShader");
+        engine.graphics.instancedDraw(engine.camera);
 
-        engine.graphics.UseShader("TexturedShader");
-        engine.graphics.Draw(engine.camera, engine.sceneGraph);
+        engine.graphics.useShader("TexturedShader");
+        engine.graphics.draw(engine.camera, engine.sceneGraph);
 
-        engine.graphics.UseShader("DebugShader");
-        engine.graphics.DebugDraw(engine.camera, engine.sceneGraph);
+        engine.graphics.useShader("DebugShader");
+        engine.graphics.debugDraw(engine.camera, engine.sceneGraph);
 
     }
     window.requestAnimationFrame(loop);

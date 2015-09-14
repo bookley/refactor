@@ -77,7 +77,7 @@ define(["require", "exports", "core/filetypes/objloader", "core/debugLine"], fun
             //add something to notify if shader.attributes["name"] doesn't exist
             //console.log("drawing");
             this.bindBuffers(shader, modelMatrix);
-            shader.PassMatrix("uMVMatrix", modelMatrix);
+            shader.passMatrix("uMVMatrix", modelMatrix);
             this.ctx.drawElements(this.ctx.TRIANGLES, this.numIndices, this.ctx.UNSIGNED_SHORT, 0);
         };
         Mesh.prototype.getBoundingCube = function () {

@@ -16,7 +16,7 @@ define(["require", "exports", "input/mousePosition"], function (require, exports
         CameraClickPickerBehaviour.prototype.onClick = function (position) {
             for (var i = 0; i < this.sceneGraph.graph.length; i++) {
                 var entity = this.sceneGraph.graph[i];
-                if (this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.GetMatrix())) {
+                if (this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.getMatrix())) {
                 }
             }
         };

@@ -3,7 +3,7 @@
  */
 
 ///<reference path="../../lib/gl-matrix.d.ts" />
-import Mesh = require("graphics/mesh");
+import Mesh = require("../core/mesh");
 
 class GameObject {
     mesh: Mesh.Mesh;

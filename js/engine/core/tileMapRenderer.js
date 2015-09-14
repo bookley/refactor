@@ -97,16 +97,16 @@ define(["require", "exports"], function (require, exports) {
             var indices = [0 + this.tileIndex, 1 + this.tileIndex, 2 + this.tileIndex, 0 + this.tileIndex, 2 + this.tileIndex, 3 + this.tileIndex];
             var normals = [
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
                 0.0,
-                -1.0,
+                1.0,
                 0.0,
             ];
             var texCoords = this.tileMap.getImageMap().getCoordsAtIndex(tile.getImageMapIndex());
