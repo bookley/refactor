@@ -6,6 +6,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "jasmine": "~2.3.4"
+    "jasmine": "~2.3.4",
+    "chai": "~3.3.0"
   }
 }

@@ -1,0 +1,18 @@
+{
+  "name": "AkitaEngine",
+  "version": "0.0.1",
+  "description": "Game Engine and Game for Refactor",
+  "main": "server/app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://strangecat@bitbucket.org/strangecat/webgl2.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
