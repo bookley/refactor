@@ -1,4 +1,4 @@
-class MousePosition {
+export class MousePosition {
     x:number;
     y:number;
 
@@ -7,5 +7,3 @@ class MousePosition {
         this.y = y;
     }
 }
-
-export = MousePosition;

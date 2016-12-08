@@ -1,9 +1,9 @@
+import GameObject = require("../gameObject");
+import Engine = require("../../engine");
 /**
  * Created by Jamie on 05-Jul-15.
  */
 
-import GameObject = require("game/gameObject");
-import Engine = require("engine");
 
 class Peon extends GameObject{
 

@@ -1,9 +1,6 @@
-/**
- * Created by Jamie on 25-Jul-15.
- */
+import Texture = require("./texture");
 
-import Texture = require("core/texture");
-class ImageMap {
+export class ImageMap {
     private width:number;
     private height:number;
     private tileHeight:number;
@@ -68,5 +65,3 @@ class ImageMap {
         return "hi";
     }
 }
-
-export = ImageMap;

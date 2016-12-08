@@ -1,11 +1,12 @@
+import {FileLoaderResult, FileLoader} from "./fileLoader";
 /**
  * Created by Jamie on 02-Jul-15.
  */
 
 ///<reference path="../../../lib/gl-matrix.d.ts" />
-import FileLoader = require("fileLoader");
 
-class ObjLoader implements FileLoader.FileLoader {
+
+class ObjLoader implements FileLoader {
     vertices: number[];
     indices: number[];
     colors: number[];
@@ -192,7 +193,7 @@ class ObjLoader implements FileLoader.FileLoader {
         this.texCoords = newTexCoords;
     }
 
-    readFile(fileString:string) : FileLoader.FileLoaderResult {
+    readFile(fileString:string) : FileLoaderResult {
         var lines = fileString.split("\n");
         for(var i = 0; i < lines.length; i++){
             var line = lines[i];

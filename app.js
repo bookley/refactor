@@ -4,6 +4,7 @@ var path = require("path");
 var routes = require("./server/routes");
 
 var app = express();
+app.use('/dist', express.static('dist'));
 app.use('/client', express.static('client'));
 app.use('/assets', express.static('assets'));
 app.use("/", routes)

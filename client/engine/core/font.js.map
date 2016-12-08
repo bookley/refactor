@@ -1,1 +1,1 @@
-{"version":3,"file":"font.js","sourceRoot":"","sources":["font.ts"],"names":["Font","Font.constructor"],"mappings":";IAGA,AAHA;;OAEG;QACG,IAAI;QAAVA,SAAMA,IAAIA;QAEVC,CAACA;QAADD,WAACA;IAADA,CAACA,AAFD,IAEC;IAEa,AAAd,OAAS,IAAI,CAAC"}
+{"version":3,"file":"font.js","sourceRoot":"","sources":["font.ts"],"names":[],"mappings":";AAAA;;GAEG;AACH;IAAA;IAEA,CAAC;IAAD,WAAC;AAAD,CAAC,AAFD,IAEC;AAED,iBAAS,IAAI,CAAC"}

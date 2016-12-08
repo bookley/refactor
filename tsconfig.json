@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es5"
+  },
+  "exclude": [
+    "node_modules",
+    "bower_components",
+    "dist"
+  ]
+}

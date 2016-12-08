@@ -1,13 +1,13 @@
-import Context = require("core/context");
 
+import {Context} from "./context";
 /**
  * Created by Jamie on 14-Sep-15.
  * Responsible for looking at a scenegraph and rendering it to a context
  */
 class Renderer {
-    context:Context.Context;
+    context:Context;
 
-    constructor(context:Context.Context){
+    constructor(context:Context){
         this.context = context;
     }
 

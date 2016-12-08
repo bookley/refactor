@@ -1,8 +1,9 @@
+import GameObject = require("./gameObject");
 /**
  * Created by Jamie on 05-Jul-15.
  */
 
-import GameObject = require("game/gameObject");
+
 export class Billboard extends GameObject {
     fixed:boolean;
 

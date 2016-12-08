@@ -1,8 +1,8 @@
-import MousePosition = require("input/mousePosition");
-import ArcballBehaviour = require("camera/behaviours/arcballBehaviour");
-import CameraClickBehaviour = require("camera/behaviours/clickBehaviour");
-import Camera = require("camera/camera");
 
+import {MousePosition} from "./mousePosition";
+import {Arcball} from "../camera/behaviours/arcballBehaviour";
+import {CameraClickBehaviour} from "../camera/behaviours/clickBehaviour";
+import {Camera} from "../camera/camera";
 export interface MouseMoveListener {
     onMouseMove(fromX, fromY, toX, toY);
 }
@@ -31,9 +31,9 @@ export class InputListener {
     isLeftMouseDown:boolean;
     isMiddleMouseDown:boolean;
 
-    cameraBehaviour:ArcballBehaviour.Arcball;
-    cameraClickBehaviour:CameraClickBehaviour.CameraClickBehaviour;
-    camera:Camera.Camera;
+    cameraBehaviour:Arcball;
+    cameraClickBehaviour:CameraClickBehaviour;
+    camera:Camera;
     element:HTMLElement;
 
     private mouseMoveListener:MouseMoveListener;
@@ -51,7 +51,7 @@ export class InputListener {
         this.isLeftMouseDown = false;
         this.isMiddleMouseDown = false;
 
-        this.cameraBehaviour = new ArcballBehaviour.Arcball();
+        this.cameraBehaviour = new Arcball();
         this.element = element;
 
         element.onmousemove =  function(evt){

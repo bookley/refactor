@@ -1,3 +1,2 @@
-define(["require", "exports"], function (require, exports) {
-});
-//# sourceMappingURL=clickBehaviour.client.map
+"use strict";
+//# sourceMappingURL=clickBehaviour.js.map

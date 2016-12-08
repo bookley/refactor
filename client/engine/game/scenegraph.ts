@@ -1,18 +1,19 @@
+import GameObject = require("./gameObject");
+import DebugLine = require("../core/debugLine");
+import {TileMap} from "./tileMap";
+import {Scene} from "./scene";
 /**
  * Created by Jamie on 28-Jun-15.
  */
 
-import GameObject = require("game/gameObject");
-import DebugLine = require("core/debugLine");
-import Scene = require("game/scene");
-import TileMap = require("game/tileMap");
 
-class Scenegraph {
+
+export class Scenegraph {
     graph:GameObject[];
     debugGraph:DebugLine[];
     transparentGraph:GameObject[];
 
-    tileMap:TileMap.TileMap;
+    tileMap:TileMap;
     currentScene:Scene;
 
     constructor(){
@@ -39,5 +40,3 @@ class Scenegraph {
         }
     }
 };
-
-export = Scenegraph;

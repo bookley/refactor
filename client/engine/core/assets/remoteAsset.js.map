@@ -1,1 +1,1 @@
-{"version":3,"file":"RemoteAsset.js","sourceRoot":"","sources":["RemoteAsset.ts"],"names":["RemoteAsset","RemoteAsset.constructor"],"mappings":";IAGA,AAHA;;OAEG;QACG,WAAW;QAAjBA,SAAMA,WAAWA;QAIjBC,CAACA;QAADD,kBAACA;IAADA,CAACA,AAJD,IAIC;IAEoB,AAArB,OAAS,WAAW,CAAC"}
+{"version":3,"file":"remoteAsset.js","sourceRoot":"","sources":["remoteAsset.ts"],"names":[],"mappings":";AAAA;;GAEG;AACH;IAAA;IAIA,CAAC;IAAD,kBAAC;AAAD,CAAC,AAJD,IAIC;AAJY,mBAAW,cAIvB,CAAA"}

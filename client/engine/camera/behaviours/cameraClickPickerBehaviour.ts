@@ -1,19 +1,18 @@
 ///<reference path="../../../lib/gl-matrix.d.ts" />
-import ClickBehaviour = require("camera/behaviours/clickBehaviour");
-import MousePosition = require("input/mousePosition");
-import Scenegraph = require("game/sceneGraph");
-import Camera = require("camera/camera");
-import GameObject = require("game/gameObject");
-import Mesh = require("../../core/mesh");
-import Ray = require("game/ray");
+import {CameraClickBehaviour} from "./clickBehaviour";
+import {Scenegraph} from "../../game/scenegraph";
+import {Camera} from "../camera";
+import {MousePosition} from "../../input/mousePosition";
+import GameObject = require("../../game/gameObject");
+import {BoundingCube} from "../../core/mesh";
 
-export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBehaviour {
+export class CameraClickPickerBehaviour implements CameraClickBehaviour {
     viewportWidth:number;
     viewportHeight:number;
     sceneGraph:Scenegraph;
-    camera:Camera.Camera;
+    camera:Camera;
 
-    constructor(sceneGraph:Scenegraph, camera:Camera.Camera){
+    constructor(sceneGraph:Scenegraph, camera:Camera){
         this.sceneGraph = sceneGraph;
         this.camera = camera;
     }
@@ -62,7 +61,7 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
         vec3.add(result2, cameraPosition, result2);
         this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result2);
 
-        var boundingCube:Mesh.BoundingCube = entity.getBoundingCube();
+        var boundingCube:BoundingCube = entity.getBoundingCube();
         boundingCube.transform(entity.getMatrix());
         //console.log(boundingCube);
 
@@ -75,7 +74,7 @@ export class CameraClickPickerBehaviour implements ClickBehaviour.CameraClickBeh
 
     }
 
-    testRayOBBIntersection(point:Float32Array, vector:Float32Array, box:Mesh.BoundingCube) {
+    testRayOBBIntersection(point:Float32Array, vector:Float32Array, box:BoundingCube) {
         var values = ["x", "y", "z"]
         var tmin = 0;
         var tmax = 10000000;

@@ -1,12 +1,12 @@
+import {Mesh} from "./mesh";
 /**
  * Created by Jamie on 25-Jul-15.
  */
 
-import Mesh = require("core/mesh");
 
-class MeshInstance {
+export class MeshInstance {
     ctx:WebGLRenderingContext;
-    mesh:Mesh.Mesh;
+    mesh:Mesh;
     centerBuffer:WebGLBuffer;
     numberOfInstances;
 
@@ -14,7 +14,7 @@ class MeshInstance {
         this.ctx = ctx;
     }
 
-    setMesh(mesh:Mesh.Mesh){
+    setMesh(mesh:Mesh){
         this.mesh = mesh;
     }
 
@@ -42,5 +42,3 @@ class MeshInstance {
         //todo: draw instanced
     }
 }
-
-export = MeshInstance;

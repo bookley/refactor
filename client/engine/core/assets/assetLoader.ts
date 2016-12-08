@@ -1,14 +1,16 @@
-import Asset = require("core/assets/asset");
-import RemoteAsset = require("core/assets/RemoteAsset");
+import {Asset} from "./asset";
+import {RemoteAsset} from "./remoteAsset";
+
+declare var Promise: any;
 
 /**
  * Responsible for resolving a collection of urls into asset objects
  */
-class AssetLoader {
+export class AssetLoader {
     urls:RemoteAsset[];
     assets:Asset[];
 
-    constructor(urls) {
+    constructor(urls:RemoteAsset[]) {
         this.urls = urls;
         this.assets = [];
     }
@@ -94,5 +96,3 @@ class AssetLoader {
         return results;
     }
 }
-
-export = AssetLoader;

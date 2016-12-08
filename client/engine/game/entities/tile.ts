@@ -1,11 +1,8 @@
+import GameObject = require("../gameObject");
+import Engine = require("../../engine");
 /**
  * Created by Jamie on 05-Jul-15.
  */
-
-import GameObject = require("game/gameObject");
-import Engine = require("engine");
-
-engine:Engine;
 
 class Tile extends GameObject{
     engine:Engine;

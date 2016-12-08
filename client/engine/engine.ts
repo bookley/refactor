@@ -65,20 +65,20 @@ var assetUrls = [
     },
 ]
 
-import Graphics = require("core/graphics");
-import AssetLoader = require("core/assets/assetLoader");
-import Camera = require("camera/camera");
-import Input = require("input/input");
-import Scene = require("game/scene");
-import Scenegraph = require("game/scenegraph");
+import {Graphics} from "./core/graphics";
+import {AssetLoader} from "./core/assets/assetLoader";
 
-import CameraClickBehaviour = require("camera/behaviours/cameraClickPickerBehaviour");
+import {Camera} from "./camera/camera";
+import {InputListener} from "./input/input";
+import {Scene} from "./game/scene";
+import {Scenegraph} from "./game/scenegraph";
+import {CameraClickPickerBehaviour} from "./camera/behaviours/cameraClickPickerBehaviour";
 
 
 class Engine {
     canvas:HTMLCanvasElement;
-    camera:Camera.Camera;
-    input:Input.InputListener;
+    camera:Camera;
+    input:InputListener;
 
     graphics:Graphics;
     assetLoader:AssetLoader;
@@ -101,13 +101,13 @@ class Engine {
         this.canvas = <HTMLCanvasElement>document.getElementById(canvas);
 
         //Dep 2
-        this.camera = new Camera.Camera(this.canvas.width, this.canvas.height, 45, 1, 100);
+        this.camera = new Camera(this.canvas.width, this.canvas.height, 45, 1, 100);
 
         //Dep 3
         this.graphics = new Graphics(this.canvas);
 
         //Dep 4
-        this.input = new Input.InputListener(this.canvas);
+        this.input = new InputListener(this.canvas);
         this.input.ControlCamera(this.camera);
 
         //Dep 5
@@ -117,7 +117,7 @@ class Engine {
         this.scene = new sceneClass(this);
 
         //Dep 7
-        var pickingBehaviour = new CameraClickBehaviour.CameraClickPickerBehaviour(this.sceneGraph, this.camera);
+        var pickingBehaviour = new CameraClickPickerBehaviour(this.sceneGraph, this.camera);
         pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
         this.input.setOnCameraClickBehaviour(pickingBehaviour);
 

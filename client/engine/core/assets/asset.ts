@@ -1,7 +1,7 @@
 /**
  * Created by Jamie on 20-Jul-15.
  */
-class Asset {
+export class Asset {
     data:any;
     name:string;
     type:string;
@@ -12,5 +12,3 @@ class Asset {
         this.type = type;
     }
 }
-
-export = Asset;

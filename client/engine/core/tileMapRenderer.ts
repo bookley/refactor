@@ -1,9 +1,10 @@
+import {TileMap, TileLevel, TileMapTile} from "../game/tileMap";
+import Shader = require("./shaders");
 /**
  * Created by Jamie on 26-Jul-15.
  */
 
-import TileMap = require("game/tileMap");
-import Shader = require("core/shaders");
+
 
 class TileMapRenderer {
     private ctx:WebGLRenderingContext;
@@ -12,7 +13,7 @@ class TileMapRenderer {
     private normalBuffer:WebGLBuffer;
     private texturePositionBuffer:WebGLBuffer;
 
-    private tileMap:TileMap.TileMap;
+    private tileMap:TileMap;
 
     private tileIndex:number;
 
@@ -31,7 +32,7 @@ class TileMapRenderer {
         this.texturePositionBuffer = ctx.createBuffer();
     }
 
-    setTileMap(tileMap:TileMap.TileMap): void {
+    setTileMap(tileMap:TileMap): void {
         this.tileMap = tileMap;
         this.calculateDataForTileMap(tileMap);
         this.updateData();
@@ -83,7 +84,7 @@ class TileMapRenderer {
         this.ctx.drawElements(this.ctx.TRIANGLES, this.indices.length, this.ctx.UNSIGNED_SHORT, 0);
     }
 
-    calculateDataForTileMap(tileMap:TileMap.TileMap) {
+    calculateDataForTileMap(tileMap:TileMap) {
         this.vertices = [];
         this.indices = [];
         this.texCoords = [];
@@ -99,7 +100,7 @@ class TileMapRenderer {
         }
     }
 
-    calculateDataForTileLevel(tileLevel:TileMap.TileLevel){
+    calculateDataForTileLevel(tileLevel:TileLevel){
         var tiles = tileLevel.getTiles();
         var result = [];
         for(var i = 0; i < tiles.length; i++){
@@ -109,7 +110,7 @@ class TileMapRenderer {
         return result;
     }
 
-    calculateDataForTile(tile:TileMap.TileMapTile){
+    calculateDataForTile(tile:TileMapTile){
         var left = tile.x;
         var bottom = tile.z;
 

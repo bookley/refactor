@@ -1,11 +1,10 @@
-define(["require", "exports"], function (require, exports) {
-    var MousePosition = (function () {
-        function MousePosition(x, y) {
-            this.x = x;
-            this.y = y;
-        }
-        return MousePosition;
-    })();
+"use strict";
+var MousePosition = (function () {
+    function MousePosition(x, y) {
+        this.x = x;
+        this.y = y;
+    }
     return MousePosition;
-});
-//# sourceMappingURL=mousePosition.client.map
+}());
+exports.MousePosition = MousePosition;
+//# sourceMappingURL=mousePosition.js.map

@@ -2,8 +2,8 @@
  * Created by Jamie on 25-Jul-15.
  */
 
-import ImageMap = require("core/imageMap");
 
+import ImageMap = require("../core/imageMap");
 /**
  * Create an array of tiles with an imagemap put in
  * where each tile has a position, orientation and imageMap index

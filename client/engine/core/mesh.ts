@@ -1,11 +1,11 @@
+import ObjLoader = require("./filetypes/objloader");
+import DebugLine = require("./debugLine");
 /**
  * Created by Jamie on 02-Jul-15.
  */
 
 
-import FileLoader = require("core/filetypes/fileLoader");
-import ObjLoader = require("core/filetypes/objloader");
-import DebugLine = require("core/debugLine");
+
 ///<reference path="../../lib/gl-matrix.d.ts" />
 
 export class Mesh {

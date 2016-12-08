@@ -1,18 +1,13 @@
-/**
- * Created by Jamie on 04-Jul-15.
- */
-import Shader = require("core/shaders");
-import Mesh = require("core/mesh");
-import Texture = require("core/texture");
-import AssetLoader = require("core/assets/assetLoader");
-import AssetCollection = require("core/assets/assetCollection");
-import TileMapRenderer = require("core/tileMapRenderer");
-import Context = require("core/context");
 
+import Shader = require("./shaders");
+import AssetCollection = require("./assets/assetCollection");
+import TileMapRenderer = require("./tileMapRenderer");
+import {Context, DefaultContext} from "./context";
+import {AssetLoader} from "./assets/assetLoader";
 /**
  * Responsible for initializing and maintaining the main WebGL context
  */
-class Graphics {
+export class Graphics {
     static DRAW_DEBUG_INFO:boolean = false;
     static DEFAULT_LIGHT_DIRECTION:number[] = [0, -1, 0];
     static DEFAULT_CLEAR_COLOR = {
@@ -33,7 +28,7 @@ class Graphics {
     assetCollection:AssetCollection;
     tileMapRenderer:TileMapRenderer;
 
-    context:Context.Context;
+    context:Context;
 
 
     constructor(canvas:HTMLCanvasElement) {
@@ -43,7 +38,7 @@ class Graphics {
     }
 
     private initGL(canvas:HTMLCanvasElement):void{
-        this.context = new Context.DefaultContext(canvas);
+        this.context = new DefaultContext(canvas);
         this.ctx = canvas.getContext("webgl");
 
         this.viewportWidth = canvas.width;
@@ -142,5 +137,3 @@ class Graphics {
         this.tileMapRenderer.draw(this.currentShader);
     }
 }
-
-export = Graphics;

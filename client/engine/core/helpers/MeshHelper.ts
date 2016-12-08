@@ -1,8 +1,7 @@
+import {Mesh} from "../mesh";
 /**
  * Created by Jamie on 20-Jul-15.
  */
-import Mesh = require("core/mesh");
-
 class MeshHelper {
     ctx:WebGLRenderingContext;
 
@@ -10,11 +9,11 @@ class MeshHelper {
         this.ctx = ctx;
     }
 
-    makeSquare():Mesh.Mesh{
+    makeSquare():Mesh{
         return this.makeSquareFromPosition([0, 0, 0], 1);
     }
 
-    makeSquareFromPosition(position:number[], size:number):Mesh.Mesh {
+    makeSquareFromPosition(position:number[], size:number):Mesh {
         var left = position[0];
         var bottom = position[2];
 
@@ -46,13 +45,13 @@ class MeshHelper {
             0.0, 0.0,
         ];
 
-        var mesh = new Mesh.Mesh(this.ctx);
+        var mesh = new Mesh(this.ctx);
         mesh.LoadVertices(vertices, indices, null, normals, texCoords);
         return mesh;
     }
 
     CreateMeshFromAsset(asset) {
-        var mesh = new Mesh.Mesh(this.ctx);
+        var mesh = new Mesh(this.ctx);
         mesh.LoadVerticesFromFile(asset.data);
         return mesh;
     }

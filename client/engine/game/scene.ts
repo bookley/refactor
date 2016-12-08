@@ -1,28 +1,27 @@
+import {MouseMoveListener} from "../input/input";
+import Tile = require("./entities/tile");
+import {Scenegraph} from "./scenegraph";
+import DebugLine = require("../core/debugLine");
+import {TileMap, TileLevel, TileMapTile} from "./tileMap";
+import Peon = require("./entities/peon");
+import Ray = require("./ray");
+import {ImageMap} from "../core/imageMap";
 /**
  * Created by Jamie on 14-Jun-15.
  */
-import GameObjects = require("game/gameObject");
-import Billboard = require("game/billboard");
-import DebugLine = require("core/debugLine");
-import Peon = require("game/entities/peon");
-import Tile = require("game/entities/tile");
-import TileMap = require("game/tileMap");
-import ImageMap = require("core/imageMap");
-import Input = require("input/input");
-import SceneGraph = require("game/scenegraph");
-import Ray = require("game/ray");
 
-class Scene implements Input.MouseMoveListener {
+
+export class Scene implements MouseMoveListener {
    engine:any;
-   sceneGraph:SceneGraph;
+   sceneGraph:Scenegraph;
 
    selectTile:Tile;
 
    constructor(engine:any){
-      this.engine = engine;
+       this.engine = engine;
        this.engine.graphics._lightDir = [0, 1, 0];
-      this.sceneGraph = this.engine.sceneGraph;
-      this.sceneGraph.setScene(this);
+       this.sceneGraph = this.engine.sceneGraph;
+       this.sceneGraph.setScene(this);
        this.engine.input.setMouseClickListener(this);
    }
 
@@ -32,14 +31,14 @@ class Scene implements Input.MouseMoveListener {
 
    onStart(){
        this.selectTile = new Tile(this.engine);
-       var tileMap = new TileMap.TileMap(1, 1);
+       var tileMap = new TileMap(1, 1);
        var imageMap = new ImageMap(this.engine.graphics.assetCollection.getTexture("tileMap"), 1024, 1024, 256, 256);
        tileMap.setImageMap(imageMap);
 
-       var bottomTileLevel = new TileMap.TileLevel(tileMap);
+       var bottomTileLevel = new TileLevel(tileMap);
        for(var x = 0; x < 100; x++){
            for(var y = 0; y < 100; y++) {
-               var tile = new TileMap.TileMapTile(x - 50, 0, y - 50);
+               var tile = new TileMapTile(x - 50, 0, y - 50);
 
                var rnd = Math.random();
                if(rnd > 0.2){
@@ -92,5 +91,3 @@ class Scene implements Input.MouseMoveListener {
         return n2;
     }
 };
-
-export = Scene;

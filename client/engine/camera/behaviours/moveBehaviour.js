@@ -1,3 +1,2 @@
-define(["require", "exports"], function (require, exports) {
-});
-//# sourceMappingURL=moveBehaviour.client.map
+"use strict";
+//# sourceMappingURL=moveBehaviour.js.map

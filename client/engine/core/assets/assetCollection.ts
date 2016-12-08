@@ -1,15 +1,11 @@
-/**
- * Created by Jamie on 20-Jul-15.
- */
 
-import Texture = require("core/texture");
-import Asset = require("core/assets/asset");
-import AssetLoader = require("core/assets/assetLoader");
-import Mesh = require("core/mesh");
-import MeshHelper = require("core/helpers/meshhelper");
-import Shader = require("core/shaders");
-import Font = require("core/font");
-
+import MeshHelper = require("../helpers/MeshHelper");
+import Texture = require("../texture");
+import {Mesh} from "../mesh";
+import {Asset} from "./asset";
+import Shader = require("../shaders");
+import Font = require("../font");
+import {AssetLoader} from "./assetLoader";
 /**
  * Responsible for turning a collection of resolved remote assets into real assets (Textures/Meshes etc.) and storing them
  */
@@ -17,7 +13,7 @@ class AssetCollection {
     ctx:WebGLRenderingContext;
     meshHelper:MeshHelper;
 
-    meshes:Mesh.Mesh[];
+    meshes:Mesh[];
     textures:Texture[];
     shaderFiles:Asset[];
     shaders:Shader[];
@@ -31,7 +27,7 @@ class AssetCollection {
         this.textures = [];
         this.shaderFiles = [];
         this.shaders = [];
-        this.fonts = [];
+        this.fontsFiles = [];
     }
 
     setAssets(assetLoader:AssetLoader) {
@@ -56,7 +52,7 @@ class AssetCollection {
         });
     }
 
-    addMesh(name:string, mesh:Mesh.Mesh){
+    addMesh(name:string, mesh:Mesh){
         this.meshes[name] = mesh;
     }
 
@@ -81,7 +77,7 @@ class AssetCollection {
         this.shaders[shaderName] = mainShader;
     }
 
-    getMesh(meshName):Mesh.Mesh {
+    getMesh(meshName):Mesh {
         var mesh = this.meshes[meshName];
         if (mesh == null) throw new Error("Attempted to access mesh '" + meshName + "', but this mesh could not be found");
         return mesh;
