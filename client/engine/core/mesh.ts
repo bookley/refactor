@@ -1,12 +1,6 @@
 import ObjLoader = require("./filetypes/objloader");
 import DebugLine = require("./debugLine");
-/**
- * Created by Jamie on 02-Jul-15.
- */
-
-
-
-///<reference path="../../lib/gl-matrix.d.ts" />
+import {vec3, mat4} from 'gl-matrix';
 
 export class Mesh {
     ctx:WebGLRenderingContext;
@@ -145,15 +139,15 @@ export class Mesh {
 }
 
 export class BoundingCube {
-    lowest:Float32Array;
-    highest:Float32Array;
+    lowest:vec3;
+    highest:vec3;
 
     constructor(){
         this.lowest = vec3.create();
         this.highest = vec3.create();
     }
 
-    transform(matrix:Float32Array): void {
+    transform(matrix:mat4): void {
         vec3.transformMat4(this.lowest, this.lowest, matrix);
         vec3.transformMat4(this.highest, this.highest, matrix);
     }

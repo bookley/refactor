@@ -1,5 +1,7 @@
 import GameObject = require("../gameObject");
 import Engine = require("../../engine");
+import {vec2} from 'gl-matrix';
+
 /**
  * Created by Jamie on 05-Jul-15.
  */
@@ -12,7 +14,7 @@ class Peon extends GameObject {
     maxX = -100;
     maxZ = -100;
 
-    direction:Float32Array;
+    direction:vec2;
     timer = 0;
     nextChange = 0;
 

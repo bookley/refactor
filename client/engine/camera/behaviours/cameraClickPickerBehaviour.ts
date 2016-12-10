@@ -1,10 +1,11 @@
-///<reference path="../../../lib/gl-matrix.d.ts" />
+
 import {CameraClickBehaviour} from "./clickBehaviour";
 import {Scenegraph} from "../../game/scenegraph";
 import {Camera} from "../camera";
 import {MousePosition} from "../../input/mousePosition";
 import GameObject = require("../../game/gameObject");
 import {BoundingCube} from "../../core/mesh";
+import {mat4, vec3, vec4} from "gl-matrix";
 
 export class CameraClickPickerBehaviour implements CameraClickBehaviour {
     viewportWidth:number;
@@ -38,14 +39,14 @@ export class CameraClickPickerBehaviour implements CameraClickBehaviour {
         }
     }
 
-    isClickOnEntity(click:MousePosition, entity:GameObject, cameraMatrix:Float32Array){
+    isClickOnEntity(click:MousePosition, entity:GameObject, cameraMatrix:mat4){
         //TODO: Figure out why ZNear has to be 1
         var perspective = mat4.create();
         mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);
         mat4.mul(perspective, perspective, cameraMatrix);
 
-        var mouseClipNear:Float32Array = this.unproject(click.x, click.y, -1, perspective, [0, 0, 600, 600]);
-        var mouseClipFar:Float32Array = this.unproject(click.x, click.y, 0, perspective, [0, 0, 600, 600]);
+        var mouseClipNear:vec3 = this.unproject(click.x, click.y, -1, perspective, [0, 0, 600, 600]);
+        var mouseClipFar:vec3 = this.unproject(click.x, click.y, 0, perspective, [0, 0, 600, 600]);
 
         var dir = vec3.create();
         vec3.sub(dir, mouseClipFar, mouseClipNear);
@@ -74,7 +75,7 @@ export class CameraClickPickerBehaviour implements CameraClickBehaviour {
 
     }
 
-    testRayOBBIntersection(point:Float32Array, vector:Float32Array, box:BoundingCube) {
+    testRayOBBIntersection(point:vec3, vector:vec3, box:BoundingCube) {
         var values = ["x", "y", "z"]
         var tmin = 0;
         var tmax = 10000000;

@@ -1,14 +1,10 @@
-/**
- * Created by Jamie on 02-Jul-15.
- */
-
-///<reference path="../../lib/gl-matrix.d.ts" />
 import Mesh = require("../core/mesh");
+import {mat4, vec3} from 'gl-matrix';
 
 class GameObject {
     mesh: Mesh.Mesh;
     texture: any;
-    orientation: Float32Array;
+    orientation: mat4;
     visible:boolean = true;
 
     x: number;
@@ -56,7 +52,7 @@ class GameObject {
         this.orientation = orientation;
     }
 
-    getMatrix():Float32Array {
+    getMatrix():mat4 {
         var matrix = mat4.create();
         mat4.translate(matrix, matrix, vec3.fromValues(this.x, this.y, this.z));
         mat4.mul(matrix, matrix, this.orientation);

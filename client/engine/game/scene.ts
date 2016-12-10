@@ -6,9 +6,7 @@ import {TileMap, TileLevel, TileMapTile} from "./tileMap";
 import Peon = require("./entities/peon");
 import Ray = require("./ray");
 import {ImageMap} from "../core/imageMap";
-/**
- * Created by Jamie on 14-Jun-15.
- */
+import {mat4, vec3, vec4} from 'gl-matrix';
 
 
 export class Scene implements MouseMoveListener {

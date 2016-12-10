@@ -1,9 +1,5 @@
 import {FileLoaderResult, FileLoader} from "./fileLoader";
-/**
- * Created by Jamie on 02-Jul-15.
- */
-
-///<reference path="../../../lib/gl-matrix.d.ts" />
+import {vec3} from 'gl-matrix';
 
 
 class ObjLoader implements FileLoader {

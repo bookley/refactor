@@ -1,3 +1,5 @@
+import {mat4} from 'gl-matrix';
+
 class DebugLine {
 
     ctx:WebGLRenderingContext;

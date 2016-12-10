@@ -1,3 +1,4 @@
+import * as GLM from "gl-matrix";
 
 import Shader = require("./shaders");
 import AssetCollection = require("./assets/assetCollection");
@@ -112,7 +113,7 @@ export class Graphics {
         this.currentShader.passMatrix("uCMatrix", camera.GetMatrix());
         for(var i = 0; i < scenegraph.debugGraph.length; i++){
             var line = scenegraph.debugGraph[i];
-            line.draw(this.currentShader, mat4.create());
+            line.draw(this.currentShader, GLM.mat4.create());
         }
 
 

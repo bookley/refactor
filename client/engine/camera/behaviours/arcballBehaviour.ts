@@ -1,4 +1,4 @@
-///<reference path="../../../lib/gl-matrix.d.ts" />
+import {vec3, mat4} from "gl-matrix";
 
 export class Arcball {
 

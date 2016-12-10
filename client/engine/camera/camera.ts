@@ -1,9 +1,9 @@
-///<reference path="../../lib/gl-matrix.d.ts" />
+import {vec3, vec4, mat4} from "gl-matrix";
 
 export class Camera {
-    perspectiveMatrix:Float32Array;
-    matrix:Float32Array;
-    position:Float32Array;
+    perspectiveMatrix:mat4;
+    matrix:mat4;
+    position:mat4;
     //TODO: Camera needs a focal point and a camera point, needs to be possible to set both
 
     constructor(width, height, fov, znear, zfar) {
@@ -27,7 +27,7 @@ export class Camera {
         return this.perspectiveMatrix;
     }
 
-    setMatrix(matrix:Float32Array){
+    setMatrix(matrix:mat4){
         this.matrix = matrix;
     }
 }

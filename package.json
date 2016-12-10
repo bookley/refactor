@@ -7,7 +7,9 @@
     "test": "test"
   },
   "dependencies": {
+    "@types/gl-matrix": "^2.2.34",
     "express": "^4.13.3",
+    "gl-matrix": "^2.3.2",
     "source-map-loader": "^0.1.5",
     "ts-loader": "^1.3.0",
     "typescript": "^2.1.4"

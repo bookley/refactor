@@ -1,7 +1,4 @@
-/**
- * Created by Jamie on 02-Aug-15.
- */
-///<reference path="../../lib/gl-matrix.d.ts" />
+import {mat4, vec3, vec4} from 'gl-matrix';
 
 class Ray {
     x:number;
@@ -19,13 +16,13 @@ class Ray {
     /**
      * @param modelView The matrix representing the modelView
      */
-    getInWorld(modelView:Float32Array): Float32Array {
+    getInWorld(modelView:mat4): vec3 {
         var perspective = mat4.create();
         mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);
         mat4.mul(perspective, perspective, modelView);
 
-        var mouseClipNear:Float32Array = this.unproject(this.x, this.y, -1, perspective, [0, 0, 600, 600]);
-        var mouseClipFar:Float32Array = this.unproject(this.x, this.y, 0, perspective, [0, 0, 600, 600]);
+        var mouseClipNear:vec3 = this.unproject(this.x, this.y, -1, perspective, [0, 0, 600, 600]);
+        var mouseClipFar:vec3 = this.unproject(this.x, this.y, 0, perspective, [0, 0, 600, 600]);
 
         var dir = vec3.create();
         vec3.sub(dir, mouseClipFar, mouseClipNear);
@@ -37,7 +34,7 @@ class Ray {
      * @param modelView The matrix representing the modelView
      * @param yPosition (optional) raise the yPlane by the specified amount
      */
-    getYPlaneIntersection(modelView:Float32Array, yPosition?:number): number[]{
+    getYPlaneIntersection(modelView:mat4, yPosition?:number): number[]{
         var dir = this.getInWorld(modelView);
         var inverseCamera = mat4.create();
         mat4.invert(inverseCamera, modelView);

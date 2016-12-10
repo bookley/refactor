@@ -1,4 +1,5 @@
 import {Mesh} from "./mesh";
+import {mat4} from 'gl-matrix';
 /**
  * Created by Jamie on 25-Jul-15.
  */
