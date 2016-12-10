@@ -19,7 +19,7 @@ class Ray {
     /**
      * @param modelView The matrix representing the modelView
      */
-    getInWorld(modelView:Float32Array):Float32Array{
+    getInWorld(modelView:Float32Array): Float32Array {
         var perspective = mat4.create();
         mat4.perspective(perspective, 45, 800 / 600, 0.1, 100.0);
         mat4.mul(perspective, perspective, modelView);
@@ -37,7 +37,7 @@ class Ray {
      * @param modelView The matrix representing the modelView
      * @param yPosition (optional) raise the yPlane by the specified amount
      */
-    getYPlaneIntersection(modelView:Float32Array, yPosition?:number):number[]{
+    getYPlaneIntersection(modelView:Float32Array, yPosition?:number): number[]{
         var dir = this.getInWorld(modelView);
         var inverseCamera = mat4.create();
         mat4.invert(inverseCamera, modelView);

@@ -5,7 +5,7 @@ import Engine = require("../../engine");
  */
 
 
-class Peon extends GameObject{
+class Peon extends GameObject {
 
     engine:Engine;
 
