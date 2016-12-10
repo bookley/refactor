@@ -1,0 +1,8 @@
+<component name="libraryTable">
+  <library name="glmatrix" type="javaScript">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/js/lib/gl-matrix.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

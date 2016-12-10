@@ -1,0 +1,12 @@
+{
+  "name": "WebGL2",
+  "version": "0.0.0",
+  "authors": [
+    "Jamie <jbuckley760@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jasmine": "~2.3.4",
+    "chai": "~3.3.0"
+  }
+}
