@@ -148,7 +148,7 @@ class Engine {
 
         this.graphics.createShader("InstancedShader", "instancedVert", "texturedFrag",
             ["aVertexPosition", "aVertexNormal", "aTexCoords"],
-            ["uPMatrix", "uCMatrix", "lightDirection"]);
+            ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
 
     }
 }

@@ -46,13 +46,13 @@ class MeshHelper {
         ];
 
         var mesh = new Mesh(this.ctx);
-        mesh.LoadVertices(vertices, indices, null, normals, texCoords);
+        mesh.loadVertices(vertices, indices, null, normals, texCoords);
         return mesh;
     }
 
     CreateMeshFromAsset(asset) {
         var mesh = new Mesh(this.ctx);
-        mesh.LoadVerticesFromFile(asset.data);
+        mesh.loadVerticesFromFile(asset.data);
         return mesh;
     }
 }

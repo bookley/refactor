@@ -9,5 +9,5 @@
         if(texColor.a <= 0.0)
             discard;
 
-        gl_FragColor =  + vec4(texColor.rgb, 1.0);
+        gl_FragColor = vec4(texColor.rgb, 1.0);
     }

@@ -245,9 +245,9 @@
 	                continue;
 	            var modelMatrix = entity.getMatrix();
 	            if (entity.texture != null) {
-	                entity.texture.Bind();
+	                entity.texture.bind();
 	            }
-	            entity.mesh.Draw(this.currentShader, modelMatrix);
+	            entity.mesh.draw(this.currentShader, modelMatrix);
 	        }
 	    };
 	    /**
@@ -269,7 +269,7 @@
 	        for (var i = 0; i < scenegraph.graph.length; i++) {
 	            var entity = scenegraph.graph[i];
 	            var modelMatrix = entity.getMatrix();
-	            entity.mesh.DrawNormals(this.currentShader, modelMatrix);
+	            entity.mesh.drawNormals(this.currentShader, modelMatrix);
 	        }
 	    };
 	    Graphics.prototype.instancedDraw = function (camera) {
@@ -425,12 +425,12 @@
 	            0.0, 0.0,
 	        ];
 	        var mesh = new mesh_1.Mesh(this.ctx);
-	        mesh.LoadVertices(vertices, indices, null, normals, texCoords);
+	        mesh.loadVertices(vertices, indices, null, normals, texCoords);
 	        return mesh;
 	    };
 	    MeshHelper.prototype.CreateMeshFromAsset = function (asset) {
 	        var mesh = new mesh_1.Mesh(this.ctx);
-	        mesh.LoadVerticesFromFile(asset.data);
+	        mesh.loadVerticesFromFile(asset.data);
 	        return mesh;
 	    };
 	    return MeshHelper;
@@ -459,11 +459,11 @@
 	        this.texturePositionBuffer = ctx.createBuffer();
 	        this.normalLines = [];
 	    }
-	    Mesh.prototype.LoadVerticesFromFile = function (file) {
+	    Mesh.prototype.loadVerticesFromFile = function (file) {
 	        var modelData = new ObjLoader().readFile(file);
-	        this.LoadVertices(modelData.vertices, modelData.indices, modelData.colors, modelData.normals, modelData.texCoords);
+	        this.loadVertices(modelData.vertices, modelData.indices, modelData.colors, modelData.normals, modelData.texCoords);
 	    };
-	    Mesh.prototype.LoadVertices = function (vertices, indices, colors, normals, texCoords) {
+	    Mesh.prototype.loadVertices = function (vertices, indices, colors, normals, texCoords) {
 	        this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
 	        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(vertices), this.ctx.STATIC_DRAW);
 	        this.vertices = vertices;
@@ -491,7 +491,7 @@
 	            this.normalLines.push(line);
 	        }
 	    };
-	    Mesh.prototype.DrawNormals = function (shader, modelMatrix) {
+	    Mesh.prototype.drawNormals = function (shader, modelMatrix) {
 	        for (var i = 0; i < this.normalLines.length; i++) {
 	            this.normalLines[i].Draw(shader, modelMatrix);
 	        }
@@ -517,7 +517,7 @@
 	        this.bindTextureCoordinatesBuffer(shader);
 	        this.bindIndexBuffer(shader);
 	    };
-	    Mesh.prototype.Draw = function (shader, modelMatrix) {
+	    Mesh.prototype.draw = function (shader, modelMatrix) {
 	        //Need to have texture//colours bound at this point
 	        //if this.material -> this.material.bind
 	        //add something to notify if shader.attributes["name"] doesn't exist
@@ -818,7 +818,7 @@
 	        this.ctx.generateMipmap(this.ctx.TEXTURE_2D);
 	        this.ctx.bindTexture(this.ctx.TEXTURE_2D, null);
 	    }
-	    Texture.prototype.Bind = function () {
+	    Texture.prototype.bind = function () {
 	        this.ctx.enable(this.ctx.BLEND);
 	        this.ctx.blendFunc(this.ctx.SRC_ALPHA, this.ctx.ONE_MINUS_SRC_ALPHA);
 	        this.ctx.activeTexture(this.ctx.TEXTURE0);
@@ -949,7 +949,7 @@
 	        this.bindIndexBuffer(shader);
 	    };
 	    TileMapRenderer.prototype.draw = function (shader) {
-	        this.tileMap.getImageMap().getTexture().Bind();
+	        this.tileMap.getImageMap().getTexture().bind();
 	        this.bindBuffers(shader);
 	        this.ctx.drawElements(this.ctx.TRIANGLES, this.indices.length, this.ctx.UNSIGNED_SHORT, 0);
 	    };

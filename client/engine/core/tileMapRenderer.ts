@@ -1,3 +1,4 @@
+import {mat4, vec3} from 'gl-matrix';
 import {TileMap, TileLevel, TileMapTile} from "../game/tileMap";
 import Shader = require("./shaders");
 /**
@@ -78,8 +79,13 @@ class TileMapRenderer {
         this.bindIndexBuffer(shader);
     }
 
-    draw(shader:Shader){
-        this.tileMap.getImageMap().getTexture().Bind();
+    draw(shader:Shader, perspectiveMatrix:mat4, cameraMatrix:mat4, modelMatrix:mat4, lightDirection:vec3){
+        shader.passMatrix("uPMatrix", perspectiveMatrix);
+        shader.passVec3("lightDirection", lightDirection);
+        shader.passMatrix("uCMatrix", cameraMatrix);
+        shader.passMatrix("uMVMatrix", modelMatrix);
+
+        this.tileMap.getImageMap().getTexture().bind();
         this.bindBuffers(shader);
         this.ctx.drawElements(this.ctx.TRIANGLES, this.indices.length, this.ctx.UNSIGNED_SHORT, 0);
     }

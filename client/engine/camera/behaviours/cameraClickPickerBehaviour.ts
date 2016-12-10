@@ -24,6 +24,7 @@ export class CameraClickPickerBehaviour implements CameraClickBehaviour {
     }
 
     private getClipCameraPosition(position:MousePosition) : MousePosition {
+        console.log(position);
         var x:number = ((position.x * 2) / this.viewportWidth) - 1;
         var y:number = 1.0 - ((position.y * 2) / this.viewportHeight);
 

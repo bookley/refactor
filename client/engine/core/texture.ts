@@ -23,7 +23,7 @@ class Texture {
         this.ctx.bindTexture(this.ctx.TEXTURE_2D, null);
     }
 
-    Bind(){
+    bind(){
         this.ctx.enable(this.ctx.BLEND);
         this.ctx.blendFunc(this.ctx.SRC_ALPHA, this.ctx.ONE_MINUS_SRC_ALPHA);
         this.ctx.activeTexture(this.ctx.TEXTURE0);

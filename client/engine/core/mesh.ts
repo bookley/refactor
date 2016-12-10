@@ -1,6 +1,7 @@
 import ObjLoader = require("./filetypes/objloader");
 import DebugLine = require("./debugLine");
 import {vec3, mat4} from 'gl-matrix';
+import Shader = require("./shaders");
 
 export class Mesh {
     ctx:WebGLRenderingContext;
@@ -11,7 +12,6 @@ export class Mesh {
     texturePositionBuffer:WebGLBuffer;
 
     normalLines:DebugLine[];
-
     numIndices:number;
     vertices:number[];
     normals:number[];
@@ -28,12 +28,12 @@ export class Mesh {
         this.normalLines = [];
     }
 
-    LoadVerticesFromFile(file:string){
+    loadVerticesFromFile(file:string){
         var modelData = new ObjLoader().readFile(file);
-        this.LoadVertices(modelData.vertices, modelData.indices, modelData.colors, modelData.normals, modelData.texCoords);
+        this.loadVertices(modelData.vertices, modelData.indices, modelData.colors, modelData.normals, modelData.texCoords);
     }
 
-    LoadVertices(vertices:number[], indices:number[], colors:number[], normals:number[], texCoords:number[]){
+    loadVertices(vertices:number[], indices:number[], colors:number[], normals:number[], texCoords:number[]){
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
         this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(vertices), this.ctx.STATIC_DRAW);
         this.vertices = vertices;
@@ -70,7 +70,7 @@ export class Mesh {
         }
     }
 
-    DrawNormals(shader:any, modelMatrix:mat4):void {
+    drawNormals(shader:any, modelMatrix:mat4):void {
         for(var i = 0; i < this.normalLines.length; i++){
             this.normalLines[i].Draw(shader, modelMatrix);
         }
@@ -95,28 +95,22 @@ export class Mesh {
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
     }
 
-    bindBuffers(shader:any, modelMatrix:mat4):void {
+    draw(shader:Shader, perspectiveMatrix:mat4, cameraMatrix:mat4, modelMatrix:mat4, lightDirection:vec3): void {
+        shader.passMatrix("uMVMatrix", modelMatrix);
+        shader.passMatrix("uPMatrix", perspectiveMatrix);
+        shader.passVec3("lightDirection", lightDirection);
+        shader.passMatrix("uCMatrix", cameraMatrix);
+
         this.bindPositionBuffer(shader);
         this.bindNormalBuffer(shader);
         this.bindTextureCoordinatesBuffer(shader);
         this.bindIndexBuffer(shader);
-    }
-
-    Draw(shader:any, modelMatrix:mat4):void{
-        //Need to have texture//colours bound at this point
-        //if this.material -> this.material.bind
-        //add something to notify if shader.attributes["name"] doesn't exist
-        //console.log("drawing");
-        this.bindBuffers(shader, modelMatrix);
-        shader.passMatrix("uMVMatrix", modelMatrix);
 
         this.ctx.drawElements(this.ctx.TRIANGLES, this.numIndices, this.ctx.UNSIGNED_SHORT, 0);
     }
 
     getBoundingCube(): BoundingCube{
         var boundingCube = new BoundingCube();
-        //console.log(this.vertices);
-
         for(var i = 0; i < this.vertices.length/3; i++) {
             var currentVertex = {
                 x: this.vertices[i * 3],

@@ -1,4 +1,4 @@
-import * as GLM from "gl-matrix";
+import {mat4, vec3} from 'gl-matrix';
 
 import Shader = require("./shaders");
 import AssetCollection = require("./assets/assetCollection");
@@ -10,7 +10,7 @@ import {AssetLoader} from "./assets/assetLoader";
  */
 export class Graphics {
     static DRAW_DEBUG_INFO:boolean = false;
-    static DEFAULT_LIGHT_DIRECTION:number[] = [0, -1, 0];
+    static DEFAULT_LIGHT_DIRECTION:vec3 = vec3.fromValues(0, -1, 0);
     static DEFAULT_CLEAR_COLOR = {
         r:1,
         g:1,
@@ -22,7 +22,7 @@ export class Graphics {
     viewportWidth:number;
     viewportHeight:number;
 
-    _lightDir:number[];
+    _lightDir:vec3;
     currentShader:Shader;
     pMatrix:Float32Array;
 
@@ -80,12 +80,7 @@ export class Graphics {
      */
     draw(camera, scenegraph) {
         this.context.setVertexAttribArrayEnabled(3, false);
-        /* Mesh position */
-        this.currentShader.passMatrix("uPMatrix", camera.getPerspectiveMatrix());
-        this.currentShader.passVec3("lightDirection", this._lightDir);
-
         if (!camera) throw new Error("Can't draw if a camera isn't set");
-        this.currentShader.passMatrix("uCMatrix", camera.getMatrix());
         this.ctx.enable(this.ctx.DEPTH_TEST);
         for (var i = 0; i < scenegraph.graph.length; i++) {
             var entity = scenegraph.graph[i];
@@ -93,9 +88,9 @@ export class Graphics {
 
             var modelMatrix = entity.getMatrix();
             if (entity.texture != null) {
-                entity.texture.Bind();
+                entity.texture.bind();
             }
-            entity.mesh.Draw(this.currentShader, modelMatrix);
+            entity.mesh.draw(this.currentShader, camera.getPerspectiveMatrix(), camera.getMatrix(), modelMatrix, this._lightDir);
         }
     }
 
@@ -113,14 +108,14 @@ export class Graphics {
         this.currentShader.passMatrix("uCMatrix", camera.GetMatrix());
         for(var i = 0; i < scenegraph.debugGraph.length; i++){
             var line = scenegraph.debugGraph[i];
-            line.draw(this.currentShader, GLM.mat4.create());
+            line.draw(this.currentShader, mat4.create());
         }
 
 
         for(var i = 0; i < scenegraph.graph.length; i++){
             var entity = scenegraph.graph[i];
             var modelMatrix = entity.getMatrix();
-            entity.mesh.DrawNormals(this.currentShader, modelMatrix);
+            entity.mesh.drawNormals(this.currentShader, modelMatrix);
         }
     }
 
@@ -129,12 +124,11 @@ export class Graphics {
         this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
 
         /* Mesh position */
-        this.currentShader.passMatrix("uPMatrix", camera.getPerspectiveMatrix());
-        this.currentShader.passVec3("lightDirection", this._lightDir);
-
         if (!camera) throw new Error("Can't draw if a camera isn't set");
-        this.currentShader.passMatrix("uCMatrix", camera.getMatrix());
 
-        this.tileMapRenderer.draw(this.currentShader);
+        var identity: mat4 = mat4.create();
+        identity = mat4.identity(identity);
+
+        this.tileMapRenderer.draw(this.currentShader, camera.getPerspectiveMatrix(), camera.getMatrix(), identity, this._lightDir);
     }
 }
