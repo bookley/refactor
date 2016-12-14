@@ -72,13 +72,6 @@ class TileMapRenderer {
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
     }
 
-    bindBuffers(shader:any):void {
-        this.bindPositionBuffer(shader);
-        this.bindNormalBuffer(shader);
-        this.bindTextureCoordinatesBuffer(shader);
-        this.bindIndexBuffer(shader);
-    }
-
     draw(shader:Shader, perspectiveMatrix:mat4, cameraMatrix:mat4, modelMatrix:mat4, lightDirection:vec3){
         shader.passMatrix("uPMatrix", perspectiveMatrix);
         shader.passVec3("lightDirection", lightDirection);
@@ -86,7 +79,10 @@ class TileMapRenderer {
         shader.passMatrix("uMVMatrix", modelMatrix);
 
         this.tileMap.getImageMap().getTexture().bind();
-        this.bindBuffers(shader);
+        this.bindPositionBuffer(shader);
+        this.bindNormalBuffer(shader);
+        this.bindTextureCoordinatesBuffer(shader);
+        this.bindIndexBuffer(shader);
         this.ctx.drawElements(this.ctx.TRIANGLES, this.indices.length, this.ctx.UNSIGNED_SHORT, 0);
     }
 
