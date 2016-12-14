@@ -5,6 +5,7 @@ import AssetCollection = require("./assets/assetCollection");
 import TileMapRenderer = require("./tileMapRenderer");
 import {Context, DefaultContext} from "./context";
 import {AssetLoader} from "./assets/assetLoader";
+import {Asset} from "./assets/asset";
 /**
  * Responsible for initializing and maintaining the main WebGL context
  */
@@ -55,7 +56,7 @@ export class Graphics {
         this.context.clearColor(r, g, b, 1.0);
     }
 
-    setAssets(assetLoader:AssetLoader) {
+    setAssets(assetLoader:Array<Asset>) {
         this.assetCollection.setAssets(assetLoader);
     }
 

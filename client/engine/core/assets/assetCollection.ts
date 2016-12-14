@@ -30,10 +30,17 @@ class AssetCollection {
         this.fontsFiles = [];
     }
 
-    setAssets(assetLoader:AssetLoader) {
-        var self = this;
-        self.addMesh("square", this.meshHelper.makeSquare());
-
+    setAssets(assets:Array<Asset>) {
+        this.addMesh("square", this.meshHelper.makeSquare());
+        assets.forEach((asset) => {
+           if(asset.type == "mesh")
+               this.addMesh(asset.name, this.meshHelper.CreateMeshFromAsset(asset));
+           if(asset.type == "texture")
+               this.addTexture(asset.name, new Texture(this.ctx, asset.data));
+           if(asset.type == "shader")
+               this.addShaderFile(asset.name, asset);
+        });
+/*
         assetLoader.getByType("mesh").forEach(function(meshAsset){
             self.addMesh(meshAsset.name, self.meshHelper.CreateMeshFromAsset(meshAsset));
         });
@@ -49,7 +56,7 @@ class AssetCollection {
 
         assetLoader.getByType("fnt").forEach(function(shaderAsset){
             self.addShaderFile(shaderAsset.name, shaderAsset);
-        });
+        });*/
     }
 
     addMesh(name:string, mesh:Mesh){

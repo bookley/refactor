@@ -8,8 +8,12 @@
   },
   "dependencies": {
     "@types/gl-matrix": "^2.2.34",
+    "@types/inversify": "^2.0.31",
     "express": "^4.13.3",
     "gl-matrix": "^2.3.2",
+    "inversify": "^3.0.0-rc.2",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "^5.0.1",
     "source-map-loader": "^0.1.5",
     "ts-loader": "^1.3.0",
     "typescript": "^2.1.4"
@@ -22,6 +26,7 @@
   "license": "ISC",
   "devDependencies": {
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "webpack-fail-plugin": "^1.0.5"
   }
 }

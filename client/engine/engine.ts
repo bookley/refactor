@@ -1,7 +1,7 @@
 import assetUrls from "./assetsUrls";
+import {Container} from "inversify";
 import {Graphics} from "./core/graphics";
 import {AssetLoader} from "./core/assets/assetLoader";
-
 import {Camera} from "./camera/camera";
 import {InputListener} from "./input/input";
 import {Scene} from "./game/scene";
@@ -13,13 +13,10 @@ class Engine {
     canvas:HTMLCanvasElement;
     camera:Camera;
     input:InputListener;
-
     graphics:Graphics;
     assetLoader:AssetLoader;
-
     sceneGraph:Scenegraph;
     scene:Scene;
-
     ready:boolean;
 
     /**
@@ -30,42 +27,31 @@ class Engine {
     constructor(canvas:string, sceneClass) {
         var self = this;
         this.ready = false;
-
-        //Dep 1
         this.canvas = <HTMLCanvasElement>document.getElementById(canvas);
+        let container = new Container();
 
-        //Dep 2
+
         this.camera = new Camera(this.canvas.width, this.canvas.height, 45, 1, 100);
-
-        //Dep 3
         this.graphics = new Graphics(this.canvas);
-
-        //Dep 4
         this.input = new InputListener(this.canvas);
         this.input.ControlCamera(this.camera);
-
-        //Dep 5
         this.sceneGraph = new Scenegraph();
-
-        //Dep 6
         this.scene = new sceneClass(this);
 
-        //Dep 7
         var pickingBehaviour = new CameraClickPickerBehaviour(this.sceneGraph, this.camera);
         pickingBehaviour.setViewportDimensions(this.graphics.viewportWidth, this.graphics.viewportHeight);
-        this.input.setOnCameraClickBehaviour(pickingBehaviour);
 
-        //Dep 8
+        this.input.setOnCameraClickBehaviour(pickingBehaviour);
         this.assetLoader = new AssetLoader(assetUrls);
-        this.assetLoader.loadAll().then(function () {
-            self.ready = true;
-            self.graphics.setAssets(self.assetLoader);
-            self.loadShaders();
-            engine.input.setMouseMoveListener(self.scene);
-            self.scene.onStart();
-        }).catch(function(err){
-            console.error(err.stack);
-        });
+        this.assetLoader.loadAll(assetUrls)
+            .subscribe((assets) => {
+                this.ready = true;
+                console.log(assets);
+                this.graphics.setAssets(assets);
+                this.loadShaders();
+                this.input.setMouseMoveListener(self.scene);
+                this.scene.onStart();
+            });
     }
 
     loadShaders(){

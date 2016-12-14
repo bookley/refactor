@@ -2,7 +2,7 @@ module.exports = {
     entry: './client/engine/engine.ts',
     output: {
         filename: "bundle.js",
-        path: __dirname + "/dist",
+        path: __dirname + "\\dist\\",
         publicPath: "http://localhost:8000",
     },
     devtool: "source-map",

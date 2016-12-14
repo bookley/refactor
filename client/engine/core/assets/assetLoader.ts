@@ -1,5 +1,6 @@
 import {Asset} from "./asset";
 import {RemoteAsset} from "./remoteAsset";
+import {Observable, Observer} from "rxjs";
 
 declare var Promise: any;
 
@@ -7,12 +8,27 @@ declare var Promise: any;
  * Responsible for resolving a collection of urls into asset objects
  */
 export class AssetLoader {
-    urls:RemoteAsset[];
     assets:Asset[];
 
     constructor(urls:RemoteAsset[]) {
-        this.urls = urls;
         this.assets = [];
+    }
+
+    /**
+     * Loads all assets at the specified urls, and returns the assets
+     * @param urls
+     * @returns {any}
+     */
+    loadAll(urls:Array<RemoteAsset>): Observable<Asset[]>{
+        return Observable.from(urls).do(url => {
+           console.log(url);
+        })
+        .flatMap((remoteAsset: RemoteAsset) => {
+            if(remoteAsset.type === "texture")
+                return this.resolveImage(remoteAsset.url, remoteAsset.name, remoteAsset.type);
+            else
+                return this.resolveAsset(remoteAsset.url, remoteAsset.name, remoteAsset.type);
+        }).toArray();
     }
 
     /**
@@ -21,72 +37,49 @@ export class AssetLoader {
      * @returns {Promise} Called when the asset file has been downloaded
      * @constructor
      */
-    resolveFile(url:string){
-        var promise = new Promise(function(resolve, reject){
+    private resolveFile(url:string): Observable<String> {
+        return Observable.create(subscriber => {
             var request = new XMLHttpRequest();
             request.open("GET", url, true);
             request.onreadystatechange = function(){
                 if(request.readyState == 0 || request.readyState==4){
                     if(request.status == 200){
-                        resolve(request.responseText);
+                        subscriber.next(request.responseText);
+                        subscriber.complete();
                     } else {
-                        reject(request.status + " " + request.responseText);
+                        subscriber.error(new Error(request.status + " " + request.responseText));
                     }
                 }
             }
             request.send();
         });
-        return promise;
     }
 
-    resolveAsset(url:string, name:string, type:string){
-        var self = this;
-        var promise = new Promise(function(resolve, reject){
-            self.resolveFile(url).then(function(data){
-                self.assets[name] = new Asset(data, name, type);
-                console.log("Resolved asset " + name);
-                resolve();
-            });
-        })
-        return promise;
+    private resolveAsset(url:string, name:string, type:string): Observable<Asset> {
+        return this.resolveFile(url).map((data) => {
+            return new Asset(data, name, type);
+        });
     }
 
-    resolveImage(url, name, type){
-        var self = this;
-        var promise = new Promise(function(resolve, reject){
-            var image = new Image();
+    private resolveImage(url:string, name:string, type:string): Observable<Asset> {
+        return Observable.create(subscriber => {
+            let image = new Image();
             image.onload = function(){
                 console.log("image loaded");
-                self.assets[name] = new Asset(image, name, type);
-                resolve();
+                subscriber.next(new Asset(image, name, type));
+                subscriber.complete();
             };
+
+            image.addEventListener("error", (er:ErrorEvent) => subscriber.error(er));
             image.src = url;
         });
-        return promise;
     }
 
-    loadAll(){
-        var promises = [];
-        for(var i = 0; i < this.urls.length; i++){
-            if(this.urls[i].type != "texture")
-                promises.push(this.resolveAsset(this.urls[i].url, this.urls[i].name, this.urls[i].type));
-            else
-                promises.push(this.resolveImage(this.urls[i].url, this.urls[i].name, this.urls[i].type));
-        }
-
-        var loadingPromise = Promise.all(promises).then(function(){
-            console.log("All _textureAssets loaded");
-        }).catch(function(){
-            console.log("Failed to load _textureAssets");
-        });
-        return loadingPromise;
-    }
-
-    getAsset(assetName):Asset{
+    getAsset(assetName): Asset{
         return this.assets[assetName];
     }
 
-    getByType(type):Asset[]{
+    getByType(type): Asset[]{
         var results = [];
         var keys = Object.keys(this.assets);
         for(var i = 0; i < keys.length; i++){
