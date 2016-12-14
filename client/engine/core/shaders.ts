@@ -4,8 +4,8 @@ class Shader {
     vSource:string;
     fSource:string;
 
-    uniforms:string[];
-    attributes:string[];
+    uniforms:WebGLUniformLocation[];
+    attributes:WebGLUniformLocation[];
 
     shaderProgram:WebGLProgram;
 
@@ -33,12 +33,12 @@ class Shader {
         ctx.linkProgram(this.shaderProgram);
     }
 
-    LoadUniforms(uniformNames:string[]){
-        this.Activate();
+    public loadUniforms(uniformNames:string[]): void {
+        this.activate();
 
         for(var i = 0; i < uniformNames.length; i++) {
             var unifName = uniformNames[i];
-            var unifLoc = this.ctx.getUniformLocation(this.shaderProgram, unifName);
+            let unifLoc = this.ctx.getUniformLocation(this.shaderProgram, unifName);
 
             if(unifLoc == null){
                 throw new Error("Error loading uniform " + unifName);
@@ -47,8 +47,8 @@ class Shader {
         }
     }
 
-    LoadAttributes(attributeNames:string[]){
-        this.Activate();
+    public loadAttributes(attributeNames:string[]): void {
+        this.activate();
 
         for(var i = 0; i < attributeNames.length; i++) {
             var attribName = attributeNames[i];
@@ -61,11 +61,11 @@ class Shader {
         }
     }
 
-    Activate() : void {
+    public activate(): void {
         this.ctx.useProgram(this.shaderProgram);
     }
 
-    Deactivate() : void {
+    public deactivate(): void {
         this.ctx.useProgram(null);
 
         this.attributes.forEach(function(element){
@@ -74,11 +74,11 @@ class Shader {
 
     }
 
-    passMatrix(uniformName, matrix) : void{
+    public passMatrix(uniformName, matrix) : void{
         this.ctx.uniformMatrix4fv(this.uniforms[uniformName], false, matrix);
     }
 
-    passVec3(uniformName, vector) : void {
+    public passVec3(uniformName, vector) : void {
         this.ctx.uniform3f(this.uniforms[uniformName], vector[0], vector[1], vector[2]);
     }
 }

@@ -46,8 +46,7 @@ class Engine {
         this.assetLoader.loadAll(assetUrls)
             .subscribe((assets) => {
                 this.ready = true;
-                console.log(assets);
-                this.graphics.setAssets(assets);
+                this.graphics.assetCollection.setAssets(assets);
                 this.loadShaders();
                 this.input.setMouseMoveListener(self.scene);
                 this.scene.onStart();
@@ -55,21 +54,21 @@ class Engine {
     }
 
     loadShaders(){
-        this.graphics.createShader("TexturedShader", "texturedVert", "texturedFrag",
-            ["aVertexPosition", "aVertexNormal", "aTexCoords"],
-            ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
+        this.graphics.assetCollection.createShader({
+           name: "TexturedShader",
+            vertexShaderFile: "texturedVert",
+            fragmentShaderFile: "texturedFrag",
+            uniformNames: ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"],
+            attributeNames: ["aVertexPosition", "aVertexNormal", "aTexCoords"]
+        });
 
-
-        this.graphics.createShader("DebugShader", "debugVert", "debugFrag",
-            ["aVertexPosition", "aVertexColour"],
-            ["uMVMatrix", "uPMatrix", "uCMatrix"]);
-
-
-
-        this.graphics.createShader("InstancedShader", "instancedVert", "texturedFrag",
-            ["aVertexPosition", "aVertexNormal", "aTexCoords"],
-            ["uMVMatrix", "uPMatrix", "uCMatrix", "lightDirection"]);
-
+        this.graphics.assetCollection.createShader({
+            name: "DebugShader",
+            vertexShaderFile: "debugVert",
+            fragmentShaderFile: "debugFrag",
+            uniformNames: ["uMVMatrix", "uPMatrix", "uCMatrix"],
+            attributeNames: ["aVertexPosition", "aVertexColour"]
+        });
     }
 }
 
@@ -80,7 +79,7 @@ function loop(){
         engine.input.Update();
         engine.sceneGraph.update(0);
 
-        engine.graphics.useShader("InstancedShader");
+        engine.graphics.useShader("TexturedShader");
         engine.graphics.instancedDraw(engine.camera);
 
         engine.graphics.useShader("TexturedShader");

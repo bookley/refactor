@@ -9,7 +9,7 @@ import {AssetLoader} from "./assetLoader";
 /**
  * Responsible for turning a collection of resolved remote assets into real assets (Textures/Meshes etc.) and storing them
  */
-class AssetCollection {
+export class AssetCollection {
     ctx:WebGLRenderingContext;
     meshHelper:MeshHelper;
 
@@ -40,23 +40,6 @@ class AssetCollection {
            if(asset.type == "shader")
                this.addShaderFile(asset.name, asset);
         });
-/*
-        assetLoader.getByType("mesh").forEach(function(meshAsset){
-            self.addMesh(meshAsset.name, self.meshHelper.CreateMeshFromAsset(meshAsset));
-        });
-
-
-        assetLoader.getByType("texture").forEach(function(textureAsset){
-            self.addTexture(textureAsset.name, new Texture(self.ctx, textureAsset.data));
-        });
-
-        assetLoader.getByType("shader").forEach(function(shaderAsset){
-            self.addShaderFile(shaderAsset.name, shaderAsset);
-        });
-
-        assetLoader.getByType("fnt").forEach(function(shaderAsset){
-            self.addShaderFile(shaderAsset.name, shaderAsset);
-        });*/
     }
 
     addMesh(name:string, mesh:Mesh){
@@ -71,42 +54,44 @@ class AssetCollection {
         this.shaderFiles[name] = shaderFile;
     }
 
-    addFont(name:string, fontFile:Asset){
-        this.fontsFiles[name] = fontFile;
-    }
-
-    createShader(shaderName:string, vShaderName:string, fShaderName:string, attributes:string[], uniforms:string[]) {
-        var vShader = this.getShaderFile(vShaderName);
-        var fShader = this.getShaderFile(fShaderName);
+    createShader(options:ShaderOptions) {
+        var vShader = this.getShaderFile(options.vertexShaderFile);
+        var fShader = this.getShaderFile(options.fragmentShaderFile);
         var mainShader = new Shader(this.ctx, vShader.data, fShader.data);
-        mainShader.LoadAttributes(attributes);
-        mainShader.LoadUniforms(uniforms);
-        this.shaders[shaderName] = mainShader;
+        mainShader.loadAttributes(options.attributeNames);
+        mainShader.loadUniforms(options.uniformNames);
+        this.shaders[options.name] = mainShader;
     }
 
-    getMesh(meshName):Mesh {
+    public getMesh(meshName): Mesh {
         var mesh = this.meshes[meshName];
         if (mesh == null) throw new Error("Attempted to access mesh '" + meshName + "', but this mesh could not be found");
         return mesh;
     }
 
-    getTexture(textureName):Texture {
+    public getTexture(textureName): Texture {
         var texture = this.textures[textureName];
         if (texture == null) throw new Error("Attempted to access texture '" + textureName + "', but this texture could not be found");
         return texture;
     }
 
-    getShaderFile(shaderFileName):Asset{
+    public getShaderFile(shaderFileName): Asset{
         var shaderFile = this.shaderFiles[shaderFileName];
         if (shaderFile == null) throw new Error("Attempted to access shaderFile '" + shaderFileName + "', but this shaderFile could not be found");
         return shaderFile;
     }
 
-    getShader(shaderName):Shader {
+    public getShader(shaderName): Shader {
         var shader = this.shaders[shaderName];
         if (shader == null) throw new Error("Attempted to access shader '" + shaderName + "', but this shader could not be found");
         return shader;
     }
 }
 
-export = AssetCollection;
+export interface ShaderOptions {
+    name: string;
+    vertexShaderFile: string;
+    fragmentShaderFile: string;
+    attributeNames: string[];
+    uniformNames: string[];
+}

@@ -1,7 +1,7 @@
 import {mat4, vec3} from 'gl-matrix';
 
 import Shader = require("./shaders");
-import AssetCollection = require("./assets/assetCollection");
+import {AssetCollection} from "./assets/assetCollection";
 import TileMapRenderer = require("./tileMapRenderer");
 import {Context, DefaultContext} from "./context";
 import {AssetLoader} from "./assets/assetLoader";
@@ -56,17 +56,9 @@ export class Graphics {
         this.context.clearColor(r, g, b, 1.0);
     }
 
-    setAssets(assetLoader:Array<Asset>) {
-        this.assetCollection.setAssets(assetLoader);
-    }
-
-    createShader(shaderName:string, vShaderName:string, fShaderName:string, attributes:string[], uniforms:string[]) {
-        this.assetCollection.createShader(shaderName, vShaderName, fShaderName, attributes, uniforms);
-    }
-
     useShader(shaderName) {
         this.currentShader = this.assetCollection.getShader(shaderName);
-        this.currentShader.Activate();
+        this.currentShader.activate();
     }
 
     setLightDir(vec) {
