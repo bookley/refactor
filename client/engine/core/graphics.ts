@@ -25,7 +25,6 @@ export class Graphics {
 
     _lightDir:vec3;
     currentShader:Shader;
-    pMatrix:Float32Array;
 
     assetCollection:AssetCollection;
     tileMapRenderer:TileMapRenderer;
