@@ -35,7 +35,7 @@ export class Mesh {
 
     loadVertices(vertices:number[], indices:number[], colors:number[], normals:number[], texCoords:number[]){
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
-        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(vertices), this.ctx.STATIC_DRAW);
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, Float32Array.from(vertices).buffer, this.ctx.STATIC_DRAW);
         this.vertices = vertices;
 
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
@@ -43,19 +43,19 @@ export class Mesh {
 
         if(colors != undefined) {
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.colorBuffer);
-            this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(colors), this.ctx.STATIC_DRAW);
+            this.ctx.bufferData(this.ctx.ARRAY_BUFFER, Float32Array.from(colors), this.ctx.STATIC_DRAW);
         }
 
         if(normals != undefined) {
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
-            this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(normals), this.ctx.STATIC_DRAW);
+            this.ctx.bufferData(this.ctx.ARRAY_BUFFER, Float32Array.from(normals), this.ctx.STATIC_DRAW);
             this.normals = normals;
             this.createNormalLines();
         }
 
         if(texCoords != undefined) {
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.texturePositionBuffer);
-            this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(texCoords), this.ctx.STATIC_DRAW);
+            this.ctx.bufferData(this.ctx.ARRAY_BUFFER, Float32Array.from(texCoords), this.ctx.STATIC_DRAW);
         }
 
         this.numIndices = indices.length;
