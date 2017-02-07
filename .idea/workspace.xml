@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a88473da-e929-42ac-b80b-7d513e5f51e8" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/client/engine/camera/behaviours/arcballBehaviour.ts" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/shaders/texturedFrag.frag" afterPath="$PROJECT_DIR$/assets/shaders/texturedFrag.frag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/camera/behaviours/arcballBehaviour.ts" afterPath="$PROJECT_DIR$/client/engine/camera/behaviours/arcballBehaviour.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/camera/behaviours/cameraClickPickerBehaviour.ts" afterPath="$PROJECT_DIR$/client/engine/camera/behaviours/cameraClickPickerBehaviour.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/camera/camera.ts" afterPath="$PROJECT_DIR$/client/engine/camera/camera.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/core/assets/assetCollection.ts" afterPath="$PROJECT_DIR$/client/engine/core/assets/assetCollection.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/core/graphics.ts" afterPath="$PROJECT_DIR$/client/engine/core/graphics.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/core/imageMap.ts" afterPath="$PROJECT_DIR$/client/engine/core/imageMap.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/core/mesh.ts" afterPath="$PROJECT_DIR$/client/engine/core/mesh.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/core/shaders.ts" afterPath="$PROJECT_DIR$/client/engine/core/shaders.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/core/texture.ts" afterPath="$PROJECT_DIR$/client/engine/core/texture.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/core/tileMapRenderer.ts" afterPath="$PROJECT_DIR$/client/engine/core/tileMapRenderer.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/engine.ts" afterPath="$PROJECT_DIR$/client/engine/engine.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/game/entities/peon.ts" afterPath="$PROJECT_DIR$/client/engine/game/entities/peon.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/game/gameObject.ts" afterPath="$PROJECT_DIR$/client/engine/game/gameObject.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/game/scene.ts" afterPath="$PROJECT_DIR$/client/engine/game/scene.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/input/input.ts" afterPath="$PROJECT_DIR$/client/engine/input/input.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/engine/input/inputHandlers/mouseHandler.ts" afterPath="$PROJECT_DIR$/client/engine/input/inputHandlers/mouseHandler.ts" />
     </list>
     <ignored path="WebGL2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,45 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="scene.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="scene.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/engine/game/scene.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="23" column="9" lean-forward="false" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="engine.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/engine/engine.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="39" column="74" lean-forward="true" selection-start-line="39" selection-start-column="74" selection-end-line="39" selection-end-column="74" />
-              <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="input.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/engine/input/input.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="89" column="103" lean-forward="false" selection-start-line="89" selection-start-column="103" selection-end-line="89" selection-end-column="103" />
-              <folding>
-                <element signature="e#1#47#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="arcballBehaviour.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/engine/camera/behaviours/arcballBehaviour.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-631">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="25" selection-end-column="19" />
+            <state relative-caret-position="621">
+              <caret line="79" column="25" lean-forward="true" selection-start-line="79" selection-start-column="25" selection-end-line="79" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -85,9 +38,33 @@
       <file leaf-file-name="mouseHandler.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/engine/input/inputHandlers/mouseHandler.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="35" column="27" lean-forward="false" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
+            <state relative-caret-position="570">
+              <caret line="53" column="4" lean-forward="false" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="41" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="engine.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/engine/engine.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="502">
+              <caret line="54" column="18" lean-forward="true" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="input.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/engine/input/input.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-178">
+              <caret line="34" column="44" lean-forward="false" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
+              <folding>
+                <element signature="e#1#47#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -174,12 +151,12 @@
         <option value="$PROJECT_DIR$/client/engine/core/graphics/shadowManager.ts" />
         <option value="$PROJECT_DIR$/client/engine/core/graphics.ts" />
         <option value="$PROJECT_DIR$/client/engine/camera/behaviours/arcballBehaviour.ts" />
-        <option value="$PROJECT_DIR$/client/engine/game/scene.ts" />
         <option value="$PROJECT_DIR$/client/engine/engine.ts" />
         <option value="$PROJECT_DIR$/client/engine/camera/camera.ts" />
-        <option value="$PROJECT_DIR$/client/engine/input/inputHandlers/mouseHandler.ts" />
         <option value="$PROJECT_DIR$/client/engine/input/input.ts" />
         <option value="$PROJECT_DIR$/client/engine/input/inputHandlers/arcballCameraHandler.ts" />
+        <option value="$PROJECT_DIR$/client/engine/input/inputHandlers/mouseHandler.ts" />
+        <option value="$PROJECT_DIR$/client/engine/game/scene.ts" />
       </list>
     </option>
   </component>
@@ -249,6 +226,54 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheGameEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webgl2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="input" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TheGameEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webgl2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="input" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="inputHandlers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -381,12 +406,12 @@
       <workItem from="1483536077615" duration="596000" />
       <workItem from="1485393851727" duration="4566000" />
       <workItem from="1486076213413" duration="4610000" />
-      <workItem from="1486403029741" duration="11405000" />
+      <workItem from="1486403029741" duration="12342000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50826000" />
+    <option name="totallyTimeSpent" value="51763000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -405,7 +430,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23851775" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11087645" sideWeight="0.50625" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2812834" sideWeight="0.49375" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19679144" sideWeight="0.49375" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -450,14 +475,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/rx/ts/rx.lite.d.ts" />
-    <entry file="file://$PROJECT_DIR$/node_modules/rxjs/Rx.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/rxjs/Observer.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -686,14 +703,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/engine/game/scenegraph.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/shaders/texturedVert.vert">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -744,14 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/engine/camera/behaviours/cameraClickPickerBehaviour.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="36" column="3" lean-forward="false" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/engine/core/graphics.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1989">
@@ -769,40 +770,6 @@
           <folding>
             <element signature="e#1#44#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/engine/game/scene.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="23" column="9" lean-forward="false" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/engine/engine.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="39" column="74" lean-forward="true" selection-start-line="39" selection-start-column="74" selection-end-line="39" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/engine/input/inputHandlers/mouseHandler.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="35" column="27" lean-forward="false" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/engine/camera/behaviours/arcballBehaviour.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-631">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="25" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -824,13 +791,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/camera/behaviours/arcballBehaviour.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="59" column="51" lean-forward="false" selection-start-line="59" selection-start-column="51" selection-end-line="59" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/camera/behaviours/clickBehaviour.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/camera/behaviours/cameraClickPickerBehaviour.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="36" column="3" lean-forward="false" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/game/scenegraph.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/engine.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="54" column="18" lean-forward="true" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/engine/input/input.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="89" column="103" lean-forward="false" selection-start-line="89" selection-start-column="103" selection-end-line="89" selection-end-column="103" />
+        <state relative-caret-position="-178">
+          <caret line="34" column="44" lean-forward="false" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
           <folding>
             <element signature="e#1#47#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/game/ray.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="4" lean-forward="false" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/input/inputHandlers/mouseHandler.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="53" column="4" lean-forward="false" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/engine/game/scene.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="79" column="25" lean-forward="true" selection-start-line="79" selection-start-column="25" selection-end-line="79" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>

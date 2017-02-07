@@ -8,20 +8,22 @@ import Ray = require("./ray");
 import {ImageMap} from "../core/imageMap";
 import {mat4, vec3, vec4} from 'gl-matrix';
 import Engine = require("../engine");
+import {SimpleMouseHandler, MouseMoveEvent, MouseUpEvent} from "../input/inputHandlers/mouseHandler";
 
 
-export class Scene implements MouseMoveListener {
+export class Scene extends SimpleMouseHandler {
    engine:Engine;
    sceneGraph:Scenegraph;
 
    selectTile:Tile;
 
    constructor(engine:Engine){
+       super();
        this.engine = engine;
        this.engine.graphics._lightDir = vec3.fromValues(0, 1, 0);
        this.sceneGraph = this.engine.sceneGraph;
        this.sceneGraph.setScene(this);
-       //this.engine.input.setMouseClickListener(this);
+       this.engine.input.addMouseHandler(this);
    }
 
    drawDebugLine(p1:Float32Array, p2:Float32Array){
@@ -60,33 +62,21 @@ export class Scene implements MouseMoveListener {
        this.engine.sceneGraph.addEntity(this.selectTile);
    }
 
-    onUpdate(){
-
+    onMouseUp(evt: MouseUpEvent): void {
+       if(evt.key == 1){
+           var peon = new Peon(this.engine);
+           peon.setPosition(this.selectTile.x + 0.5, 0, this.selectTile.z + 0.5);
+           this.sceneGraph.addEntity(peon);
+       }
     }
 
-    onMouseClick(x, y){
-        var peon = new Peon(this.engine);
-        peon.setPosition(this.selectTile.x + 0.5, 0, this.selectTile.z + 0.5);
-        this.sceneGraph.addEntity(peon);
-    }
-
-    onMouseMove(fromX, fromY, toX, toY) {
-        var x:number = ((toX * 2) / 800) - 1;
-        var y:number =  1 - ((toY * 2) / 600);
+    onMouseMove(evt: MouseMoveEvent) {
+        var x:number = ((evt.x * 2) / 800) - 1;
+        var y:number =  1 - ((evt.y * 2) / 600);
 
         var ray = new Ray(x, y);
         var position = ray.getYPlaneIntersection(this.engine.camera.viewMatrix, null);
 
         this.selectTile.setPosition(position[0], 0.01, position[2]);
-    }
-
-    unproject(winx,winy,winz,mat,viewport){
-        winz = 2 * winz - 1;
-        var invMat = mat4.create();
-        mat4.invert(invMat,mat);
-        var n = vec4.fromValues(winx, winy, winz, 1);
-        vec4.transformMat4(n,n,invMat);
-        var n2 = vec3.fromValues(n[0]/n[3], n[1]/n[3], n[2]/n[3]);
-        return n2;
     }
 };

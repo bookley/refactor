@@ -45,3 +45,13 @@ export interface MouseHandler {
     onMouseUp(evt: MouseUpEvent): void;
     onMouseScroll(evt: MouseScrollEvent): void;
 }
+
+export class SimpleMouseHandler implements MouseHandler {
+    onMouseMove(evt: MouseMoveEvent): void {}
+
+    onMouseDown(evt: MouseUpEvent): void {}
+
+    onMouseUp(evt: MouseUpEvent): void {}
+
+    onMouseScroll(evt: MouseScrollEvent): void {}
+}
