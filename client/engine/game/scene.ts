@@ -7,20 +7,21 @@ import Peon = require("./entities/peon");
 import Ray = require("./ray");
 import {ImageMap} from "../core/imageMap";
 import {mat4, vec3, vec4} from 'gl-matrix';
+import Engine = require("../engine");
 
 
 export class Scene implements MouseMoveListener {
-   engine:any;
+   engine:Engine;
    sceneGraph:Scenegraph;
 
    selectTile:Tile;
 
-   constructor(engine:any){
+   constructor(engine:Engine){
        this.engine = engine;
-       this.engine.graphics._lightDir = [0, 1, 0];
+       this.engine.graphics._lightDir = vec3.fromValues(0, 1, 0);
        this.sceneGraph = this.engine.sceneGraph;
        this.sceneGraph.setScene(this);
-       this.engine.input.setMouseClickListener(this);
+       //this.engine.input.setMouseClickListener(this);
    }
 
    drawDebugLine(p1:Float32Array, p2:Float32Array){
@@ -52,7 +53,7 @@ export class Scene implements MouseMoveListener {
        tileMap.getTileLevels().push(bottomTileLevel);
 
        this.engine.graphics.tileMapRenderer.setTileMap(tileMap);
-       this.engine.graphics._lightDir = [0, 1, 0];
+       this.engine.graphics._lightDir = vec3.fromValues(0, 1, 0);
 
        this.selectTile.setPosition(0, 50, 0);
        this.selectTile.setScaleSingle(1);
@@ -74,7 +75,7 @@ export class Scene implements MouseMoveListener {
         var y:number =  1 - ((toY * 2) / 600);
 
         var ray = new Ray(x, y);
-        var position = ray.getYPlaneIntersection(this.engine.camera.getMatrix(), null);
+        var position = ray.getYPlaneIntersection(this.engine.camera.viewMatrix, null);
 
         this.selectTile.setPosition(position[0], 0.01, position[2]);
     }

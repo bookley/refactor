@@ -1,19 +1,22 @@
-import Mesh = require("../core/mesh");
 import {mat4, vec3} from 'gl-matrix';
+import {MeshInstance} from "../core/interfaces/meshInstance";
+import {Texture} from "../core/texture";
+import {Mesh, BoundingCube} from "../core/mesh";
 
-class GameObject {
-    mesh: Mesh.Mesh;
-    texture: any;
-    orientation: mat4;
-    visible:boolean = true;
+class GameObject implements MeshInstance {
 
-    x: number;
-    y: number;
-    z:number;
+    private mesh: Mesh;
+    private texture: Texture;
+    private orientation: mat4;
+    private visible:boolean = true;
 
-    scaleX: number;
-    scaleY: number;
-    scaleZ: number;
+    private _x: number;
+    private _y: number;
+    private _z:number;
+
+    private scaleX: number;
+    private scaleY: number;
+    private scaleZ: number;
 
     constructor(){
         this.orientation = mat4.create();
@@ -23,23 +26,24 @@ class GameObject {
         this.setPosition(0, 0, 0);
     }
 
-    setMesh(mesh:Mesh.Mesh){
-        this.mesh = mesh;
-    }
-
-    setTexture(texture:any){
-        this.texture = texture;
-    }
-
-    getBoundingCube() : Mesh.BoundingCube{
+    getBoundingCube() : BoundingCube {
         var boundingCube = this.mesh.getBoundingCube();
         return boundingCube;
     }
 
+    get x(): number { return this._x }
+    set x(val: number) { this._x = val; }
+
+    get y(): number { return this._y }
+    set y(val: number) { this._y = val; }
+
+    get z(): number { return this._z }
+    set z(val: number) { this._z = val; }
+
     setPosition(x: number, y:number, z:number){
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this._x = x;
+        this._y = y;
+        this._z = z;
     }
 
     setScaleSingle(scale:number) {
@@ -48,13 +52,33 @@ class GameObject {
         this.scaleZ = scale;
     }
 
-    setOrientation(orientation) {
-        this.orientation = orientation;
+    public getMesh(): Mesh {
+        return this.mesh;
     }
 
-    getMatrix():mat4 {
+    public setMesh(mesh: Mesh){
+        this.mesh = mesh;
+    }
+
+    public getTexture(): Texture {
+        return this.texture;
+    }
+
+    public setTexture(texture:Texture){
+        this.texture = texture;
+    }
+
+    public getVisible(): boolean {
+        return this.visible;
+    }
+
+    public setVisible(visible: boolean): void {
+        this.visible = visible;
+    }
+
+    public getMatrix(): mat4 {
         var matrix = mat4.create();
-        mat4.translate(matrix, matrix, vec3.fromValues(this.x, this.y, this.z));
+        mat4.translate(matrix, matrix, vec3.fromValues(this._x, this._y, this._z));
         mat4.mul(matrix, matrix, this.orientation);
 
         var scale = mat4.create();

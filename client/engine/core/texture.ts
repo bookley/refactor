@@ -1,7 +1,4 @@
-/**
- * Created by Jamie on 28-Jun-15.
- */
-class Texture {
+export class Texture {
     ctx:WebGLRenderingContext;
     image:HTMLImageElement;
     id:WebGLTexture;
@@ -23,12 +20,10 @@ class Texture {
         this.ctx.bindTexture(this.ctx.TEXTURE_2D, null);
     }
 
-    bind(){
+    bind(textureNumber:number = 0){
         this.ctx.enable(this.ctx.BLEND);
         this.ctx.blendFunc(this.ctx.SRC_ALPHA, this.ctx.ONE_MINUS_SRC_ALPHA);
-        this.ctx.activeTexture(this.ctx.TEXTURE0);
+        this.ctx.activeTexture(this.ctx.TEXTURE0 + textureNumber);
         this.ctx.bindTexture(this.ctx.TEXTURE_2D, this.id);
     }
 }
-
-export = Texture;

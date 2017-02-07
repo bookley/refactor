@@ -1,8 +1,9 @@
 
 import {MousePosition} from "./mousePosition";
-import {Arcball} from "../camera/behaviours/arcballBehaviour";
 import {CameraClickBehaviour} from "../camera/behaviours/clickBehaviour";
 import {Camera} from "../camera/camera";
+import {MouseHandler, MouseMoveEvent, MouseDownEvent, MouseScrollEvent} from "./inputHandlers/mouseHandler";
+
 export interface MouseMoveListener {
     onMouseMove(fromX, fromY, toX, toY);
 }
@@ -31,16 +32,11 @@ export class InputListener {
     isLeftMouseDown:boolean;
     isMiddleMouseDown:boolean;
 
-    cameraBehaviour:Arcball;
     cameraClickBehaviour:CameraClickBehaviour;
     camera:Camera;
     element:HTMLElement;
 
-    private mouseMoveListener:MouseMoveListener;
-    private mouseClickListener:MouseClickListener;
-    private keyDownListener:KeyDownListener;
-    private keyUpListener:KeyUpListener;
-    private mouseRayListener:MouseRayListener;
+    private mouseHandlers: MouseHandler[];
 
     constructor(element) {
         var self = this;
@@ -50,15 +46,19 @@ export class InputListener {
 
         this.isLeftMouseDown = false;
         this.isMiddleMouseDown = false;
-
-        this.cameraBehaviour = new Arcball();
         this.element = element;
 
+        this.mouseHandlers = [];
+
         element.onmousemove =  function(evt){
-            self.OnMouseMove(evt);
+            self.onMouseMove(evt);
         }
 
-        element.onmousedown = function(evt){
+        element.onmousedown = (evt) => {
+            if(this.mouseHandlers != null && this.mouseHandlers.length){
+                this.mouseHandlers.forEach((mh) => mh.onMouseDown(new MouseDownEvent(evt.which, evt.x, evt.y)));
+            }
+
             switch(evt.which){
                 case 1:
                     self.isLeftMouseDown = true;
@@ -69,15 +69,25 @@ export class InputListener {
             }
         }
 
-        document.onmouseup = function(evt){
+        document.onmouseup = (evt) => {
+            if(this.mouseHandlers != null && this.mouseHandlers.length){
+                this.mouseHandlers.forEach((mh) => mh.onMouseUp(new MouseDownEvent(evt.which, evt.x, evt.y)));
+            }
+
             switch(evt.which){
                 case 1:
                     self.isLeftMouseDown = false;
-                    self.onClick();
+                    self.onClick(evt);
                     break;
                 case 2:
                     self.isMiddleMouseDown = false;
                     break;
+            }
+        }
+
+        document.onmousewheel = (evt) => {
+            if(this.mouseHandlers != null && this.mouseHandlers.length){
+                this.mouseHandlers.forEach((mh) => mh.onMouseScroll(new MouseScrollEvent(evt.wheelDelta)));
             }
         }
 
@@ -94,58 +104,33 @@ export class InputListener {
         }
     }
 
-    setMouseMoveListener(listener:MouseMoveListener){
-        this.mouseMoveListener = listener;
-    }
-
-    setMouseClickListener(listener:MouseClickListener){
-        this.mouseClickListener = listener;
-    }
-
-    setMouseRayListener(listener:MouseRayListener){
-        this.mouseRayListener = listener;
-    }
-
-    setKeyDownListener(listener:KeyDownListener){
-        this.keyDownListener = listener;
-    }
-
-    setKeyUpListener(listener:KeyUpListener){
-        this.keyUpListener = listener;
-    }
-
-    ControlCamera(camera){
-        this.camera = camera;
-    }
-
     setOnCameraClickBehaviour(cameraClickBehaviour){
         this.cameraClickBehaviour = cameraClickBehaviour;
     }
 
-    OnMouseMove(evt){
+    onMouseMove(evt){
         this.currentMouse = new MousePosition(evt.x, evt.y);
         this.currentClientMouse = new MousePosition(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop);
         if(!this.previousMouse) this.previousMouse = this.currentMouse;
 
-        if(this.mouseMoveListener)
-            this.mouseMoveListener.onMouseMove(this.previousMouse.x, this.previousMouse.y, this.currentClientMouse.x, this.currentClientMouse.y);
+        if(this.mouseHandlers != null && this.mouseHandlers.length){
+            this.mouseHandlers.forEach((mh) => mh.onMouseMove(new MouseMoveEvent(this.previousMouse.x, this.previousMouse.y, this.currentMouse.x, this.currentMouse.y)));
+        }
     }
 
-    onClick():void {
+    onClick(evt):void {
         this.cameraClickBehaviour.onClick(this.currentClientMouse);
-        if(this.mouseClickListener)
-            this.mouseClickListener.onMouseClick(this.currentClientMouse.x, this.currentClientMouse.y);
-
     }
 
-    Update(){
+    update(){
         if(!this.previousMouse || !this.currentMouse){
             return;
         }
 
-        if(this.isMiddleMouseDown) {
-            this.camera.setMatrix(this.cameraBehaviour.CalculateMoveMatrix(this.previousMouse, this.currentMouse));
-        }
         this.previousMouse = this.currentMouse;
+    }
+
+    addMouseHandler(handler: MouseHandler) {
+        this.mouseHandlers.push(handler);
     }
 }

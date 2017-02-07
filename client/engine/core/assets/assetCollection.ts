@@ -1,6 +1,6 @@
 
 import MeshHelper = require("../helpers/MeshHelper");
-import Texture = require("../texture");
+import {Texture} from "../texture";
 import {Mesh} from "../mesh";
 import {Asset} from "./asset";
 import Shader = require("../shaders");

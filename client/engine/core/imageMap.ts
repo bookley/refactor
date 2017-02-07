@@ -1,4 +1,4 @@
-import Texture = require("./texture");
+import {Texture} from "./texture";
 
 export class ImageMap {
     private width:number;

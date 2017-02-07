@@ -34,9 +34,9 @@ export class CameraClickPickerBehaviour implements CameraClickBehaviour {
     onClick(position:MousePosition): void {
         for(var i = 0; i < this.sceneGraph.graph.length; i++){
             var entity = this.sceneGraph.graph[i];
-            if(this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.getMatrix())){
+/*            if(this.isClickOnEntity(this.getClipCameraPosition(position), entity, this.camera.getMatrix())){
 
-            }
+            }*/
         }
     }
 
@@ -61,7 +61,7 @@ export class CameraClickPickerBehaviour implements CameraClickBehaviour {
         vec3.copy(result2, dir);
         vec3.scale(result2, result2, 100);
         vec3.add(result2, cameraPosition, result2);
-        this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result2);
+        //this.sceneGraph.currentScene.drawDebugLine(cameraPosition, result2);
 
         var boundingCube:BoundingCube = entity.getBoundingCube();
         boundingCube.transform(entity.getMatrix());

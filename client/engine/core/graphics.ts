@@ -4,8 +4,9 @@ import Shader = require("./shaders");
 import {AssetCollection} from "./assets/assetCollection";
 import TileMapRenderer = require("./tileMapRenderer");
 import {Context, DefaultContext} from "./context";
-import {AssetLoader} from "./assets/assetLoader";
-import {Asset} from "./assets/asset";
+import ShadowManager from "./graphics/shadowManager";
+import {Camera} from "../camera/camera";
+
 /**
  * Responsible for initializing and maintaining the main WebGL context
  */
@@ -28,6 +29,7 @@ export class Graphics {
 
     assetCollection:AssetCollection;
     tileMapRenderer:TileMapRenderer;
+    shadowManager: ShadowManager;
 
     context:Context;
 
@@ -36,6 +38,7 @@ export class Graphics {
         this.initGL(canvas)
         this.assetCollection = new AssetCollection(this.ctx);
         this.tileMapRenderer = new TileMapRenderer(this.ctx);
+        this.shadowManager = new ShadowManager(this.ctx, 512, 0.01);
     }
 
     private initGL(canvas:HTMLCanvasElement):void{
@@ -70,7 +73,7 @@ export class Graphics {
      * @param scenegraph The scenegraph to interate over
      * @constructor
      */
-    draw(camera, scenegraph) {
+    draw(camera: Camera, scenegraph) {
         this.context.setVertexAttribArrayEnabled(3, false);
         if (!camera) throw new Error("Can't draw if a camera isn't set");
         this.ctx.enable(this.ctx.DEPTH_TEST);
@@ -82,7 +85,7 @@ export class Graphics {
             if (entity.texture != null) {
                 entity.texture.bind();
             }
-            entity.mesh.draw(this.currentShader, camera.getPerspectiveMatrix(), camera.getMatrix(), modelMatrix, this._lightDir);
+            entity.mesh.draw(this.currentShader, camera.projectionMatrix, camera.viewMatrix, modelMatrix, this._lightDir);
         }
     }
 
@@ -111,7 +114,11 @@ export class Graphics {
         }
     }
 
-    instancedDraw(camera){
+    instancedDraw(camera: Camera, scenegraph){
+        //this.shadowManager.bind();
+        //this.shadowManager.draw(camera, scenegraph, this.currentShader, this._lightDir);
+        //this.shadowManager.unbind();
+
         this.ctx.viewport(0, 0, this.viewportWidth, this.viewportHeight);
         this.ctx.clear(this.ctx.DEPTH_BUFFER_BIT | this.ctx.COLOR_BUFFER_BIT);
 
@@ -121,6 +128,12 @@ export class Graphics {
         var identity: mat4 = mat4.create();
         identity = mat4.identity(identity);
 
-        this.tileMapRenderer.draw(this.currentShader, camera.getPerspectiveMatrix(), camera.getMatrix(), identity, this._lightDir);
+        //this.ctx.activeTexture(this.ctx.TEXTURE1);
+        //this.ctx.bindTexture(this.ctx.TEXTURE_2D, this.shadowManager.texture);
+        //this.currentShader.pass1I("shadowSampler", 1);
+
+        this.tileMapRenderer.draw(this.currentShader, camera.projectionMatrix, camera.viewMatrix, identity, this._lightDir);
+        this.ctx.activeTexture(this.ctx.TEXTURE1);
+        this.ctx.bindTexture(this.ctx.TEXTURE_2D, null);
     }
 }

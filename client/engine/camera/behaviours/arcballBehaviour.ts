@@ -10,7 +10,7 @@ export class Arcball {
         this.yRot = 0;
     }
 
-    _GetArcballVector(x, y){
+    static getArcballVector(x, y){
         var vec = vec3.fromValues(
             1 * x / 800 * 2 - 1,
             1 * y / 600 * 2 - 1,
@@ -20,22 +20,17 @@ export class Arcball {
 
         var OP_squared = vec[0] * vec[0] + vec[1] * vec[1];
         if (OP_squared <= 1*1) {
-            vec[2] = Math.sqrt(1 * 1 - OP_squared);  // Pythagore
-        }
-        else {
-            // vec3.normalize(vec, vec);  // nearest point
+            vec[2] = Math.sqrt(1 * 1 - OP_squared);
         }
 
         return vec;
     }
 
-    CalculateMoveMatrix(pointA, pointB){
+    calculateMoveMatrix(pointA, pointB){
         var result = mat4.create();
 
-        var prevCameraVector = this._GetArcballVector(pointA.x, pointA.y);
-        var nextCameraVector = this._GetArcballVector(pointB.x, pointB.y);
-
-
+        var prevCameraVector = Arcball.getArcballVector(pointA.x, pointA.y);
+        var nextCameraVector = Arcball.getArcballVector(pointB.x, pointB.y);
 
         var prevCameraVectorX = vec3.fromValues(0, prevCameraVector[1], prevCameraVector[2]);
         vec3.normalize(prevCameraVectorX, prevCameraVectorX);

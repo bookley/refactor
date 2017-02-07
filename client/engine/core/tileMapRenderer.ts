@@ -41,13 +41,13 @@ class TileMapRenderer {
 
     updateData(){
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.vertexBuffer);
-        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(this.vertices), this.ctx.DYNAMIC_DRAW);
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, Float32Array.from(this.vertices), this.ctx.DYNAMIC_DRAW);
 
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.normalBuffer);
-        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(this.normals), this.ctx.DYNAMIC_DRAW);
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, Float32Array.from(this.normals), this.ctx.DYNAMIC_DRAW);
 
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.texturePositionBuffer);
-        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(this.texCoords), this.ctx.DYNAMIC_DRAW);
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, Float32Array.from(this.texCoords), this.ctx.DYNAMIC_DRAW);
 
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
         this.ctx.bufferData(this.ctx.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indices), this.ctx.DYNAMIC_DRAW);

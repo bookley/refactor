@@ -2,11 +2,6 @@ import GameObject = require("../gameObject");
 import Engine = require("../../engine");
 import {vec2} from 'gl-matrix';
 
-/**
- * Created by Jamie on 05-Jul-15.
- */
-
-
 class Peon extends GameObject {
 
     engine:Engine;

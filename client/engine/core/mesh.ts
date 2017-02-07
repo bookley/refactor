@@ -39,7 +39,7 @@ export class Mesh {
         this.vertices = vertices;
 
         this.ctx.bindBuffer(this.ctx.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-        this.ctx.bufferData(this.ctx.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this.ctx.STATIC_DRAW);
+        this.ctx.bufferData(this.ctx.ELEMENT_ARRAY_BUFFER, Uint16Array.from(indices).buffer, this.ctx.STATIC_DRAW);
 
         if(colors != undefined) {
             this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, this.colorBuffer);
@@ -109,7 +109,7 @@ export class Mesh {
         this.ctx.drawElements(this.ctx.TRIANGLES, this.numIndices, this.ctx.UNSIGNED_SHORT, 0);
     }
 
-    getBoundingCube(): BoundingCube{
+    getBoundingCube(): BoundingCube {
         var boundingCube = new BoundingCube();
         for(var i = 0; i < this.vertices.length/3; i++) {
             var currentVertex = {

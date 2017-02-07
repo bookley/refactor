@@ -81,6 +81,10 @@ class Shader {
     public passVec3(uniformName, vector) : void {
         this.ctx.uniform3f(this.uniforms[uniformName], vector[0], vector[1], vector[2]);
     }
+
+    public pass1I(uniformName: string, value:number){
+        this.ctx.uniform1i(this.uniforms[uniformName], value);
+    }
 }
 
 export = Shader;
