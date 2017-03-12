@@ -10,12 +10,12 @@ import {mat4, vec3, vec4} from 'gl-matrix';
 import Engine = require("../engine");
 import {SimpleMouseHandler, MouseMoveEvent, MouseUpEvent} from "../input/inputHandlers/mouseHandler";
 
-
+//Temporary code for testing
 export class Scene extends SimpleMouseHandler {
-   engine:Engine;
-   sceneGraph:Scenegraph;
 
-   selectTile:Tile;
+   private engine:Engine;
+   private sceneGraph:Scenegraph;
+   private selectTile:Tile;
 
    constructor(engine:Engine){
        super();
@@ -39,7 +39,7 @@ export class Scene extends SimpleMouseHandler {
        var bottomTileLevel = new TileLevel(tileMap);
        for(var x = 0; x < 100; x++){
            for(var y = 0; y < 100; y++) {
-               var tile = new TileMapTile(x - 50, 0, y - 50);
+               var tile = new TileMapTile(x -      50, 0, y - 50);
 
                var rnd = Math.random();
                if(rnd > 0.2){
